@@ -120,7 +120,7 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             //telemetry.addData("claw",  "%.2f", clawPosition);
             telemetry.addData("left",  "%.2f", left);
             telemetry.addData("right", "%.2f", right);
-            telemetry.addData("encoder!", robot.encoderTest.getPower());
+            telemetry.addData("encoder!", robot.encoderTest.getCurrentPosition());
             telemetry.update();
 
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.
