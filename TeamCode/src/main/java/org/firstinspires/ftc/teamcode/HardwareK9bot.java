@@ -28,7 +28,7 @@ public class HardwareK9bot
     /* Public OpMode members. */
     public DcMotor  leftMotor   = null;
     public DcMotor  rightMotor  = null;
-    public DcMotor  encoderTest=null;
+    public DcMotor  encoderTest = null;
     //public Servo    arm         = null;
     //public Servo    claw        = null;
 

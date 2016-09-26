@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,7 +29,8 @@ import com.qualcomm.robotcore.util.Range;
  *   As the arm servo approaches 0, the arm position moves up (away from the floor).
  *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-@TeleOp(name="Template: Test Crap", group="Linear Opmode")
+//@TeleOp(name="Template: Test Crap", group="Linear Opmode")
+//@Disabled
 public abstract class HardwareK9botPiRhos extends OpMode{
     /* Public OpMode members. */
     public DcMotor  leftMotor   = null;
