@@ -70,10 +70,9 @@ public class MotorEncoder extends OpMode {
     leftMotor   = hardwareMap.dcMotor.get("left motor");
     rightMotor  = hardwareMap.dcMotor.get("right motor");
 
-    //leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    //leftMotor.setMode(DcMotor.RunMode.RESET_ENCODERS);
 
   }
 
@@ -87,6 +86,7 @@ public class MotorEncoder extends OpMode {
 
     //leftMotor.getCurrentPosition();
     leftMotor.setTargetPosition(this.motorPosition);
+    leftMotor.setPower(1);
 
   }
 
