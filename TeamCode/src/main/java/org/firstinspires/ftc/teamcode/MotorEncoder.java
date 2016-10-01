@@ -44,7 +44,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Motor Encoder", group = "Concept")
+@TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class MotorEncoder extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
@@ -52,8 +52,17 @@ public class MotorEncoder extends OpMode {
   //Initialize Variables
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
-  private int ticksPerRotation = 1120;
-  int motorPosition = 21 * ticksPerRotation;
+
+  //All units here is inches
+  private final int ticksPerRotation = 1120;
+  private int motorTarget = 21 * ticksPerRotation;
+  private int realTimeTicks = 0;
+
+  private double time = 0;
+  private double wheelDiameter = 3.5;
+  private double olderTick = 0;
+  private double currentTick = 0;
+  private double lastSecondsTick = 0;
 
   @Override
   public void init() {
@@ -67,8 +76,8 @@ public class MotorEncoder extends OpMode {
   @Override
   public void init_loop() {
 
-    leftMotor   = hardwareMap.dcMotor.get("left motor");
-    rightMotor  = hardwareMap.dcMotor.get("right motor");
+    leftMotor = hardwareMap.dcMotor.get("left motor");
+    rightMotor = hardwareMap.dcMotor.get("right motor");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -84,8 +93,8 @@ public class MotorEncoder extends OpMode {
   public void start() {
     runtime.reset();
 
-    //leftMotor.getCurrentPosition();
-    leftMotor.setTargetPosition(this.motorPosition);
+    leftMotor.getCurrentPosition();
+    leftMotor.setTargetPosition(this.motorTarget);
     leftMotor.setPower(1);
 
   }
@@ -94,13 +103,59 @@ public class MotorEncoder extends OpMode {
    * This method will be called repeatedly in a loop
    * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
    */
+  //The code for the robot while running driver control
+  //This method acts as a while loop
   @Override
   public void loop() {
     telemetry.addData("Status", "Run Time: " + runtime.toString());
-    telemetry.addData("Left Encoder", "Left Encoder : " + leftMotor.getCurrentPosition());
+    telemetry.addData("Left Encoder", ":" + leftMotor.getCurrentPosition());
+
+    //realTimeTicks = leftMotor.getCurrentPosition() + realTimeTicks;
+    //calcMotorSpeed(wheelDiameter ,leftMotor.getCurrentPosition());
+
+    //Runs after a whole second, starts from one
+    if((((runtime.seconds()) % 1) == 0)){
+      //For the first second
+      if(runtime.seconds() <= 0.01) {
+        currentTick = leftMotor.getCurrentPosition();
+        lastSecondsTick = getLastSecondTick(0, currentTick);
+        olderTick = leftMotor.getCurrentPosition();
+        calcMotorSpeed(wheelDiameter ,lastSecondsTick);
+        telemetry.addData("Current Ticks: ", ":" + currentTick);
+        telemetry.addData("Older Ticks", ":" + olderTick);
+        telemetry.addData("Last second ticks: ", ":" + lastSecondsTick);
+      } else if ((runtime.seconds()) % 1 <= 0.01){
+        //For the following Seconds
+        currentTick = leftMotor.getCurrentPosition();
+        lastSecondsTick = getLastSecondTick(olderTick, currentTick);
+        olderTick = leftMotor.getCurrentPosition();
+        calcMotorSpeed(wheelDiameter ,lastSecondsTick);
+        telemetry.addData("Current Ticks: ", ":" + currentTick);
+        telemetry.addData("Older Ticks", ":" + olderTick);
+        telemetry.addData("Last second ticks: ", ":" + lastSecondsTick);
+      }
+    }
+
+    if(leftMotor.getCurrentPosition() >= motorTarget){
+      //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftMotor.setPower(0);
+    }
+
+
   }
 
-  public void findMotorDriveDistance(){
+  public double getLastSecondTick(double lastTick, double currentTick){
+
+    return (currentTick - lastTick);
+
+  }
+
+  //Custom Methods
+  public void calcMotorSpeed(double diameter, double ticksLastSecond){
+
+    double motorSpeed = diameter * Math.PI * ticksLastSecond / 1120;
+    telemetry.addData("Left Speed in inches per second", ":" + motorSpeed);
+
 
   }
 
