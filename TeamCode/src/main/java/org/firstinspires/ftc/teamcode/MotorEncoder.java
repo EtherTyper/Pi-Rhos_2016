@@ -48,6 +48,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class MotorEncoder extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
+  private ElapsedTime speedTimer = new ElapsedTime();
 
   //Initialize Variables
   DcMotor leftMotor = null;
@@ -55,14 +56,16 @@ public class MotorEncoder extends OpMode {
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int motorTarget = 21 * ticksPerRotation;
+  private int motorTarget = 3 * ticksPerRotation;
   private int realTimeTicks = 0;
 
   private double time = 0;
-  private double wheelDiameter = 3.5;
+  private double wheelDiameter = 2.75;
+
   private double olderTick = 0;
   private double currentTick = 0;
   private double lastSecondsTick = 0;
+  private double motorSpeed = 0;
 
   @Override
   public void init() {
@@ -107,33 +110,26 @@ public class MotorEncoder extends OpMode {
   //This method acts as a while loop
   @Override
   public void loop() {
-    telemetry.addData("Status", "Run Time: " + runtime.toString());
-    telemetry.addData("Left Encoder", ":" + leftMotor.getCurrentPosition());
+
+    telemetry.addData("Status", "Run Time :" + runtime.toString());
+    telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
+    //telemetry.addData("Current Ticks", " :" + currentTick);
+    //telemetry.addData("Older Ticks", " :" + olderTick);
+    telemetry.addData("Last second ticks", " :" + lastSecondsTick);
+    telemetry.addData("Left Speed in inches per second", " :" + motorSpeed);
+    telemetry.addData("Updating...", " " + runtime.seconds());
 
     //realTimeTicks = leftMotor.getCurrentPosition() + realTimeTicks;
     //calcMotorSpeed(wheelDiameter ,leftMotor.getCurrentPosition());
 
-    //Runs after a whole second, starts from one
-    if((((runtime.seconds()) % 1) == 0)){
-      //For the first second
-      if(runtime.seconds() <= 0.01) {
-        currentTick = leftMotor.getCurrentPosition();
-        lastSecondsTick = getLastSecondTick(0, currentTick);
-        olderTick = leftMotor.getCurrentPosition();
-        calcMotorSpeed(wheelDiameter ,lastSecondsTick);
-        telemetry.addData("Current Ticks: ", ":" + currentTick);
-        telemetry.addData("Older Ticks", ":" + olderTick);
-        telemetry.addData("Last second ticks: ", ":" + lastSecondsTick);
-      } else if ((runtime.seconds()) % 1 <= 0.01){
-        //For the following Seconds
-        currentTick = leftMotor.getCurrentPosition();
-        lastSecondsTick = getLastSecondTick(olderTick, currentTick);
-        olderTick = leftMotor.getCurrentPosition();
-        calcMotorSpeed(wheelDiameter ,lastSecondsTick);
-        telemetry.addData("Current Ticks: ", ":" + currentTick);
-        telemetry.addData("Older Ticks", ":" + olderTick);
-        telemetry.addData("Last second ticks: ", ":" + lastSecondsTick);
-      }
+    //For the first second
+    if (speedTimer.seconds() >= 1){
+      //For the following Seconds
+      currentTick = leftMotor.getCurrentPosition();
+      lastSecondsTick = getLastSecondTick(olderTick, currentTick);
+      motorSpeed = calcMotorSpeed(wheelDiameter ,lastSecondsTick,speedTimer.seconds());
+      olderTick = leftMotor.getCurrentPosition();
+      speedTimer.reset();
     }
 
     if(leftMotor.getCurrentPosition() >= motorTarget){
@@ -144,18 +140,17 @@ public class MotorEncoder extends OpMode {
 
   }
 
+  //Gets ticks from last second
   public double getLastSecondTick(double lastTick, double currentTick){
 
     return (currentTick - lastTick);
 
   }
 
-  //Custom Methods
-  public void calcMotorSpeed(double diameter, double ticksLastSecond){
+  //Calculates speed
+  public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
 
-    double motorSpeed = diameter * Math.PI * ticksLastSecond / 1120;
-    telemetry.addData("Left Speed in inches per second", ":" + motorSpeed);
-
+    return (diameter * Math.PI * (ticksLastSecond / this.ticksPerRotation))/currentTime;
 
   }
 
