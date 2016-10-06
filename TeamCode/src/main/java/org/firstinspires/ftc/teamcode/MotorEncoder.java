@@ -94,6 +94,8 @@ public class MotorEncoder extends OpMode {
    */
   @Override
   public void start() {
+    //Test for color sensor
+
     runtime.reset();
 
     leftMotor.getCurrentPosition();
@@ -110,6 +112,9 @@ public class MotorEncoder extends OpMode {
   //This method acts as a while loop
   @Override
   public void loop() {
+    //Driver Controller
+
+
 
     telemetry.addData("Status", "Run Time :" + runtime.toString());
     telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
@@ -154,4 +159,7 @@ public class MotorEncoder extends OpMode {
 
   }
 
+  public void switchDirection(){
+
+  }
 }
