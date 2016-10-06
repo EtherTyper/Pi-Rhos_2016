@@ -118,9 +118,21 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             // Send telemetry message to signify robot running;
             //telemetry.addData("arm",   "%.2f", armPosition);
             //telemetry.addData("claw",  "%.2f", clawPosition);
+
+            if(gamepad1.x)
+            {
+                robot.leftMotor.setPower(-left);
+                robot.rightMotor.setPower(-right);
+            }
+            else if (gamepad1.a)
+            {
+                robot.leftMotor.setPower(left);
+                robot.rightMotor.setPower(right);
+            }
+
             telemetry.addData("left",  "%.2f", left);
             telemetry.addData("right", "%.2f", right);
-            telemetry.addData("encoder!", robot.encoderTest.getCurrentPosition());
+            //telemetry.addData("encoder!", robot.encoderTest.getCurrentPosition());
             telemetry.update();
 
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.

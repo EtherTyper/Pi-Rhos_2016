@@ -28,7 +28,7 @@ public class HardwareK9bot
     /* Public OpMode members. */
     public DcMotor  leftMotor   = null;
     public DcMotor  rightMotor  = null;
-    public DcMotor  encoderTest = null;
+    //public DcMotor  encoderTest = null;
     //public Servo    arm         = null;
     //public Servo    claw        = null;
 
@@ -55,7 +55,7 @@ public class HardwareK9bot
         // Define and Initialize Motors
         leftMotor   = hwMap.dcMotor.get("left motor");
         rightMotor  = hwMap.dcMotor.get("right motor");
-        encoderTest = hwMap.dcMotor.get("encoder tester");
+        //encoderTest = hwMap.dcMotor.get("encoder tester");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
@@ -66,7 +66,7 @@ public class HardwareK9bot
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        encoderTest.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       // encoderTest.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
         /*
