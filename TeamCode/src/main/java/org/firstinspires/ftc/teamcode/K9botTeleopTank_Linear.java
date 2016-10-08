@@ -72,7 +72,7 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double left;
         double right;
-        boolean reverseMode;
+        boolean reverseMode = false;
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
@@ -92,9 +92,18 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
             left = -gamepad1.left_stick_y;
             right = -gamepad1.right_stick_y;
-            robot.leftMotor.setPower(left);
-            robot.rightMotor.setPower(right);
-            reverseMode = false;
+
+            if(reverseMode)
+            {
+                robot.leftMotor.setPower(-right);
+                robot.rightMotor.setPower(-left);
+
+            }
+            else
+            {
+                robot.leftMotor.setPower(left);
+                robot.rightMotor.setPower(right);
+            }
             Telemetry.Item addData = telemetry.addData("Say", left);
             // Use gamepad Y & A raise and lower the arm
             /*
@@ -122,17 +131,18 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             //switches orientation\
 
               //boolean stores so button does not need to be held
-            while(reverseMode==gamepad1.x) {
-                robot.leftMotor.setPower(-left);
-                robot.rightMotor.setPower(-right);
+            //reverseMode = gamepad1.x;
 
-                if (reverseMode == gamepad1.a) {
-                    robot.leftMotor.setPower(left);
-                    robot.rightMotor.setPower(right);
-                    gamepad1.x=false;
-                    reverseMode = gamepad1.x;
-                }
-                }
+
+
+
+                    if(gamepad1.x)
+                    {
+
+                        reverseMode = !reverseMode;
+                        Thread.sleep(400);
+                    }
+
 
 
 
