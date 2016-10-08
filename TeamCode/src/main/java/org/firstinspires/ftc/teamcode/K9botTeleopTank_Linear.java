@@ -72,7 +72,7 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         double left;
         double right;
-
+        boolean reverseMode;
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
@@ -94,7 +94,7 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             right = -gamepad1.right_stick_y;
             robot.leftMotor.setPower(left);
             robot.rightMotor.setPower(right);
-
+            reverseMode = false;
             Telemetry.Item addData = telemetry.addData("Say", left);
             // Use gamepad Y & A raise and lower the arm
             /*
@@ -119,16 +119,23 @@ public class K9botTeleopTank_Linear extends LinearOpMode {
             //telemetry.addData("arm",   "%.2f", armPosition);
             //telemetry.addData("claw",  "%.2f", clawPosition);
 
-            if(gamepad1.x)
-            {
+            //switches orientation\
+
+              //boolean stores so button does not need to be held
+            while(reverseMode==gamepad1.x) {
                 robot.leftMotor.setPower(-left);
                 robot.rightMotor.setPower(-right);
-            }
-            else if (gamepad1.a)
-            {
-                robot.leftMotor.setPower(left);
-                robot.rightMotor.setPower(right);
-            }
+
+                if (reverseMode == gamepad1.a) {
+                    robot.leftMotor.setPower(left);
+                    robot.rightMotor.setPower(right);
+                    gamepad1.x=false;
+                    reverseMode = gamepad1.x;
+                }
+                }
+
+
+
 
             telemetry.addData("left",  "%.2f", left);
             telemetry.addData("right", "%.2f", right);
