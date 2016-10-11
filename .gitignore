@@ -22,7 +22,7 @@ Thumbs.db
 *.iml
 .idea
 .gradle
-.log
+*.log
 build/
 
 *ASUS_PC_01*

@@ -1,16 +1,22 @@
 /* Copyright (c) 2014, 2015 Qualcomm Technologies Inc
+
 All rights reserved.
+
 Redistribution and use in source and binary forms, with or without modification,
 are permitted (subject to the limitations in the disclaimer below) provided that
 the following conditions are met:
+
 Redistributions of source code must retain the above copyright notice, this list
 of conditions and the following disclaimer.
+
 Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or
 other materials provided with the distribution.
+
 Neither the name of Qualcomm Technologies Inc nor the names of its contributors
 may be used to endorse or promote products derived from this software without
 specific prior written permission.
+
 NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
 LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -29,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -36,7 +43,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
 @TeleOp(name = "Test: Color Sensor", group = "Linear Opmode")
-public class ColorSensorTest extends OpMode {
+public class BeaconTester extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -44,7 +51,10 @@ public class ColorSensorTest extends OpMode {
   //Initialize Variables
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
-  ColorSensor robotColorSensor = null;
+  ColorSensor rightColorSensor = null;
+  ColorSensor leftColorSensor = null;
+  Servo rightServo = null;
+  Servo leftServo = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -73,7 +83,8 @@ public class ColorSensorTest extends OpMode {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
-    robotColorSensor = hardwareMap.colorSensor.get("color sensor");
+    rightColorSensor = hardwareMap.colorSensor.get("color sensor 1");
+    leftColorSensor = hardwareMap.colorSensor.get("color sensor 2");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -88,7 +99,7 @@ public class ColorSensorTest extends OpMode {
   @Override
   public void start() {
     //Test for color sensor
-    telemetry.addData("Blue value: ", robotColorSensor.blue());
+    telemetry.addData("Blue value: ", rightColorSensor.blue());
 
   }
 
@@ -102,7 +113,28 @@ public class ColorSensorTest extends OpMode {
   public void loop() {
     //Driver Controller
 
-    telemetry.addData("Color sensor: ", robotColorSensor.blue());
+    telemetry.addData("Color sensor blue: ", rightColorSensor.blue());
+    telemetry.addData("Color sensor red: ", rightColorSensor.red());
+    testForRed(rightColorSensor.blue(), rightColorSensor.red(), leftColorSensor.blue(), leftColorSensor.red());
 
   }
+
+  //Test for red
+  public void testForRed(int rightBlueValue, int rightRedValue, int leftBlueValue, int leftRedValue){
+    //Stop motor
+    if(rightRedValue >= 10 && leftRedValue >= 10){
+      rightServo.setPosition(0);
+      leftServo.setPosition(0);
+    }
+
+    //Press buttond
+    if(rightRedValue >= 10 && leftRedValue <= 10){
+      rightServo.setPosition(1);
+    }
+    else if (leftRedValue >= 10 && rightRedValue <= 10){
+      leftServo.setPosition(1);
+    }
+
+  }
+
 }
