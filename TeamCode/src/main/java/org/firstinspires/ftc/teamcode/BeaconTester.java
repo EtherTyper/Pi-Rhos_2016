@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Color Sensor", group = "Linear Opmode")
+@TeleOp(name = "Test: Beacon Pusher", group = "Linear Opmode")
 public class BeaconTester extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
@@ -85,6 +85,8 @@ public class BeaconTester extends OpMode {
     rightMotor = hardwareMap.dcMotor.get("right motor");
     rightColorSensor = hardwareMap.colorSensor.get("color sensor 1");
     leftColorSensor = hardwareMap.colorSensor.get("color sensor 2");
+    rightServo = hardwareMap.servo.get("right servo");
+    leftServo = hardwareMap.servo.get("left servo");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
