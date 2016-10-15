@@ -31,19 +31,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Demonstrates empty OpMode
  */
-//@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Beacon Blue", group = "Linear Opmode")
-public class BeaconTesterBlue extends OpMode {
+@Autonomous(name = "Auto Test", group = "Concept")
+//TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
+public class PiRhoAutoTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -51,14 +50,10 @@ public class BeaconTesterBlue extends OpMode {
   //Initialize Variables
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
-  ColorSensor rightColorSensor = null;
-  ColorSensor leftColorSensor = null;
-  Servo rightServo = null;
-  Servo leftServo = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int motorTarget = 3 * ticksPerRotation;
+  private int motorTarget = 10 * ticksPerRotation;
   private int realTimeTicks = 0;
 
   private double time = 0;
@@ -69,6 +64,8 @@ public class BeaconTesterBlue extends OpMode {
   private double lastSecondsTick = 0;
   private double motorSpeed = 0;
 
+  BeaconTesterBlue testBlue = new BeaconTesterBlue();
+  BeaconTesterRed  testRed = new BeaconTesterRed();
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
@@ -83,13 +80,12 @@ public class BeaconTesterBlue extends OpMode {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
-    rightColorSensor = hardwareMap.colorSensor.get("color sensor 1");
-    leftColorSensor = hardwareMap.colorSensor.get("color sensor 2");
 
-    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+    //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    //leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
   }
 
   /*
@@ -100,6 +96,15 @@ public class BeaconTesterBlue extends OpMode {
   public void start() {
     //Test for color sensor
 
+    runtime.reset();
+
+    leftMotor.getCurrentPosition();
+    leftMotor.setTargetPosition(this.motorTarget);
+    leftMotor.setPower(1);
+
+    rightMotor.getCurrentPosition();
+    rightMotor.setTargetPosition(this.motorTarget);
+    rightMotor.setPower(1);
   }
 
   /*
@@ -112,31 +117,50 @@ public class BeaconTesterBlue extends OpMode {
   public void loop() {
     //Driver Controller
 
-    telemetry.addData("Right color sensor blue: ", rightColorSensor.blue());  //return right blue value
-    telemetry.addData("Right color sensor red: ", rightColorSensor.red());    //return right red value
-    telemetry.addData("Left color sensor blue: ", leftColorSensor.blue());    //return left blue value
-    telemetry.addData("Left color sensor red: ", leftColorSensor.red());     //return left red value
 
-    testForBlue(rightColorSensor.blue(), rightColorSensor.red(), leftColorSensor.blue(), leftColorSensor.red());  //tests for blue color
+
+   /* telemetry.addData("Status", "Run Time :" + runtime.toString());
+    telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
+    //telemetry.addData("Current Ticks", " :" + currentTick);
+    //telemetry.addData("Older Ticks", " :" + olderTick);
+    telemetry.addData("Last second ticks", " :" + lastSecondsTick);
+    telemetry.addData("Left Speed in inches per second", " :" + motorSpeed);
+    telemetry.addData("Updating...", " " + runtime.seconds());*/
+
+    //realTimeTicks = leftMotor.getCurrentPosition() + realTimeTicks;
+    //calcMotorSpeed(wheelDiameter ,leftMotor.getCurrentPosition());
+
+    //For the first second
+   /* if (speedTimer.seconds() >= 1){
+      //For the following Seconds
+      currentTick = leftMotor.getCurrentPosition();
+      lastSecondsTick = getLastSecondTick(olderTick, currentTick);
+      motorSpeed = calcMotorSpeed(wheelDiameter ,lastSecondsTick,speedTimer.seconds());
+      olderTick = leftMotor.getCurrentPosition();
+      speedTimer.reset();
+    }*/
+
+    if(leftMotor.getCurrentPosition() >= motorTarget){
+      //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      leftMotor.setPower(0);
+    }
+
 
   }
 
-  //Test for red
-  public void testForBlue(int rightBlueValue, int rightRedValue, int leftBlueValue, int leftRedValue){
-    //Stop motor
-    if(rightBlueValue >= 10 && leftBlueValue >= 10){
-      rightServo.setPosition(0);
-      leftServo.setPosition(0);
-    }
+  //Gets ticks from last second
+  public double getLastSecondTick(double lastTick, double currentTick){
 
-    //Press button
-    if(rightBlueValue >= 10 && leftBlueValue <= 10){
-      rightServo.setPosition(1);
-    }
-    else if (leftBlueValue >= 10 && rightBlueValue <= 10){
-      leftServo.setPosition(1);
-    }
+    return (currentTick - lastTick);
 
   }
+
+  //Calculates speed
+  /*public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
+
+    return (diameter * Math.PI * (ticksLastSecond / this.ticksPerRotation))/currentTime;
+
+  }*/
+
 
 }
