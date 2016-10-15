@@ -133,10 +133,10 @@ public class BeaconTester extends OpMode {
     }
 
     //Press buttond
-    if(rightRedValue >= 10 && leftRedValue <= 10){
-      rightServo.setPosition(1);
+    if(rightRedValue >= 10 || leftRedValue <= 10){
+      rightServo.setPosition(-1);
     }
-    else if (leftRedValue >= 10 && rightRedValue <= 10){
+    else if (leftRedValue >= 10 || rightRedValue <= 10){
       leftServo.setPosition(1);
     }
 

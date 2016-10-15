@@ -73,7 +73,7 @@ public class ColorSensorTest extends OpMode {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
-    robotColorSensor = hardwareMap.colorSensor.get("color sensor");
+    robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -88,7 +88,6 @@ public class ColorSensorTest extends OpMode {
   @Override
   public void start() {
     //Test for color sensor
-    telemetry.addData("Blue value: ", robotColorSensor.blue());
 
   }
 
@@ -102,7 +101,8 @@ public class ColorSensorTest extends OpMode {
   public void loop() {
     //Driver Controller
 
-    telemetry.addData("Color sensor: ", robotColorSensor.blue());
+    telemetry.addData("Color sensor blue: ", robotColorSensor.blue());
+    telemetry.addData("Color sensor red: ", robotColorSensor.red());
 
   }
 }
