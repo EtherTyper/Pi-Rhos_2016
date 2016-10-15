@@ -114,12 +114,12 @@ public class BeaconTesterRed extends OpMode {
   public void loop() {
     //Driver Controller
 
-    telemetry.addData("Right color sensor blue: ", rightColorSensor.blue());
-    telemetry.addData("Right color sensor red: ", rightColorSensor.red());
-    telemetry.addData("Left color sensor blue: ", leftColorSensor.blue());
-    telemetry.addData("Left color sensor red: ", leftColorSensor.red());
+    telemetry.addData("Right color sensor blue: ", rightColorSensor.blue());   //return right blue value
+    telemetry.addData("Right color sensor red: ", rightColorSensor.red());     //return right red value
+    telemetry.addData("Left color sensor blue: ", leftColorSensor.blue());     //return left blue value
+    telemetry.addData("Left color sensor red: ", leftColorSensor.red());       //return left red value
 
-    testForRed(rightColorSensor.blue(), rightColorSensor.red(), leftColorSensor.blue(), leftColorSensor.red());
+    testForRed(rightColorSensor.blue(), rightColorSensor.red(), leftColorSensor.blue(), leftColorSensor.red()); //tests for red color
 
   }
 
