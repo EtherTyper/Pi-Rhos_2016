@@ -67,9 +67,9 @@ public class ColorSensorTest extends OpMode {
   public void init() {
     telemetry.addData("Status", "Initialized");
     robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
-    robotColorSensor.enableLed(LEDStatus);
+    robotColorSensor.enableLed(false);
     otherColorSensor = hardwareMap.colorSensor.get("color sensor 2");
-    otherColorSensor.enableLed(LEDStatus);
+    otherColorSensor.enableLed(false);
   }
 
   /*
@@ -81,8 +81,8 @@ public class ColorSensorTest extends OpMode {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
-    robotColorSensor.enableLed(true);
-    otherColorSensor.enableLed(true);
+    robotColorSensor.enableLed(LEDStatus);
+    otherColorSensor.enableLed(LEDStatus);
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -114,13 +114,17 @@ public class ColorSensorTest extends OpMode {
     robotColorSensor.enableLed(LEDStatus);
     otherColorSensor.enableLed(LEDStatus);
 
+    telemetry.addData("Sensor placement 1: ", robotColorSensor.getI2cAddress());
+    telemetry.addData("Sensor placement 2: ", otherColorSensor.getI2cAddress());
+
     telemetry.addData("Color sensor blue: ", robotColorSensor.blue());
     telemetry.addData("Color sensor red: ", robotColorSensor.red());
+    telemetry.addData("Color sensor brightness: ", robotColorSensor.argb());
 
     telemetry.addData("Other sensor blue: ", otherColorSensor.blue());
     telemetry.addData("Other sensor red: ", otherColorSensor.red());
 
-    telemetry.addData("LED Status: ", LEDStatus);
+    //telemetry.addData("LED Status: ", LEDStatus);
 
   }
 }
