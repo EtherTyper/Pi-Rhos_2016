@@ -29,6 +29,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -45,6 +46,7 @@ public class ColorSensorTest extends OpMode {
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
   ColorSensor robotColorSensor = null;
+  ColorSensor otherColorSensor = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -59,9 +61,15 @@ public class ColorSensorTest extends OpMode {
   private double lastSecondsTick = 0;
   private double motorSpeed = 0;
 
+  private boolean LEDStatus = true;
+
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
+    robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
+    robotColorSensor.enableLed(LEDStatus);
+    otherColorSensor = hardwareMap.colorSensor.get("color sensor 2");
+    otherColorSensor.enableLed(LEDStatus);
   }
 
   /*
@@ -73,7 +81,8 @@ public class ColorSensorTest extends OpMode {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
-    robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
+    robotColorSensor.enableLed(true);
+    otherColorSensor.enableLed(true);
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -88,21 +97,30 @@ public class ColorSensorTest extends OpMode {
   @Override
   public void start() {
     //Test for color sensor
+    robotColorSensor.enableLed(LEDStatus);
+    otherColorSensor.enableLed(LEDStatus);
 
   }
 
   /*
    * This method will be called repeatedly in a loop
    * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
+   *///
   //The code for the robot while running driver control
   //This method acts as a while loop
   @Override
   public void loop() {
     //Driver Controller
+    robotColorSensor.enableLed(LEDStatus);
+    otherColorSensor.enableLed(LEDStatus);
 
     telemetry.addData("Color sensor blue: ", robotColorSensor.blue());
     telemetry.addData("Color sensor red: ", robotColorSensor.red());
+
+    telemetry.addData("Other sensor blue: ", otherColorSensor.blue());
+    telemetry.addData("Other sensor red: ", otherColorSensor.red());
+
+    telemetry.addData("LED Status: ", LEDStatus);
 
   }
 }
