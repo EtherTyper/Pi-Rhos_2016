@@ -34,10 +34,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.HardwareK9BotActual;
-
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -55,13 +54,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name="Template: Pi-Rho TeleOp", group="Linear Opmode")
+@TeleOp(name="Template: Final Drive", group="Linear Opmode")
 //@TeleOp(name="K9bot: Telop Tank", group="K9bot")
 //@Disabled
-public class K9botTeleopTank_LinearActual extends LinearOpMode {
+public class FinalDriverControll extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareK9BotActual   robot           = new HardwareK9BotActual();              // Use a K9'shardware
+    HardwareK9bot   robot           = new HardwareK9bot();              // Use a K9'shardware
     //double          armPosition     = robot.ARM_HOME;                   // Servo safe position
     //double          clawPosition    = robot.CLAW_HOME;                  // Servo safe position
     //final double    CLAW_SPEED      = 0.01 ;                            // sets rate to move servo
@@ -94,14 +93,14 @@ public class K9botTeleopTank_LinearActual extends LinearOpMode {
 
             if(reverseMode)
             {
-                robot.frontLeftMotor.setPower(-right);
-                robot.backRightMotor.setPower(-left);
+                robot.leftMotor.setPower(-right);
+                robot.rightMotor.setPower(-left);
 
             }
             else
             {
-                robot.frontLeftMotor.setPower(left);
-                robot.backRightMotor.setPower(right);
+                robot.leftMotor.setPower(left);
+                robot.rightMotor.setPower(right);
             }
             Telemetry.Item addData = telemetry.addData("Say", left);
             // Use gamepad Y & A raise and lower the arm

@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 /**
  * This is NOT an opmode.
  *
@@ -22,22 +24,23 @@ import com.qualcomm.robotcore.hardware.Servo;
  *   As the arm servo approaches 0, the arm position moves up (away from the floor).
  *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-public class HardwareK9BotActual
+public class FinalHardwareConfiguration
 {
-    /* Public OpMode members. */
-    public DcMotor  frontLeftMotor   = null;
-    public DcMotor  frontRightMotor  = null;
-    public DcMotor  backLeftMotor = null;
-    public DcMotor backRightMotor = null;
-    public DcMotor shooterMotor = null;
-    public DcMotor intakeSpinnerMotor = null;
+    // Hardware Components
+    DcMotor frontLeftMotor   = null;
+    DcMotor frontRightMotor  = null;
+    DcMotor backLeftMotor = null;
+    DcMotor backRightMotor = null;
+    DcMotor shooterMotor = null;
+    DcMotor intakeSpinnerMotor = null;
+
+    ColorSensor rightColorSensor = null;
+    ColorSensor leftColorSensor = null;
+
+    Servo leftServo = null;
+    Servo rightServo = null;
 
     public Servo intake = null;
-
-    //public DcMotor  encoderTest = null;
-    //public Servo    arm         = null;
-    //public Servo    claw        = null;
-
     public final static double ARM_HOME = 0.2;
     public final static double CLAW_HOME = 0.2;
     public final static double ARM_MIN_RANGE  = 0.20;
@@ -50,7 +53,7 @@ public class HardwareK9BotActual
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareK9BotActual() {
+    public FinalHardwareConfiguration() {
     }
 
     /* Initialize standard Hardware interfaces */
@@ -76,19 +79,10 @@ public class HardwareK9BotActual
         shooterMotor.setPower(0);
         intakeSpinnerMotor.setPower(0);
 
-        // Set all motors to run without encoders.
+        // Set Encoder Usage
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-       // encoderTest.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Define and initialize ALL installed servos.
-        /*
-        arm = hwMap.servo.get("arm");
-        claw = hwMap.servo.get("claw");
-        arm.setPosition(ARM_HOME);
-        claw.setPosition(CLAW_HOME);
-        */
     }
 
     /***

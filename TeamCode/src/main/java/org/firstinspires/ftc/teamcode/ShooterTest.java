@@ -31,29 +31,32 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Shooter", group = "Linear Opmode")
+@TeleOp(name = "Test: Shooter Tester", group = "Linear Opmode")
 public class ShooterTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
 
   //Initialize Variables
-  //DcMotor leftMotor = null;
-  //DcMotor rightMotor = null;
-  DcMotor shootMotor = null;
+  DcMotor leftMotor = null;
+  DcMotor rightMotor = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int motorTarget = 2 * ticksPerRotation;
+  private int motorTarget = 3 * ticksPerRotation;
   private int realTimeTicks = 0;
 
   private double time = 0;
@@ -76,15 +79,11 @@ public class ShooterTest extends OpMode {
   @Override
   public void init_loop() {
 
-   /* leftMotor = hardwareMap.dcMotor.get("left motor");
-    rightMotor = hardwareMap.dcMotor.get("right motor");
+    leftMotor = hardwareMap.dcMotor.get("left motor");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
-    shootMotor = hardwareMap.dcMotor.get("left motor");
-    shootMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
   }
 
@@ -98,9 +97,9 @@ public class ShooterTest extends OpMode {
 
     runtime.reset();
 
-    shootMotor.getCurrentPosition();
-    shootMotor.setTargetPosition(this.motorTarget);
-    shootMotor.setPower(1);
+    leftMotor.getCurrentPosition();
+    leftMotor.setTargetPosition(this.motorTarget);
+    leftMotor.setPower(1);
 
   }
 
@@ -117,7 +116,7 @@ public class ShooterTest extends OpMode {
 
 
     telemetry.addData("Status", "Run Time :" + runtime.toString());
-    telemetry.addData("Left Encoder", " :" + shootMotor.getCurrentPosition());
+    telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
     //telemetry.addData("Current Ticks", " :" + currentTick);
     //telemetry.addData("Older Ticks", " :" + olderTick);
     telemetry.addData("Last second ticks", " :" + lastSecondsTick);
@@ -130,16 +129,16 @@ public class ShooterTest extends OpMode {
     //For the first second
     if (speedTimer.seconds() >= 1){
       //For the following Seconds
-      currentTick = shootMotor.getCurrentPosition();
+      currentTick = leftMotor.getCurrentPosition();
       lastSecondsTick = getLastSecondTick(olderTick, currentTick);
       motorSpeed = calcMotorSpeed(wheelDiameter ,lastSecondsTick,speedTimer.seconds());
-      olderTick = shootMotor.getCurrentPosition();
+      olderTick = leftMotor.getCurrentPosition();
       speedTimer.reset();
     }
 
-    if(shootMotor.getCurrentPosition() >= motorTarget){
+    if(leftMotor.getCurrentPosition() >= motorTarget){
       //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      shootMotor.setPower(0);
+      leftMotor.setPower(0);
     }
 
 

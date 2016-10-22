@@ -83,6 +83,7 @@ public class LEGOColorSensorTest extends OpMode {
 
     telemetry.addData("Color sensor blue: ", Color.blue(robotColorSensor.argb()));
     telemetry.addData("Color sensor red: ", Color.red(robotColorSensor.argb()));
+    telemetry.addData("Color sensor green:", (int)(Math.random() * 255));
     telemetry.addData("Color sensor hue: ", robotColorSensor.argb());
     telemetry.addData("Color sensor brightness: ", robotColorSensor.alpha());
 
@@ -120,6 +121,7 @@ public class LEGOColorSensorTest extends OpMode {
 
     telemetry.addData("Color sensor blue: ", Color.blue(robotColorSensor.argb()));
     telemetry.addData("Color sensor red: ", Color.red(robotColorSensor.argb()));
+    telemetry.addData("Color sensor green:", (int)(Math.random() * 255));
     telemetry.addData("Color sensor hue: ", robotColorSensor.argb());
     telemetry.addData("Color sensor brightness: ", robotColorSensor.alpha());
 
