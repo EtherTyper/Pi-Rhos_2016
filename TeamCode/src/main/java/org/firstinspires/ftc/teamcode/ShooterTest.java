@@ -56,7 +56,7 @@ public class ShooterTest extends OpMode {
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int motorTarget = 3 * ticksPerRotation;
+  private int motorTarget = 1 * ticksPerRotation;
   private int realTimeTicks = 0;
 
   private double time = 0;
@@ -137,7 +137,6 @@ public class ShooterTest extends OpMode {
     }
 
     if(leftMotor.getCurrentPosition() >= motorTarget){
-      //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       leftMotor.setPower(0);
     }
 
