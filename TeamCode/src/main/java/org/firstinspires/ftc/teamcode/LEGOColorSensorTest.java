@@ -79,6 +79,13 @@ public class LEGOColorSensorTest extends OpMode {
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
 
+    telemetry.addData("Sensor placement 1: ", robotColorSensor.getI2cAddress());
+
+    telemetry.addData("Color sensor blue: ", Color.blue(robotColorSensor.argb()));
+    telemetry.addData("Color sensor red: ", Color.red(robotColorSensor.argb()));
+    telemetry.addData("Color sensor hue: ", robotColorSensor.argb());
+    telemetry.addData("Color sensor brightness: ", robotColorSensor.alpha());
+
 //    robotColorSensor.enableLed(LEDStatus);
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -113,7 +120,8 @@ public class LEGOColorSensorTest extends OpMode {
 
     telemetry.addData("Color sensor blue: ", Color.blue(robotColorSensor.argb()));
     telemetry.addData("Color sensor red: ", Color.red(robotColorSensor.argb()));
-    telemetry.addData("Color sensor brightness: ", robotColorSensor.argb());
+    telemetry.addData("Color sensor hue: ", robotColorSensor.argb());
+    telemetry.addData("Color sensor brightness: ", robotColorSensor.alpha());
 
     //telemetry.addData("LED Status: ", LEDStatus);
 
