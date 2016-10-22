@@ -29,16 +29,15 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.I2cAddr;
-import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import android.graphics.Color;
 
 /**
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Color Sensor Test", group = "Linear Opmode")
-public class ColorSensorTest extends OpMode {
+@TeleOp(name = "Test: LEGO Color Sensor Test", group = "Linear Opmode")
+public class LEGOColorSensorTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -47,7 +46,6 @@ public class ColorSensorTest extends OpMode {
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
   ColorSensor robotColorSensor = null;
-  ColorSensor otherColorSensor = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -64,14 +62,11 @@ public class ColorSensorTest extends OpMode {
 
   private boolean LEDStatus = true;
 
-
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
-    robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
+    robotColorSensor = hardwareMap.colorSensor.get("Lego color 1");
     robotColorSensor.enableLed(false);
-    otherColorSensor = hardwareMap.colorSensor.get("color sensor 2");
-    otherColorSensor.enableLed(false);
   }
 
   /*
@@ -84,10 +79,7 @@ public class ColorSensorTest extends OpMode {
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
 
-    robotColorSensor.enableLed(LEDStatus);
-    otherColorSensor.enableLed(LEDStatus);
-
-
+//    robotColorSensor.enableLed(LEDStatus);
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -102,8 +94,7 @@ public class ColorSensorTest extends OpMode {
   @Override
   public void start() {
     //Test for color sensor
-    robotColorSensor.enableLed(LEDStatus);
-    otherColorSensor.enableLed(LEDStatus);
+//    robotColorSensor.enableLed(LEDStatus);
 
   }
 
@@ -116,20 +107,13 @@ public class ColorSensorTest extends OpMode {
   @Override
   public void loop() {
     //Driver Controller
-    robotColorSensor.enableLed(LEDStatus);
-    otherColorSensor.enableLed(LEDStatus);
-
-    //robotColorSensor.setI2cAddress(I2cAddr)
+//    robotColorSensor.enableLed(LEDStatus);
 
     telemetry.addData("Sensor placement 1: ", robotColorSensor.getI2cAddress());
-    telemetry.addData("Sensor placement 2: ", otherColorSensor.getI2cAddress());
 
-    telemetry.addData("Color sensor blue: ", robotColorSensor.blue());
-    telemetry.addData("Color sensor red: ", robotColorSensor.red());
-    telemetry.addData("Color sensor hue: ", robotColorSensor.argb());
-
-    telemetry.addData("Other sensor blue: ", otherColorSensor.blue());
-    telemetry.addData("Other sensor red: ", otherColorSensor.red());
+    telemetry.addData("Color sensor blue: ", Color.blue(robotColorSensor.argb()));
+    telemetry.addData("Color sensor red: ", Color.red(robotColorSensor.argb()));
+    telemetry.addData("Color sensor brightness: ", robotColorSensor.argb());
 
     //telemetry.addData("LED Status: ", LEDStatus);
 
