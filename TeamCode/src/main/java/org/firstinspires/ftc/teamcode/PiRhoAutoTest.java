@@ -94,7 +94,7 @@ public class PiRhoAutoTest extends OpMode {
    */
   @Override
   public void start() {
-    //Test for color sensor
+    //Test movement
 
     runtime.reset();
 
@@ -105,6 +105,8 @@ public class PiRhoAutoTest extends OpMode {
     rightMotor.getCurrentPosition();
     rightMotor.setTargetPosition(this.motorTarget);
     rightMotor.setPower(1);
+
+
   }
 
   /*
