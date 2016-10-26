@@ -55,8 +55,8 @@ public class ShooterTest extends OpMode {
   DcMotor rightMotor = null;
 
   //All units here is inches
-  private final int ticksPerRotation = 1120;
-  private int motorTarget = 1 * ticksPerRotation;
+  private final int ticksPerRotation = /*1120*/ 1680;
+  private int motorTarget = ticksPerRotation;
   private int realTimeTicks = 0;
 
   private double time = 0;
@@ -80,6 +80,7 @@ public class ShooterTest extends OpMode {
   public void init_loop() {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
+    //telemetry.addData("Status", "Init Loop");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -94,6 +95,7 @@ public class ShooterTest extends OpMode {
   @Override
   public void start() {
     //Test for color sensor
+    telemetry.addData("Status", "Start");
 
     runtime.reset();
 
@@ -115,7 +117,7 @@ public class ShooterTest extends OpMode {
 
 
 
-    telemetry.addData("Status", "Run Time :" + runtime.toString());
+    //telemetry.addData("Status", "Run Time :" + runtime.toString());
     telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
     //telemetry.addData("Current Ticks", " :" + currentTick);
     //telemetry.addData("Older Ticks", " :" + olderTick);
