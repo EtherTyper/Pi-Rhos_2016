@@ -36,7 +36,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -55,9 +54,7 @@ import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name="Template: Drive Base Test", group="Linear Opmode")
-//@TeleOp(name="K9bot: Telop Tank", group="K9bot")
-//@Disabled
-public class FinalDriverControl extends LinearOpMode {
+public class DriverDriveBaseControl extends LinearOpMode {
 
     /* Declare OpMode members. */
     FinalHardwareConfiguration robot = new FinalHardwareConfiguration();              // Use a K9'shardware

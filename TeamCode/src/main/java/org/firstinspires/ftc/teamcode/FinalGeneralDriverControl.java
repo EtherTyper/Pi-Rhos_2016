@@ -37,126 +37,115 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
 
+//import static java.lang.thread;
+
 /**
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: General Drive Control", group = "Linear Opmode")
+@TeleOp(name = "Final: General Drive Control", group = "Linear Opmode")
 public class FinalGeneralDriverControl extends OpMode {
 
+  //Objects setup
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
+  FinalHardwareConfiguration robot = new FinalHardwareConfiguration();
 
-  //Initialize Variables
-  DcMotor leftMotor = null;
-  DcMotor rightMotor = null;
 
-  //All units here is inches
+  //Integer Varibles (All units here is inches)
   private final int ticksPerRotation = 1120;
   private int motorTarget = 3 * ticksPerRotation;
   private int realTimeTicks = 0;
 
+  //Double Variables
   private double time = 0;
   private double wheelDiameter = 2.75;
-
   private double olderTick = 0;
   private double currentTick = 0;
   private double lastSecondsTick = 0;
   private double motorSpeed = 0;
+  private double left;
+  private double right;
 
+  //Boolean Variables
+  private boolean reverseMode = false;
+  private boolean preciseMode = false;
+
+  //Runs once when init is pressed
   @Override
   public void init() {
-    telemetry.addData("Status", "Initialized");
+    robot.init(hardwareMap);
+    telemetry.addData("Status", "(Initialized) Setup");
   }
 
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
+  //Runs after init is pressed (loop)
   @Override
   public void init_loop() {
-
-    leftMotor = hardwareMap.dcMotor.get("left motor");
-    rightMotor = hardwareMap.dcMotor.get("right motor");
-
-    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    telemetry.addData("Status", "(Initialized) Loop");
 
   }
 
-  /*
-   * This method will be called ONCE when start is pressed
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
+  //Runs once when start button is pressed
   @Override
   public void start() {
-    //Test for color sensor
-
+    telemetry.addData("Status", "(Running) Setup");
     runtime.reset();
 
-    leftMotor.getCurrentPosition();
-    leftMotor.setTargetPosition(this.motorTarget);
-    leftMotor.setPower(1);
-
   }
 
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  //The code for the robot while running driver control
-  //This method acts as a while loop
+  //Runs when start is pressed (loop)
   @Override
   public void loop() {
-    //Driver Controller
+    telemetry.addData("Status", "(Running) Main Loop");
+
+    // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
+    left = -gamepad1.left_stick_y;
+    right = -gamepad1.right_stick_y;
 
 
+    if(preciseMode)
+    {
+      left*=0.25;
+      right*=0.25;
 
-    telemetry.addData("Status", "Run Time :" + runtime.toString());
-    telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
-    //telemetry.addData("Current Ticks", " :" + currentTick);
-    //telemetry.addData("Older Ticks", " :" + olderTick);
-    telemetry.addData("Last second ticks", " :" + lastSecondsTick);
-    telemetry.addData("Left Speed in inches per second", " :" + motorSpeed);
-    telemetry.addData("Updating...", " " + runtime.seconds());
-
-    //realTimeTicks = leftMotor.getCurrentPosition() + realTimeTicks;
-    //calcMotorSpeed(wheelDiameter ,leftMotor.getCurrentPosition());
-
-    //For the first second
-    if (speedTimer.seconds() >= 1){
-      //For the following Seconds
-      currentTick = leftMotor.getCurrentPosition();
-      lastSecondsTick = getLastSecondTick(olderTick, currentTick);
-      motorSpeed = calcMotorSpeed(wheelDiameter ,lastSecondsTick,speedTimer.seconds());
-      olderTick = leftMotor.getCurrentPosition();
-      speedTimer.reset();
     }
 
-    if(leftMotor.getCurrentPosition() >= motorTarget){
-      //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      leftMotor.setPower(0);
+    if(reverseMode)
+    {
+      robot.frontLeftMotor.setPower(-right);
+      robot.backLeftMotor.setPower(-right);
+
+      robot.frontRightMotor.setPower(-left);
+      robot.backRightMotor.setPower(-left);
+
+    }
+    else
+    {
+      robot.frontLeftMotor.setPower(left);
+      robot.backLeftMotor.setPower(left);
+
+      robot.frontRightMotor.setPower(right);
+      robot.backRightMotor.setPower(right);
     }
 
-
-  }
-
-  //Gets ticks from last second
-  public double getLastSecondTick(double lastTick, double currentTick){
-
-    return (currentTick - lastTick);
-
-  }
-
-  //Calculates speed
-  public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
-
-    return (diameter * Math.PI * (ticksLastSecond / this.ticksPerRotation))/currentTime;
-
-  }
-
-  public void switchDirection(){
+    if(gamepad1.x)
+    {
+      reverseMode = !reverseMode;
+      try {
+        Thread.sleep(400);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    if(gamepad1.right_bumper)  //lower power for more precise movement
+    {
+      preciseMode = !preciseMode;
+      try {
+        Thread.sleep(400);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
 
   }
 }
