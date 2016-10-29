@@ -71,6 +71,7 @@ public class FinalDriverControl extends LinearOpMode {
         double left;
         double right;
         boolean reverseMode = false;
+        boolean preciseMode = false;
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
@@ -90,6 +91,13 @@ public class FinalDriverControl extends LinearOpMode {
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
             left = -gamepad1.left_stick_y;
             right = -gamepad1.right_stick_y;
+
+            if(preciseMode)
+            {
+                left*=0.25;
+                right*=0.25;
+
+            }
 
             if(reverseMode)
             {
@@ -114,6 +122,12 @@ public class FinalDriverControl extends LinearOpMode {
                     {
 
                         reverseMode = !reverseMode;
+                        Thread.sleep(400);
+                    }
+                    if(gamepad1.right_bumper)  //lower power for more precise movement
+                    {
+
+                        preciseMode = !preciseMode;
                         Thread.sleep(400);
                     }
 
