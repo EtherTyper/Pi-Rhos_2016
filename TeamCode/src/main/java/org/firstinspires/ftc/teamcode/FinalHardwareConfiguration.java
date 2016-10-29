@@ -66,23 +66,28 @@ public class FinalHardwareConfiguration
         frontRightMotor  = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
         backRightMotor = hwMap.dcMotor.get("back right motor");
-        shooterMotor = hwMap.dcMotor.get("shooter motor");
-        intakeSpinnerMotor = hwMap.dcMotor.get("spinner motor");
-        //encoderTest = hwMap.dcMotor.get("encoder tester");
+
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        //shooterMotor = hwMap.dcMotor.get("shooter motor");
+        //intakeSpinnerMotor = hwMap.dcMotor.get("intake motor");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
+
+        /*
         shooterMotor.setPower(0);
         intakeSpinnerMotor.setPower(0);
+        */
 
         // Set Encoder Usage
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+
     }
 
     /***

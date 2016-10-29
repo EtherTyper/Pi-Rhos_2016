@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -53,13 +54,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name="Template: Final Drive", group="Linear Opmode")
+@TeleOp(name="Template: Drive Base Test", group="Linear Opmode")
 //@TeleOp(name="K9bot: Telop Tank", group="K9bot")
 //@Disabled
 public class FinalDriverControl extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareK9bot   robot           = new HardwareK9bot();              // Use a K9'shardware
+    FinalHardwareConfiguration robot = new FinalHardwareConfiguration();              // Use a K9'shardware
     //double          armPosition     = robot.ARM_HOME;                   // Servo safe position
     //double          clawPosition    = robot.CLAW_HOME;                  // Servo safe position
     //final double    CLAW_SPEED      = 0.01 ;                            // sets rate to move servo
@@ -92,57 +93,29 @@ public class FinalDriverControl extends LinearOpMode {
 
             if(reverseMode)
             {
-                robot.leftMotor.setPower(-right);
-                robot.rightMotor.setPower(-left);
+                robot.frontLeftMotor.setPower(-right);
+                robot.backLeftMotor.setPower(-right);
+
+                robot.frontRightMotor.setPower(-left);
+                robot.backRightMotor.setPower(-left);
 
             }
             else
             {
-                robot.leftMotor.setPower(left);
-                robot.rightMotor.setPower(right);
+                robot.frontLeftMotor.setPower(left);
+                robot.backLeftMotor.setPower(left);
+
+                robot.frontRightMotor.setPower(right);
+                robot.backRightMotor.setPower(right);
             }
+
             Telemetry.Item addData = telemetry.addData("Say", left);
-            // Use gamepad Y & A raise and lower the arm
-            /*
-            if (gamepad1.a)
-                armPosition += ARM_SPEED;
-            else if (gamepad1.y)
-                armPosition -= ARM_SPEED;
-
-            // Use gamepad X & B to open and close the claw
-            if (gamepad1.x)
-                clawPosition += CLAW_SPEED;
-            else if (gamepad1.b)
-                clawPosition -= CLAW_SPEED;
-
-            // Move both servos to new position.
-            armPosition  = Range.clip(armPosition, robot.ARM_MIN_RANGE, robot.ARM_MAX_RANGE);
-            robot.arm.setPosition(armPosition);
-            clawPosition = Range.clip(clawPosition, robot.CLAW_MIN_RANGE, robot.CLAW_MAX_RANGE);
-            robot.claw.setPosition(clawPosition);
-            */
-            // Send telemetry message to signify robot running;
-            //telemetry.addData("arm",   "%.2f", armPosition);
-            //telemetry.addData("claw",  "%.2f", clawPosition);
-
-            //switches orientation\
-
-              //boolean stores so button does not need to be held
-            //reverseMode = gamepad1.x;
-
-
-
-
                     if(gamepad1.x)
                     {
 
                         reverseMode = !reverseMode;
                         Thread.sleep(400);
                     }
-
-
-
-
 
             telemetry.addData("left",  "%.2f", left);
             telemetry.addData("right", "%.2f", right);
