@@ -35,7 +35,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * Demonstrates empty OpMode
@@ -48,16 +50,32 @@ public class PiRhoAutoMaster extends OpMode {
   private ElapsedTime speedTimer = new ElapsedTime();
 
   //Initialize Variables
-  DcMotor leftMotor = null;
-  DcMotor rightMotor = null;
+  DcMotor frontLeftMotor = null;
+  DcMotor frontRightMotor = null;
+  DcMotor backLeftMotor = null;
+  DcMotor backRightMotor = null;
+  DcMotor intakeSpinnerMotor = null;
+  DcMotor shooterMotor = null;
+  DcMotor screwMotor = null;
+
+  ColorSensor leftColorSensor = null;
+  ColorSensor rightColorSensor = null;
+
+  Servo leftServo = null;
+  Servo rightServo = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
   private int motorTarget = 3 * ticksPerRotation;
   private int realTimeTicks = 0;
+  private final int GEAR_RATIO = 1;
+  private double distance = 12; //in inches, so far this is test code
 
   private double time = 0;
-  private double wheelDiameter = 2.75;
+  private final double wheelDiameter = 3;
+  private final  double CIRCUMFERENCE = Math.PI * wheelDiameter;
+  private double ROTATIONS = distance / CIRCUMFERENCE;
+  public double COUNTS = ticksPerRotation * ROTATIONS * GEAR_RATIO;
 
   private double olderTick = 0;
   private double currentTick = 0;
@@ -76,12 +94,26 @@ public class PiRhoAutoMaster extends OpMode {
   @Override
   public void init_loop() {
 
-    leftMotor = hardwareMap.dcMotor.get("left motor");
-    rightMotor = hardwareMap.dcMotor.get("right motor");
+    frontLeftMotor = hardwareMap.dcMotor.get("front left motor");
+    frontRightMotor = hardwareMap.dcMotor.get("front right motor");
+    backLeftMotor = hardwareMap.dcMotor.get("back left motor");
+    backRightMotor = hardwareMap.dcMotor.get("back right motor");
+    //shooterMotor = hwMap.dcMotor.get("shooter motor");
+    //intakeSpinnerMotor = hwMap.dcMotor.get("intake motor");
+    //screwMotor = hwMap.dcMotor.get("screw motor");
 
-    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    leftServo = hardwareMap.servo.get("left servo");
+    rightServo = hardwareMap.servo.get("right servo");
+
+
+    frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+    backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+
+    frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
   }
 
@@ -91,13 +123,13 @@ public class PiRhoAutoMaster extends OpMode {
    */
   @Override
   public void start() {
-    //Test for color sensor
+    /*//Test for color sensor
 
     runtime.reset();
 
     leftMotor.getCurrentPosition();
     leftMotor.setTargetPosition(this.motorTarget);
-    leftMotor.setPower(1);
+    leftMotor.setPower(1);*/
 
   }
 
@@ -107,9 +139,9 @@ public class PiRhoAutoMaster extends OpMode {
    */
   //The code for the robot while running driver control
   //This method acts as a while loop
-  @Override
+  //@Override
   public void loop() {
-    //Driver Controller
+    /*//Driver Controller
 
 
 
@@ -137,11 +169,26 @@ public class PiRhoAutoMaster extends OpMode {
     if(leftMotor.getCurrentPosition() >= motorTarget){
       //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       leftMotor.setPower(0);
-    }
+    }*/
 
 
   }
 
+  public void halt()
+  {
+    frontLeftMotor.setPower(0);
+    frontRightMotor.setPower(0);
+    backLeftMotor.setPower(0);
+    backRightMotor.setPower(0);
+  }
+
+  public void haltALL()
+  {
+    halt();
+    intakeSpinnerMotor.setPower(0);
+    shooterMotor.setPower(0);
+    screwMotor.setPower(0);
+  }
   //Gets ticks from last second
   public double getLastSecondTick(double lastTick, double currentTick){
 

@@ -33,6 +33,7 @@ public class FinalHardwareConfiguration
     DcMotor backRightMotor = null;
     DcMotor shooterMotor = null;
     DcMotor intakeSpinnerMotor = null;
+    DcMotor screwMotor = null;
 
     ColorSensor rightColorSensor = null;
     ColorSensor leftColorSensor = null;
@@ -72,7 +73,10 @@ public class FinalHardwareConfiguration
 
         //shooterMotor = hwMap.dcMotor.get("shooter motor");
         //intakeSpinnerMotor = hwMap.dcMotor.get("intake motor");
+        //screwMotor = hwMap.dcMotor.get("screw motor");
 
+        //leftServo = hardwareMap.servo.get("left servo");
+        //rightServo = hardwareMap.servo.get("right servo");
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
