@@ -99,11 +99,9 @@ public class PiRhoAutoTest extends OpMode {
     runtime.reset();
 
     leftMotor.getCurrentPosition();
-    leftMotor.setTargetPosition(this.motorTarget);
     leftMotor.setPower(1);
 
     rightMotor.getCurrentPosition();
-    rightMotor.setTargetPosition(this.motorTarget);
     rightMotor.setPower(1);
 
 
@@ -117,34 +115,11 @@ public class PiRhoAutoTest extends OpMode {
   //This method acts as a while loop
   @Override
   public void loop() {
-    //Driver Controller
 
-
-
-   /* telemetry.addData("Status", "Run Time :" + runtime.toString());
-    telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
-    //telemetry.addData("Current Ticks", " :" + currentTick);
-    //telemetry.addData("Older Ticks", " :" + olderTick);
-    telemetry.addData("Last second ticks", " :" + lastSecondsTick);
-    telemetry.addData("Left Speed in inches per second", " :" + motorSpeed);
-    telemetry.addData("Updating...", " " + runtime.seconds());*/
-
-    //realTimeTicks = leftMotor.getCurrentPosition() + realTimeTicks;
-    //calcMotorSpeed(wheelDiameter ,leftMotor.getCurrentPosition());
-
-    //For the first second
-   /* if (speedTimer.seconds() >= 1){
-      //For the following Seconds
-      currentTick = leftMotor.getCurrentPosition();
-      lastSecondsTick = getLastSecondTick(olderTick, currentTick);
-      motorSpeed = calcMotorSpeed(wheelDiameter ,lastSecondsTick,speedTimer.seconds());
-      olderTick = leftMotor.getCurrentPosition();
-      speedTimer.reset();
-    }*/
-
-    if(leftMotor.getCurrentPosition() >= motorTarget){
+    if(runtime.seconds() >= 2){
       //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       leftMotor.setPower(0);
+      rightMotor.setPower(0);
     }
 
 
