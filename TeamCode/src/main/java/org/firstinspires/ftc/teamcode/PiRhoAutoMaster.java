@@ -174,6 +174,7 @@ public class PiRhoAutoMaster extends OpMode {
 
   }
 
+
   public void halt()
   {
     frontLeftMotor.setPower(0);

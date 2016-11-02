@@ -89,7 +89,7 @@ public class FinalHardwareConfiguration
         */
 
         // Set Encoder Usage
-
+        //shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
     }

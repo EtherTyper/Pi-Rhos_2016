@@ -55,7 +55,7 @@ public class ShooterTest extends OpMode {
   DcMotor rightMotor = null;
 
   //All units here is inches
-  private final int ticksPerRotation = /*1120*/ 1680;
+  private final int ticksPerRotation = 1120;
   private int motorTarget = ticksPerRotation;
   private int realTimeTicks = 0;
 
