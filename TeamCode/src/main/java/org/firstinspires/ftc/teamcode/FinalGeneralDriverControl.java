@@ -103,6 +103,7 @@ public class FinalGeneralDriverControl extends OpMode {
     //        ===Shooter System===
     if(gamepad2.right_bumper && !shooterActive){
       shooterTarget = shooterTarget + ticksPerRotation;
+      robot.shooterMotor.setTargetPosition(shooterTarget);
       robot.shooterMotor.setPower(1);
       this.shooterActive = true;
     }

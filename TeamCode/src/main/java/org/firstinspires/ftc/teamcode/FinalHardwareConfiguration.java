@@ -81,9 +81,8 @@ public class FinalHardwareConfiguration
         intakeSpinnerMotor.setPower(0);
 
         // Set Encoder Usage
+        shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
     }
 
     /***
