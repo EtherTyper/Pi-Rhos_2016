@@ -102,6 +102,8 @@ public class ShooterTest extends OpMode {
     leftMotor.getCurrentPosition();
     leftMotor.setTargetPosition(this.motorTarget);
     leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    leftMotor.setPower(1);
+
   }
 
   /*
@@ -137,7 +139,7 @@ public class ShooterTest extends OpMode {
       speedTimer.reset();
     }
 
-    if(leftMotor.getCurrentPosition() >= motorTarget){
+    if(leftMotor.getCurrentPosition() == motorTarget){
       leftMotor.setPower(0);
     }
 
