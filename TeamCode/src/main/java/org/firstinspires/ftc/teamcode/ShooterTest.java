@@ -101,8 +101,7 @@ public class ShooterTest extends OpMode {
 
     leftMotor.getCurrentPosition();
     leftMotor.setTargetPosition(this.motorTarget);
-    leftMotor.setPower(1);
-
+    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
   }
 
   /*
