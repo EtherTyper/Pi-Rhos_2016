@@ -80,10 +80,6 @@ public class PiRhoAutoTest extends OpMode {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
-
-    //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    //leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
   }
@@ -95,7 +91,6 @@ public class PiRhoAutoTest extends OpMode {
   @Override
   public void start() {
     //Test movement
-
     runtime.reset();
 
     leftMotor.getCurrentPosition();
@@ -133,11 +128,11 @@ public class PiRhoAutoTest extends OpMode {
   }
 
   //Calculates speed
-  /*public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
+  public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
 
     return (diameter * Math.PI * (ticksLastSecond / this.ticksPerRotation))/currentTime;
 
-  }*/
+  }
 
 
 }
