@@ -98,7 +98,9 @@ public class FinalGeneralDriverControl extends OpMode {
   public void loop() {
     telemetry.addData("Status", "(Running) Main Loop");
 
-    // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
+
+
+    //        ===Drive System===
     left = -gamepad1.left_stick_y;
     right = -gamepad1.right_stick_y;
 
@@ -146,6 +148,7 @@ public class FinalGeneralDriverControl extends OpMode {
         e.printStackTrace();
       }
     }
+    //        ===Drive System (End)===
 
 
   }
