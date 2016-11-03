@@ -115,19 +115,10 @@ public class ShooterTest extends OpMode {
   @Override
   public void loop() {
     //Driver Controller
-
-
-
-    //telemetry.addData("Status", "Run Time :" + runtime.toString());
     telemetry.addData("Left Encoder", " :" + leftMotor.getCurrentPosition());
-    //telemetry.addData("Current Ticks", " :" + currentTick);
-    //telemetry.addData("Older Ticks", " :" + olderTick);
     telemetry.addData("Last second ticks", " :" + lastSecondsTick);
     telemetry.addData("Left Speed in inches per second", " :" + motorSpeed);
     telemetry.addData("Updating...", " " + runtime.seconds());
-
-    //realTimeTicks = leftMotor.getCurrentPosition() + realTimeTicks;
-    //calcMotorSpeed(wheelDiameter ,leftMotor.getCurrentPosition());
 
     //For the first second
     if (speedTimer.seconds() >= 1){

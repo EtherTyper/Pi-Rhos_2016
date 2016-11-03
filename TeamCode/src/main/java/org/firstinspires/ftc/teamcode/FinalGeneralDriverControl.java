@@ -51,9 +51,9 @@ public class FinalGeneralDriverControl extends OpMode {
   private ElapsedTime speedTimer = new ElapsedTime();
   FinalHardwareConfiguration robot = new FinalHardwareConfiguration();
 
-
   //Integer Varibles (All units here is inches)
   private final int ticksPerRotation = 1120;
+  private int shooterTarget = 0;
   private int motorTarget = 3 * ticksPerRotation;
   private int realTimeTicks = 0;
 
@@ -70,6 +70,7 @@ public class FinalGeneralDriverControl extends OpMode {
   //Boolean Variables
   private boolean reverseMode = false;
   private boolean preciseMode = false;
+  private boolean shooterActive = false;
 
   //Runs once when init is pressed
   @Override
@@ -90,6 +91,7 @@ public class FinalGeneralDriverControl extends OpMode {
   public void start() {
     telemetry.addData("Status", "(Running) Setup");
     runtime.reset();
+    speedTimer.reset();
 
   }
 
@@ -98,7 +100,18 @@ public class FinalGeneralDriverControl extends OpMode {
   public void loop() {
     telemetry.addData("Status", "(Running) Main Loop");
 
+    //        ===Shooter System===
+    if(gamepad2.right_bumper && !shooterActive){
+      shooterTarget = shooterTarget + ticksPerRotation;
+      robot.shooterMotor.setPower(1);
+      this.shooterActive = true;
+    }
 
+    if(robot.shooterMotor.getCurrentPosition() == shooterTarget){
+      robot.shooterMotor.setPower(0);
+      this.shooterActive = false;
+    }
+    //        ===Shooter System (End)===
 
     //        ===Drive System===
     left = -gamepad1.left_stick_y;

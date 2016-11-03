@@ -63,33 +63,25 @@ public class FinalHardwareConfiguration
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        frontLeftMotor   = hwMap.dcMotor.get("front left motor");
-        frontRightMotor  = hwMap.dcMotor.get("front right motor");
+        frontLeftMotor = hwMap.dcMotor.get("front left motor");
+        frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
-        backRightMotor = hwMap.dcMotor.get("back right motor");
+        shooterMotor = hwMap.dcMotor.get("shooter motor");
 
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        //shooterMotor = hwMap.dcMotor.get("shooter motor");
-        //intakeSpinnerMotor = hwMap.dcMotor.get("intake motor");
-        //screwMotor = hwMap.dcMotor.get("screw motor");
-
-        //leftServo = hardwareMap.servo.get("left servo");
-        //rightServo = hardwareMap.servo.get("right servo");
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
 
-        /*
         shooterMotor.setPower(0);
         intakeSpinnerMotor.setPower(0);
-        */
 
         // Set Encoder Usage
-        //shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
     }
