@@ -32,15 +32,19 @@ public class FinalHardwareConfiguration
     DcMotor backLeftMotor = null;
     DcMotor backRightMotor = null;
     DcMotor shooterMotor = null;
-    DcMotor intakeSpinnerMotor = null;
-    DcMotor screwMotor = null;
+    DcMotor intakeMoter = null;
+    DcMotor elevatorMotor = null;
 
+    //Color sensor
     ColorSensor rightColorSensor = null;
     ColorSensor leftColorSensor = null;
 
+    //Servos
     Servo leftServo = null;
     Servo rightServo = null;
 
+
+    //Variables
     public Servo intake = null;
     public final static double ARM_HOME = 0.2;
     public final static double CLAW_HOME = 0.2;
@@ -67,7 +71,10 @@ public class FinalHardwareConfiguration
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
         shooterMotor = hwMap.dcMotor.get("shooter motor");
+        intakeMoter = hwMap.dcMotor.get("intake motor");
+        elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
+        //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
 
@@ -76,9 +83,8 @@ public class FinalHardwareConfiguration
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-
         shooterMotor.setPower(0);
-        intakeSpinnerMotor.setPower(0);
+        intakeMoter.setPower(0);
 
         // Set Encoder Usage
         shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

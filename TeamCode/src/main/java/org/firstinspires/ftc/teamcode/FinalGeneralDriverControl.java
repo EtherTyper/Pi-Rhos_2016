@@ -95,12 +95,10 @@ public class FinalGeneralDriverControl extends OpMode {
 
   }
 
-  //Runs when start is pressed (loop)
-  @Override
-  public void loop() {
-    telemetry.addData("Status", "(Running) Main Loop");
+  //          ===Robot Functions===        //
 
-    //        ===Shooter System===
+  //Shooter System
+  void shooterSystem(){
     if(gamepad2.right_bumper && !shooterActive){
       shooterTarget = shooterTarget + ticksPerRotation;
       robot.shooterMotor.setTargetPosition(shooterTarget);
@@ -112,9 +110,11 @@ public class FinalGeneralDriverControl extends OpMode {
       robot.shooterMotor.setPower(0);
       this.shooterActive = false;
     }
-    //        ===Shooter System (End)===
+  }
 
-    //        ===Drive System===
+  //Drive System
+  void driveSystem(){
+
     left = -gamepad1.left_stick_y;
     right = -gamepad1.right_stick_y;
 
@@ -162,8 +162,21 @@ public class FinalGeneralDriverControl extends OpMode {
         e.printStackTrace();
       }
     }
-    //        ===Drive System (End)===
+  }
 
+  //Intake System
+  void intakeSystem(){
+    if(gamepad2.)
+  }
+
+  //Runs when start is pressed (loop)
+  @Override
+  public void loop() {
+
+    telemetry.addData("Status", "(Running) Main Loop");
+
+    shooterSystem();
+    driveSystem();
 
   }
 }
