@@ -71,6 +71,8 @@ public class FinalGeneralDriverControl extends OpMode {
   private boolean reverseMode = false;
   private boolean preciseMode = false;
   private boolean shooterActive = false;
+  private boolean intakeActive = false;
+  private boolean elevatorActive = false;
 
   //Runs once when init is pressed
   @Override
@@ -99,7 +101,7 @@ public class FinalGeneralDriverControl extends OpMode {
 
   //Shooter System
   void shooterSystem(){
-    if(gamepad2.right_bumper && !shooterActive){
+    if(gamepad2.left_bumper && !shooterActive){
       shooterTarget = shooterTarget + ticksPerRotation;
       robot.shooterMotor.setTargetPosition(shooterTarget);
       robot.shooterMotor.setPower(1);
@@ -166,9 +168,53 @@ public class FinalGeneralDriverControl extends OpMode {
 
   //Intake System
   void intakeSystem(){
-    if(gamepad2.)
+
+    //Intake
+    if(gamepad2.a){
+      robot.intakeMoter.setPower(1);
+      try {
+        Thread.sleep(400);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } else if (gamepad2.b){
+      robot.intakeMoter.setPower(-1);
+      try {
+        Thread.sleep(400);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } else {
+      robot.intakeMoter.setPower(0);
+    }
+
+    //Elevator
+    if(gamepad2.x){
+      robot.elevatorMotor.setPower(1);
+      try {
+        Thread.sleep(400);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } else if (gamepad2.y){
+      robot.elevatorMotor.setPower(-1);
+      try {
+        Thread.sleep(400);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } else {
+      robot.elevatorMotor.setPower(0);
+    }
+
+    //Stop all systems
+    if(gamepad2.right_bumper){
+      robot.intakeMoter.setPower(0);
+      robot.elevatorMotor.setPower(0);
+    }
   }
 
+  //        ===Main Loop===        //
   //Runs when start is pressed (loop)
   @Override
   public void loop() {
@@ -177,6 +223,7 @@ public class FinalGeneralDriverControl extends OpMode {
 
     shooterSystem();
     driveSystem();
+    intakeSystem();
 
   }
 }
