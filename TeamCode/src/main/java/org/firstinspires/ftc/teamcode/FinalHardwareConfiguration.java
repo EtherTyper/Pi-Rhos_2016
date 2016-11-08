@@ -68,8 +68,8 @@ public class FinalHardwareConfiguration
 
         // Define and Initialize Motors and Servos
         frontLeftMotor = hwMap.dcMotor.get("front left motor");
-        frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
+        frontRightMotor = hwMap.dcMotor.get("front right motor");
         backRightMotor = hwMap.dcMotor.get("back right motor");
         shooterMotor = hwMap.dcMotor.get("shooter motor");
         intakeMotor = hwMap.dcMotor.get("intake motor");
@@ -93,6 +93,7 @@ public class FinalHardwareConfiguration
         // Set Encoder Usage
         shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     /***

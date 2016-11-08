@@ -73,12 +73,18 @@ public class FinalGeneralDriverControl extends OpMode {
   private boolean shooterActive = false;
   private boolean intakeActive = false;
   private boolean elevatorActive = false;
+  private boolean leftServoActive = false;
+  private boolean rightServoActive = false;
 
   //Runs once when init is pressed
   @Override
   public void init() {
     robot.init(hardwareMap);
     telemetry.addData("Status", "(Initialized) Setup");
+
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
   }
 
   //Runs after init is pressed (loop)
@@ -98,6 +104,13 @@ public class FinalGeneralDriverControl extends OpMode {
   }
 
   //          ===Robot Functions===        //
+
+  //Test Shooter System
+  void testShooterSystem(){
+
+    robot.shooterMotor.setPower(gamepad2.right_stick_y);
+
+  }
 
   //Shooter System
   void shooterSystem(){
@@ -169,16 +182,21 @@ public class FinalGeneralDriverControl extends OpMode {
   //Beacon Pusher
   void beaconPusher(){
 
+    leftServoActive = false;
+    rightServoActive = false;
+
     if(gamepad1.right_bumper){
       robot.rightServo.setPosition(0);
-    } else {
-      robot.rightServo.setPosition(gamepad1.right_trigger);
+      leftServoActive = true;
+    } else if (gamepad1.right_trigger >= 0.5){
+      robot.rightServo.setPosition(1);
     }
 
     if(gamepad1.left_bumper){
       robot.leftServo.setPosition(0);
-    } else {
-      robot.leftServo.setPosition(gamepad1.left_trigger);
+      rightServoActive = true;
+    } else if (gamepad1.left_trigger >= 0.5){
+      robot.leftServo.setPosition(-1);
     }
 
   }
@@ -190,29 +208,28 @@ public class FinalGeneralDriverControl extends OpMode {
     if(!intakeActive && gamepad2.x) {
 
       robot.intakeMotor.setPower(1);
-
-    } else if (intakeActive && gamepad2.x){
-
-      robot.intakeMotor.setPower(0);
+      intakeActive = true;
 
     }
 
     if(!intakeActive && gamepad2.b) {
 
       robot.intakeMotor.setPower(-1);
+      intakeActive = true;
 
-    } else if (intakeActive && gamepad2.b){
+    }
+
+    if (intakeActive && (gamepad2.x || gamepad2.b)){
 
       robot.intakeMotor.setPower(0);
+      intakeActive = false;
 
     }
 
     else
     {
-
       robot.intakeMotor.setPower(0);
       intakeActive = false;
-
     }
   }
 
@@ -220,11 +237,11 @@ public class FinalGeneralDriverControl extends OpMode {
   void elevatorSystem(){
 
     if(gamepad2.dpad_up){
-      robot.elevatorMotor.setPower(1);
+      robot.elevatorMotor.setPower(-1);
 
     } else if (gamepad2.dpad_down){
 
-      robot.elevatorMotor.setPower(-1);
+      robot.elevatorMotor.setPower(1);
 
     } else {
 
@@ -241,7 +258,8 @@ public class FinalGeneralDriverControl extends OpMode {
     telemetry.addData("Status", "(Running) Main Loop");
 
     //Method Calls
-    shooterSystem();
+    //shooterSystem();
+    testShooterSystem();
     driveSystem();
     beaconPusher();
     elevatorSystem();

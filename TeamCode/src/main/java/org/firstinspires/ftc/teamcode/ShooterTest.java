@@ -79,7 +79,7 @@ public class ShooterTest extends OpMode {
   @Override
   public void init_loop() {
 
-    leftMotor = hardwareMap.dcMotor.get("left motor");
+    leftMotor = hardwareMap.dcMotor.get("shooter motor");
     //telemetry.addData("Status", "Init Loop");
 
     leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
