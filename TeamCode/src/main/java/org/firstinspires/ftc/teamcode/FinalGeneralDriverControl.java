@@ -155,7 +155,7 @@ public class FinalGeneralDriverControl extends OpMode {
         e.printStackTrace();
       }
     }
-    if(gamepad1.right_bumper)  //lower power for more precise movement
+    if(gamepad1.y)  //lower power for more precise movement
     {
       preciseMode = !preciseMode;
       try {
@@ -214,6 +214,21 @@ public class FinalGeneralDriverControl extends OpMode {
     }
   }
 
+  //Servo Control
+  void servoControl(){
+    if(gamepad1.right_bumper){
+      robot.rightServo.setPosition(1);
+    } else {
+      robot.rightServo.setPosition(0);
+    }
+
+    if(gamepad1.left_bumper){
+      robot.leftServo.setPosition(1);
+    } else {
+      robot.leftServo.setPosition(0);
+    }
+  }
+
   //        ===Main Loop===        //
   //Runs when start is pressed (loop)
   @Override
@@ -224,6 +239,7 @@ public class FinalGeneralDriverControl extends OpMode {
     shooterSystem();
     driveSystem();
     intakeSystem();
+    servoControl();
 
   }
 }

@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
 
 /**
  * Demonstrates empty OpMode
@@ -48,98 +49,50 @@ public class PiRhoAutoMaster extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-
-  //Initialize Variables
-  DcMotor frontLeftMotor = null;
-  DcMotor frontRightMotor = null;
-  DcMotor backLeftMotor = null;
-  DcMotor backRightMotor = null;
-  DcMotor intakeSpinnerMotor = null;
-  DcMotor shooterMotor = null;
-  DcMotor screwMotor = null;
-
-  ColorSensor leftColorSensor = null;
-  ColorSensor rightColorSensor = null;
-
-  Servo leftServo = null;
-  Servo rightServo = null;
+  private FinalHardwareConfiguration robot = new FinalHardwareConfiguration();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int motorTarget = 3 * ticksPerRotation;
-  private int realTimeTicks = 0;
-  private final int GEAR_RATIO = 1;
-  private double distance = 12; //in inches, so far this is test code
 
-  private double time = 0;
-  private final double wheelDiameter = 3;
-  private final  double CIRCUMFERENCE = Math.PI * wheelDiameter;
-  private double ROTATIONS = distance / CIRCUMFERENCE;
-  public double COUNTS = ticksPerRotation * ROTATIONS * GEAR_RATIO;
-
-  private double olderTick = 0;
-  private double currentTick = 0;
-  private double lastSecondsTick = 0;
-  private double motorSpeed = 0;
+  private int frontRightTarget = 0;
+  private int frontLeftTarget = 0;
+  private int backRightTarget = 0;
+  private int backLeftTarget = 0;
+  private int shooterTarget = 0;
 
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
+
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
   }
 
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
   @Override
   public void init_loop() {
 
-    frontLeftMotor = hardwareMap.dcMotor.get("front left motor");
-    frontRightMotor = hardwareMap.dcMotor.get("front right motor");
-    backLeftMotor = hardwareMap.dcMotor.get("back left motor");
-    backRightMotor = hardwareMap.dcMotor.get("back right motor");
-    //shooterMotor = hwMap.dcMotor.get("shooter motor");
-    //intakeSpinnerMotor = hwMap.dcMotor.get("intake motor");
-    //screwMotor = hwMap.dcMotor.get("screw motor");
-
-    leftServo = hardwareMap.servo.get("left servo");
-    rightServo = hardwareMap.servo.get("right servo");
-
-
-    frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-    backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-
-    frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
   }
 
-  /*
-   * This method will be called ONCE when start is pressed
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
   @Override
   public void start() {
-    /*//Test for color sensor
-
-    runtime.reset();
-
-    leftMotor.getCurrentPosition();
-    leftMotor.setTargetPosition(this.motorTarget);
-    leftMotor.setPower(1);*/
+    /*Test for color sensor*/
 
   }
 
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  //The code for the robot while running driver control
   //This method acts as a while loop
-  //@Override
+  @Override
   public void loop() {
     /*//Driver Controller
 
@@ -175,37 +128,88 @@ public class PiRhoAutoMaster extends OpMode {
   }
 
 
-  public void halt()
+  public void haltDrive()
   {
-    frontLeftMotor.setPower(0);
-    frontRightMotor.setPower(0);
-    backLeftMotor.setPower(0);
-    backRightMotor.setPower(0);
+    robot.frontLeftMotor.setPower(0);
+    robot.frontRightMotor.setPower(0);
+    robot.backLeftMotor.setPower(0);
+    robot.backRightMotor.setPower(0);
   }
 
   public void haltALL()
   {
-    halt();
-    intakeSpinnerMotor.setPower(0);
-    shooterMotor.setPower(0);
-    screwMotor.setPower(0);
-  }
-  //Gets ticks from last second
-  public double getLastSecondTick(double lastTick, double currentTick){
-
-    return (currentTick - lastTick);
-
+    haltDrive();
+    robot.intakeMoter.setPower(0);
+    robot.shooterMotor.setPower(0);
+    robot.elevatorMotor.setPower(0);
   }
 
-  //Calculates speed
-  public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
-
-    return (diameter * Math.PI * (ticksLastSecond / this.ticksPerRotation))/currentTime;
-
+  public void moveForwardTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(1);
+    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(1);
   }
 
-  public void switchDirection(){
-
+  public void moveBackTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(-1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(-1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(-1);
+    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(-1);
   }
+
+  public void turnLeftTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(-1);
+    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(-1);
+  }
+
+  public void turnRightTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(-1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(-1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(1);
+    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(1);
+  }
+
+  public void shootBall(){
+    robot.shooterMotor.setTargetPosition(shooterTarget + ticksPerRotation);
+    robot.shooterMotor.setPower(1);
+  }
+
+  public void pushButton(int pushCase){
+    //Left is 1 and right is 2
+    switch (pushCase) {
+      case 1: robot.leftServo.setPosition(1);
+        break;
+      case 2: robot.rightServo.setPosition(1);
+        break;
+    }
+  }
+
+  public boolean findLeftColor(String findColor){
+    return true;
+  }
+
+  public boolean findRightColor(String findColor){
+    return true;
+  }
+
 }
  

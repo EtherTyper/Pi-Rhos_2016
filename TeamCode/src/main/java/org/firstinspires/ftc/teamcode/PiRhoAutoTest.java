@@ -93,12 +93,6 @@ public class PiRhoAutoTest extends OpMode {
     //Test movement
     runtime.reset();
 
-    leftMotor.getCurrentPosition();
-    leftMotor.setPower(1);
-
-    rightMotor.getCurrentPosition();
-    rightMotor.setPower(1);
-
 
   }
 

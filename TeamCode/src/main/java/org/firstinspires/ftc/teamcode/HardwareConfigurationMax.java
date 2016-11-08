@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 /**
  * This is NOT an opmode.
  *
@@ -24,15 +25,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *   As the arm servo approaches 0, the arm position moves up (away from the floor).
  *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-public class FinalHardwareConfiguration
+public class HardwareConfigurationMax
 {
     // Hardware Components
     DcMotor frontLeftMotor   = null;
     DcMotor frontRightMotor  = null;
     DcMotor backLeftMotor = null;
     DcMotor backRightMotor = null;
-    DcMotor shooterMotor = null;
-    DcMotor intakeMoter = null;
+    //DcMotor shooterMotor = null;
+    DcMotor intakeMotor = null;
     DcMotor elevatorMotor = null;
 
     //Color sensor
@@ -40,8 +41,8 @@ public class FinalHardwareConfiguration
     ColorSensor leftColorSensor = null;
 
     //Servos
-    Servo leftServo = null;
-    Servo rightServo = null;
+    CRServo leftServo = null;
+    CRServo rightServo = null;
 
 
     //Variables
@@ -58,7 +59,7 @@ public class FinalHardwareConfiguration
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public FinalHardwareConfiguration() {
+    public HardwareConfigurationMax() {
     }
 
     /* Initialize standard Hardware interfaces */
@@ -70,29 +71,32 @@ public class FinalHardwareConfiguration
         frontLeftMotor = hwMap.dcMotor.get("front left motor");
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
-        shooterMotor = hwMap.dcMotor.get("shooter motor");
-        intakeMoter = hwMap.dcMotor.get("intake motor");
+        backRightMotor = hwMap.dcMotor.get("back right motor");
+        //shooterMotor = hwMap.dcMotor.get("shooter motor");
+        intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
-        // Define and Initialize Servos
-        leftServo = hwMap.servo.get("left servo");
-        rightServo = hwMap.servo.get("right servo");
+        leftServo = hwMap.crservo.get("left beacon");
+        rightServo = hwMap.crservo.get("right beacon");
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+        elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-        shooterMotor.setPower(0);
-        intakeMoter.setPower(0);
+        //shooterMotor.setPower(0);
+        intakeMotor.setPower(0);
 
         // Set Encoder Usage
-        shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /***
