@@ -70,6 +70,7 @@ public class FinalHardwareConfiguration
         frontLeftMotor = hwMap.dcMotor.get("front left motor");
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
+        backRightMotor = hwMap.dcMotor.get("back right motor");
         shooterMotor = hwMap.dcMotor.get("shooter motor");
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
