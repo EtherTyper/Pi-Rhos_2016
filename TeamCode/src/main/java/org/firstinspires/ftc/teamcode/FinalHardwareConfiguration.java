@@ -32,7 +32,7 @@ public class FinalHardwareConfiguration
     DcMotor backLeftMotor = null;
     DcMotor backRightMotor = null;
     DcMotor shooterMotor = null;
-    DcMotor intakeMoter = null;
+    DcMotor intakeMotor = null;
     DcMotor elevatorMotor = null;
 
     //Color sensor
@@ -66,15 +66,14 @@ public class FinalHardwareConfiguration
         // save reference to HW Map
         hwMap = ahwMap;
 
-        // Define and Initialize Motors
+        // Define and Initialize Motors and Servos
         frontLeftMotor = hwMap.dcMotor.get("front left motor");
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
         shooterMotor = hwMap.dcMotor.get("shooter motor");
-        intakeMoter = hwMap.dcMotor.get("intake motor");
+        intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
-        // Define and Initialize Servos
         leftServo = hwMap.servo.get("left servo");
         rightServo = hwMap.servo.get("right servo");
 
@@ -88,7 +87,7 @@ public class FinalHardwareConfiguration
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
         shooterMotor.setPower(0);
-        intakeMoter.setPower(0);
+        intakeMotor.setPower(0);
 
         // Set Encoder Usage
         shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

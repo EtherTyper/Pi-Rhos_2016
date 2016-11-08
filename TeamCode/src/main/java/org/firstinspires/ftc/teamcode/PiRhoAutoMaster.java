@@ -139,7 +139,7 @@ public class PiRhoAutoMaster extends OpMode {
   public void haltALL()
   {
     haltDrive();
-    robot.intakeMoter.setPower(0);
+    robot.intakeMotor.setPower(0);
     robot.shooterMotor.setPower(0);
     robot.elevatorMotor.setPower(0);
   }
