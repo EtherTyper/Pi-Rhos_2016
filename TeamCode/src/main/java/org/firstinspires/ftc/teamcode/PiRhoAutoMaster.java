@@ -128,16 +128,14 @@ public class PiRhoAutoMaster extends OpMode {
   }
 
 
-  public void haltDrive()
-  {
+  public void haltDrive(){
     robot.frontLeftMotor.setPower(0);
     robot.frontRightMotor.setPower(0);
     robot.backLeftMotor.setPower(0);
     robot.backRightMotor.setPower(0);
   }
 
-  public void haltALL()
-  {
+  public void haltALL(){
     haltDrive();
     robot.intakeMotor.setPower(0);
     robot.shooterMotor.setPower(0);
@@ -186,6 +184,18 @@ public class PiRhoAutoMaster extends OpMode {
     robot.frontRightMotor.setPower(1);
     robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
     robot.backRightMotor.setPower(1);
+  }
+
+  public void moveElevator(int rotationTime){
+
+    robot.elevatorMotor.setPower(1);
+    try {
+      Thread.sleep(rotationTime * 100);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    robot.elevatorMotor.setPower(0);
+
   }
 
   public void shootBall(){
