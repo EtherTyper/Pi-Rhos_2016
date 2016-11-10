@@ -85,6 +85,7 @@ public class HardwareConfigurationMax
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightServo.setDirection(Servo.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
