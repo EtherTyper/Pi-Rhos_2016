@@ -51,8 +51,8 @@ public class ServoTester extends OpMode {
   private ElapsedTime speedTimer = new ElapsedTime();
   HardwareMap hwMap  = hardwareMap;
 
-  Servo rightServo = hwMap.servo.get("right servo");
-
+  //Servo rightServo = hardwareMap.servo.get("right servo");
+  Servo rightServo = null;
   //Integer Varibles (All units here is inches)
   private final int ticksPerRotation = 1120;
   private int shooterTarget = 0;
@@ -88,7 +88,7 @@ public class ServoTester extends OpMode {
   @Override
   public void init_loop() {
     telemetry.addData("Status", "(Initialized) Loop");
-
+    rightServo = hardwareMap.servo.get("right servo");
   }
 
   //Runs once when start button is pressed
@@ -115,6 +115,7 @@ public class ServoTester extends OpMode {
 
     telemetry.addData("Status", "(Running) Main Loop");
     MoveTheDamServo(1);
+    telemetry.addData("Motor position", rightServo.getPosition());
 
   }
 }
