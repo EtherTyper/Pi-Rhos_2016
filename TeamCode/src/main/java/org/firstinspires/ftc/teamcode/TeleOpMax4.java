@@ -137,29 +137,29 @@ public class TeleOpMax4 extends LinearOpMode {
 
 
 
-            if(!beaconLeftIn && beaconLeftOut==0)
+            if(gamepad1.left_bumper)
             {
-                robot.leftServo.setPosition(128/255);
+                robot.leftServo.setPosition(1);
             }
-            else if(beaconLeftIn){
+            else if(gamepad1.left_trigger >= 0.5) {
                 robot.leftServo.setPosition(0);
             }
             else
             {
-                robot.leftServo.setPosition(1);
+                robot.leftServo.setPosition(0.5);
             }
 
-            if(!beaconRightIn && beaconRightOut==0)
+            if(gamepad1.right_bumper)
             {
-                robot.rightServo.setPosition(128/255);
+                robot.rightServo.setPosition(1);
             }
-            else if(beaconRightIn)
+            else if(gamepad1.right_trigger >= 0.5)
             {
                 robot.rightServo.setPosition(0);
             }
             else
             {
-                robot.rightServo.setPosition(1);
+                robot.rightServo.setPosition(0.5);
             }
 
 
