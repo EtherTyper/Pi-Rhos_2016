@@ -109,7 +109,7 @@ public class ServoTester extends OpMode {
   }
 
   void ControlTheDangServo(double motorPosition) {
-    if (gamepad2.right_bumper) {
+    if (gamepad2.a) {
 
 
       rightServo.setPosition(motorPosition);
