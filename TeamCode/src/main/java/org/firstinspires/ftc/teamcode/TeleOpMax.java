@@ -52,11 +52,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-<<<<<<< HEAD
-@TeleOp(name="Max TeleOp", group="Linear Opmode")
-=======
 @TeleOp(name="TeleOp VMax", group="Linear Opmode")
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
 public class TeleOpMax extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -75,32 +71,19 @@ public class TeleOpMax extends LinearOpMode {
         //Gamepad 1 Variables
         double left;                //left drivebase speed
         double right;               //right drivebase speed
-<<<<<<< HEAD
-        boolean toggleDriveOrient;  //toggles the orientation of the drivebase
-        double beaconLeftOut;       //extends left beacon presser
-        boolean beaconLeftIn;       //retracts left beacon presser
-        double beaconRightOut;      //extends right beacon presser
-=======
         boolean toggleDriveMode;    //toggles the direction of the drivebase
         double beaconLeftOut;       //pushes left beacon presser out
         boolean beaconLeftIn;       //retracts left beacon presser
         double beaconRightOut;      //pushes right beacon presser out
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
         boolean beaconRightIn;      //retracts right beacon presser
 
         //Gamepad 2 Variables
         boolean shoot;              //shoots the ball
         boolean screwUp;            //screw spirals up
         boolean screwDown;          //screw spirals down
-<<<<<<< HEAD
-        boolean flapsIn = false;    //flaps bring ball in
-        boolean toggleFlapsIn;
-        boolean flapsOut = false;   //flaps push ball out
-=======
         boolean flapsIn = false;            //flaps bring ball in
         boolean toggleFlapsIn;
         boolean flapsOut = false;           //flaps push ball out
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
         boolean toggleFlapsOut;
 
         boolean reverseMode = false;
@@ -125,11 +108,7 @@ public class TeleOpMax extends LinearOpMode {
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
             left = -gamepad1.left_stick_y;
             right = -gamepad1.right_stick_y;
-<<<<<<< HEAD
-            toggleDriveOrient = gamepad1.x;
-=======
             toggleDriveMode = gamepad1.x;
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
             beaconLeftOut = gamepad1.left_trigger;
             beaconLeftIn = gamepad1.left_bumper;
             beaconRightOut = gamepad1.right_trigger;
@@ -144,32 +123,6 @@ public class TeleOpMax extends LinearOpMode {
 
             if(preciseMode)
             {
-<<<<<<< HEAD
-                left*=0.2;
-                right*=0.2;
-
-            }
-
-            if(!beaconLeftIn && beaconLeftOut==0)
-            {
-                robot.leftServo.setPosition(0.5);
-            }
-            else if(beaconLeftIn){
-                robot.leftServo.setPosition(0);
-            }
-            else
-            {
-                robot.leftServo.setPosition(1);
-            }
-
-            if(!beaconRightIn && beaconRightOut==0)
-            {
-                robot.rightServo.setPosition(0.5);
-            }
-            else if(beaconRightIn)
-            {
-                robot.rightServo.setPosition(0);
-=======
                 left*=0.25;
                 right*=0.25;
 
@@ -187,16 +140,11 @@ public class TeleOpMax extends LinearOpMode {
             if(!beaconRightIn)
             {
                 robot.rightServo.setDirection();
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
             }
             else
             {
                 robot.rightServo.setPosition(1);
-<<<<<<< HEAD
-            }
-=======
             }*/
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
 
             if(reverseMode)
             {
@@ -216,18 +164,6 @@ public class TeleOpMax extends LinearOpMode {
                 robot.backRightMotor.setPower(right);
             }
 
-<<<<<<< HEAD
-            if(shoot){
-                shooterTarget = shooterTarget + ticksPerRotation;
-                robot.shooterMotor.setTargetPosition(shooterTarget);
-                robot.shooterMotor.setPower(1);
-                Thread.sleep(400);
-            }
-
-            if(robot.shooterMotor.getCurrentPosition() >= shooterTarget && robot.shooterMotor.getCurrentPosition() <= shooterTarget+50){
-                robot.shooterMotor.setPower(0);
-            }
-=======
             if(shoot && !shooterActive){
                 shooterTarget = shooterTarget + ticksPerRotation;
                 //robot.shooterMotor.setTargetPosition(shooterTarget);
@@ -239,7 +175,6 @@ public class TeleOpMax extends LinearOpMode {
                 //robot.shooterMotor.setPower(0);
                 shooterActive = false;
             }*/
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
 
             if(screwUp)
             {
@@ -257,21 +192,13 @@ public class TeleOpMax extends LinearOpMode {
             if(toggleFlapsIn)
             {
                 flapsIn = !flapsIn;
-<<<<<<< HEAD
-                Thread.sleep(200);
-=======
                 Thread.sleep(400);
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
             }
 
             if(toggleFlapsOut)
             {
                 flapsOut = !flapsOut;
-<<<<<<< HEAD
-                Thread.sleep(200);
-=======
                 Thread.sleep(400);
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
             }
             
             if(flapsIn)
@@ -288,29 +215,17 @@ public class TeleOpMax extends LinearOpMode {
             }
             
             Telemetry.Item addData = telemetry.addData("Say", left);
-<<<<<<< HEAD
-                    if(toggleDriveOrient)
-                    {
-
-                        reverseMode = !reverseMode;
-                        Thread.sleep(200);
-=======
                     if(toggleDriveMode)
                     {
 
                         reverseMode = !reverseMode;
                         Thread.sleep(400);
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
                     }
                     if(gamepad1.x)  //lower power for more precise movement
                     {
 
                         preciseMode = !preciseMode;
-<<<<<<< HEAD
-                        Thread.sleep(200);
-=======
                         Thread.sleep(400);
->>>>>>> e25dedf5b5c01089e3df6b508c125bcc1accbf82
                     }
 
             telemetry.addData("left",  "%.2f", left);
