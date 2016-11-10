@@ -133,6 +133,10 @@ public class TeleOpMax4 extends LinearOpMode {
 
             }
 
+
+
+
+
             if(!beaconLeftIn && beaconLeftOut==0)
             {
                 robot.leftServo.setPosition(128/255);
@@ -157,6 +161,10 @@ public class TeleOpMax4 extends LinearOpMode {
             {
                 robot.rightServo.setPosition(1);
             }
+
+
+
+
 
             if(reverseMode)
             {

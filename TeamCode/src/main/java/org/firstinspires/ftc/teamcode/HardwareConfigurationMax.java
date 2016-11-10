@@ -32,7 +32,7 @@ public class HardwareConfigurationMax
     DcMotor frontRightMotor  = null;
     DcMotor backLeftMotor = null;
     DcMotor backRightMotor = null;
-    //DcMotor shooterMotor = null;
+    DcMotor shooterMotor = null;
     DcMotor intakeMotor = null;
     DcMotor elevatorMotor = null;
 
@@ -41,8 +41,8 @@ public class HardwareConfigurationMax
     ColorSensor leftColorSensor = null;
 
     //Servos
-    CRServo leftServo = null;
-    CRServo rightServo = null;
+    Servo leftServo = null;
+    Servo rightServo = null;
 
 
     //Variables
@@ -72,12 +72,12 @@ public class HardwareConfigurationMax
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
         backRightMotor = hwMap.dcMotor.get("back right motor");
-        //shooterMotor = hwMap.dcMotor.get("shooter motor");
+        shooterMotor = hwMap.dcMotor.get("shooter motor");
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
-        leftServo = hwMap.crservo.get("left beacon");
-        rightServo = hwMap.crservo.get("right beacon");
+        leftServo = hwMap.servo.get("left beacon");
+        rightServo = hwMap.servo.get("right beacon");
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
