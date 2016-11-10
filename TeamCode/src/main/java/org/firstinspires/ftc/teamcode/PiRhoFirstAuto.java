@@ -18,7 +18,9 @@ public class PiRhoFirstAuto extends PiRhoAutoMaster {
     {
 
         shootBall();
+        moveElevator(4);
         shootBall();
+        moveBackTo(1);
     }
 
 }

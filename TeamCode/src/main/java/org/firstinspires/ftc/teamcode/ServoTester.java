@@ -49,7 +49,7 @@ public class ServoTester extends OpMode {
   //Objects setup
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  HardwareMap hwMap  = hardwareMap;
+  HardwareMap hwMap = hardwareMap;
 
   //Servo rightServo = hardwareMap.servo.get("right servo");
   Servo rightServo = null;
@@ -102,20 +102,31 @@ public class ServoTester extends OpMode {
 
   //          ===Robot Functions===        //
 
-  void MoveTheDamServo(double motorPosition){
+  void MoveTheDamServo(double motorPosition) {
 
     rightServo.setPosition(motorPosition);
 
   }
 
-  //        ===Main Loop===        //
-  //Runs when start is pressed (loop)
-  @Override
-  public void loop() {
+  void ControlTheDangServo(double motorPosition) {
+    if (gamepad2.right_bumper) {
 
-    telemetry.addData("Status", "(Running) Main Loop");
-    MoveTheDamServo(1);
-    telemetry.addData("Motor position", rightServo.getPosition());
 
+      rightServo.setPosition(motorPosition);
+    } else
+      rightServo.setPosition(0.5);
   }
+
+    //        ===Main Loop===        //
+    //Runs when start is pressed (loop)
+    @Override
+    public void loop () {
+
+      telemetry.addData("Status", "(Running) Main Loop");
+      //MoveTheDamServo(0);
+      ControlTheDangServo(1);
+      telemetry.addData("Motor position", rightServo.getPosition());
+
+    }
+
 }
