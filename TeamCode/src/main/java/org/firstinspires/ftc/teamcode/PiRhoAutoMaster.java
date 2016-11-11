@@ -49,7 +49,7 @@ public class PiRhoAutoMaster extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private FinalHardwareConfiguration robot = new FinalHardwareConfiguration();
+  private HardwareConfigurationMax robot = new HardwareConfigurationMax();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
