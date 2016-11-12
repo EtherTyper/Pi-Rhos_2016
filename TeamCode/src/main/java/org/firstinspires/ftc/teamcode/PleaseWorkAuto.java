@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @Autonomous(name = "Pleeeease Work", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
-public class PleaseWorkAuto extends LinearOpMode {
+public class PleaseWorkAuto extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -56,10 +56,13 @@ public class PleaseWorkAuto extends LinearOpMode {
   private int backLeftTarget = 0;
   private int shooterTarget = 0;
 
-  public void initialize() {
+  @Override
+  public void init() {
     telemetry.addData("Status", "Initialized");
 
     robot.init(hardwareMap);
+
+    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -172,7 +175,7 @@ public class PleaseWorkAuto extends LinearOpMode {
   }
 
   @Override
-  public void runOpMode() throws InterruptedException {
+  public void loop() {
 
     robot.shooterMotor.setTargetPosition(ticksPerRotation);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -180,8 +183,8 @@ public class PleaseWorkAuto extends LinearOpMode {
 
     telemetry.addData("Position",robot.shooterMotor.getCurrentPosition());
 
-    moveForwardTo(3);
-    turnRightTo(2);
+    //moveForwardTo(3);
+    //turnRightTo(2);
 
   }
 
