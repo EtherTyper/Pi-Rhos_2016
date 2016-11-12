@@ -46,85 +46,60 @@ public class PiRhoAutoTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-
-  //Initialize Variables
-  DcMotor leftMotor = null;
-  DcMotor rightMotor = null;
+  private HardwareConfigurationMax robot = new HardwareConfigurationMax();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int motorTarget = 10 * ticksPerRotation;
-  private int realTimeTicks = 0;
 
-  private double time = 0;
-  private double wheelDiameter = 2.75;
+  private int frontRightTarget = 0;
+  private int frontLeftTarget = 0;
+  private int backRightTarget = 0;
+  private int backLeftTarget = 0;
+  private int shooterTarget = 0;
 
-  private double olderTick = 0;
-  private double currentTick = 0;
-  private double lastSecondsTick = 0;
-  private double motorSpeed = 0;
-
-  BeaconTesterBlue testBlue = new BeaconTesterBlue();
-  BeaconTesterRed  testRed = new BeaconTesterRed();
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
+
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
   }
 
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
   @Override
   public void init_loop() {
 
-    leftMotor = hardwareMap.dcMotor.get("left motor");
-    rightMotor = hardwareMap.dcMotor.get("right motor");
-    leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
   }
 
-  /*
-   * This method will be called ONCE when start is pressed
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
   @Override
   public void start() {
     //Test movement
-    runtime.reset();
 
 
   }
 
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  //The code for the robot while running driver control
-  //This method acts as a while loop
+
+
+
   @Override
   public void loop() {
 
-    if(runtime.seconds() >= 2){
-      //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      leftMotor.setPower(0);
-      rightMotor.setPower(0);
-    }
-
-
-  }
-
-  //Gets ticks from last second
-  public double getLastSecondTick(double lastTick, double currentTick){
-
-    return (currentTick - lastTick);
-
-  }
-
-  //Calculates speed
-  public double calcMotorSpeed(double diameter, double ticksLastSecond, double currentTime){
-
-    return (diameter * Math.PI * (ticksLastSecond / this.ticksPerRotation))/currentTime;
+    //shootBall();
+    //moveElevator(4);
+    //shootBall();
+    //moveBackTo(1);
 
   }
 

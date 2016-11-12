@@ -92,12 +92,12 @@ public class HardwareConfigurationMax
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-        //shooterMotor.setPower(0);
+        shooterMotor.setPower(0);
         intakeMotor.setPower(0);
 
         // Set Encoder Usage
-        //shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /***

@@ -31,21 +31,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
 
 /**
  * Demonstrates empty OpMode
  */
-//@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-//@TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
-public class PiRhoAutoMaster extends OpMode {
+@Autonomous(name = "Pleeeease Work", group = "Concept")
+//TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
+public class PleaseWorkAuto extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -53,16 +50,16 @@ public class PiRhoAutoMaster extends OpMode {
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-
   private int frontRightTarget = 0;
   private int frontLeftTarget = 0;
   private int backRightTarget = 0;
   private int backLeftTarget = 0;
   private int shooterTarget = 0;
 
-  @Override
-  public void init() {
+  public void initialize() {
     telemetry.addData("Status", "Initialized");
+
+    robot.init(hardwareMap);
 
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -78,22 +75,6 @@ public class PiRhoAutoMaster extends OpMode {
 
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-  }
-
-  @Override
-  public void init_loop() {
-
-  }
-
-  @Override
-  public void start() {
-    /*Test for color sensor*/
-
-  }
-
-  //This method acts as a while loop
-  @Override
-  public void loop() {
 
   }
 
@@ -190,5 +171,19 @@ public class PiRhoAutoMaster extends OpMode {
     return true;
   }
 
+  @Override
+  public void runOpMode() throws InterruptedException {
+
+    robot.shooterMotor.setTargetPosition(ticksPerRotation);
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    robot.shooterMotor.setPower(1);
+
+    telemetry.addData("Position",robot.shooterMotor.getCurrentPosition());
+
+    moveForwardTo(3);
+    turnRightTo(2);
+
+  }
+
+
 }
- 

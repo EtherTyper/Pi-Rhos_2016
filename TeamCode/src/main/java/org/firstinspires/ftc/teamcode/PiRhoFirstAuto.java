@@ -16,11 +16,15 @@ public class PiRhoFirstAuto extends PiRhoAutoMaster {
     public void runOpMode() throws InterruptedException
 
     {
-        init();
+
+
+        //init();
+        /*
         shootBall();
         moveElevator(4);
         shootBall();
         moveBackTo(1);
+        */
     }
 
 }

@@ -35,6 +35,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -54,7 +55,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name="Max ShooterTest Bumper", group="Linear Opmode")
+
+@TeleOp(name="Max TeleOp Works", group="Linear Opmode")
 public class TeleOpMax4 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -68,6 +70,36 @@ public class TeleOpMax4 extends LinearOpMode {
     private boolean shooterActive;
     final int ticksPerRotation = 1120;
     private int shooterTarget = ticksPerRotation;
+
+
+    void moveLeftServo(double motorPosition) {
+        if (gamepad1.left_bumper) {
+
+
+            robot.leftServo.setPosition(motorPosition);
+        }
+        else if (gamepad1.left_trigger >= 0.1)
+        {
+            robot.leftServo.setPosition(gamepad1.left_trigger*0.9);
+        }
+        else
+            robot.leftServo.setPosition(0.5);
+    }
+
+    void moveRightServo(double motorPosition) {
+        if (gamepad1.right_bumper) {
+
+
+            robot.rightServo.setPosition(motorPosition);
+        }
+        else if (gamepad1.right_trigger >= 0.1)
+        {
+            robot.rightServo.setPosition(gamepad1.right_trigger*0.9);
+        }
+        else
+            robot.rightServo.setPosition(0.5);
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         //Gamepad 1 Variables
@@ -88,8 +120,8 @@ public class TeleOpMax4 extends LinearOpMode {
         boolean flapsOut = false;   //flaps push ball out
         boolean toggleFlapsOut;
 
-        boolean reverseMode = false;
-        boolean preciseMode = false;
+        boolean reverseMode = true;
+        boolean preciseMode = true;
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
@@ -103,7 +135,7 @@ public class TeleOpMax4 extends LinearOpMode {
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
-        while (/*opModeIsActive()*/true) {
+        while (opModeIsActive()) {
 
             telemetry.addData("Say","Op mode Active.");
             //Gamepad 1 controls
@@ -122,8 +154,6 @@ public class TeleOpMax4 extends LinearOpMode {
             screwDown = gamepad2.dpad_down;
             toggleFlapsIn = gamepad2.x;
             toggleFlapsOut = gamepad2.b;
-            float testShoot = -gamepad2.right_stick_y;
-            boolean revShoot = gamepad2.y;
             boolean otherShoot = gamepad2.right_bumper;
 
             if(preciseMode)
@@ -133,36 +163,39 @@ public class TeleOpMax4 extends LinearOpMode {
 
             }
 
-
-
-
-
-            if(gamepad1.left_bumper)
+            /*if(!beaconLeftIn && beaconLeftOut==0)
             {
-                robot.leftServo.setPosition(1);
+                robot.leftServo.setDirection(DcMotorSimple.Direction.FORWARD);
             }
-            else if(gamepad1.left_trigger >= 0.5) {
-                robot.leftServo.setPosition(0);
+            else if(beaconLeftIn){
+                robot.leftServo.setDirection(DcMotorSimple.Direction.FORWARD);
             }
             else
             {
-                robot.leftServo.setPosition(0.5);
+                robot.leftServo.setDirection(DcMotorSimple.Direction.FORWARD);
             }
 
-            if(gamepad1.right_bumper)
+            if(!beaconRightIn && beaconRightOut==0)
             {
-                robot.rightServo.setPosition(1);
+                robot.leftServo.setDirection(DcMotorSimple.Direction.FORWARD);
             }
-            else if(gamepad1.right_trigger >= 0.5)
+            else if(beaconRightIn)
             {
-                robot.rightServo.setPosition(0);
+                robot.leftServo.setDirection(DcMotorSimple.Direction.FORWARD);
             }
             else
             {
-                robot.rightServo.setPosition(0.5);
+                robot.leftServo.setDirection(DcMotorSimple.Direction.FORWARD);
+            }*/
+            moveLeftServo(beaconRightOut);
+            if(beaconLeftIn){
+                moveLeftServo(-1);
             }
 
-
+            moveRightServo(beaconRightOut);
+            if(beaconRightIn){
+                moveRightServo(-1);
+            }
 
 
 
@@ -210,10 +243,6 @@ public class TeleOpMax4 extends LinearOpMode {
 
             if(otherShoot)
             {
-                shooterTarget = shooterTarget + ticksPerRotation;
-                robot.shooterMotor.getCurrentPosition();
-                robot.shooterMotor.setTargetPosition(shooterTarget);
-                robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.shooterMotor.setPower(1);
             }
             else
