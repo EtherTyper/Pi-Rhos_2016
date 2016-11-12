@@ -61,6 +61,8 @@ public class PleaseWorkAuto extends LinearOpMode {
 
     robot.init(hardwareMap);
 
+    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
