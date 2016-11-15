@@ -54,7 +54,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name="Max ShooterTest Bumper", group="Linear Opmode")
+@TeleOp(name="Competition TeleOp", group="Linear Opmode")
 public class TeleOpMax4 extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -80,13 +80,13 @@ public class TeleOpMax4 extends LinearOpMode {
         boolean beaconRightIn;      //retracts right beacon presser
 
         //Gamepad 2 Variables
-        boolean shoot;              //shoots the ball
         boolean screwUp;            //screw spirals up
         boolean screwDown;          //screw spirals down
         boolean flapsIn = false;    //flaps bring ball in
         boolean toggleFlapsIn;
         boolean flapsOut = false;   //flaps push ball out
         boolean toggleFlapsOut;
+        boolean shoot;
 
         boolean reverseMode = false;
         boolean preciseMode = false;
@@ -117,14 +117,11 @@ public class TeleOpMax4 extends LinearOpMode {
             beaconRightIn = gamepad1.right_bumper;
 
             //Gamepad 2 controls
-            shoot = gamepad2.a;
             screwUp = gamepad2.dpad_up;
             screwDown = gamepad2.dpad_down;
             toggleFlapsIn = gamepad2.x;
             toggleFlapsOut = gamepad2.b;
-            float testShoot = -gamepad2.right_stick_y;
-            boolean revShoot = gamepad2.y;
-            boolean otherShoot = gamepad2.right_bumper;
+            shoot = gamepad2.right_bumper;
 
             if(preciseMode)
             {
@@ -133,15 +130,11 @@ public class TeleOpMax4 extends LinearOpMode {
 
             }
 
-
-
-
-
-            if(gamepad1.left_bumper)
+            if(beaconLeftIn)
             {
                 robot.leftServo.setPosition(1);
             }
-            else if(gamepad1.left_trigger >= 0.5) {
+            else if(beaconLeftOut >= 0.5) {
                 robot.leftServo.setPosition(0);
             }
             else
@@ -149,11 +142,11 @@ public class TeleOpMax4 extends LinearOpMode {
                 robot.leftServo.setPosition(0.5);
             }
 
-            if(gamepad1.right_bumper)
+            if(beaconRightIn)
             {
                 robot.rightServo.setPosition(1);
             }
-            else if(gamepad1.right_trigger >= 0.5)
+            else if(beaconRightOut >= 0.5)
             {
                 robot.rightServo.setPosition(0);
             }
@@ -161,10 +154,6 @@ public class TeleOpMax4 extends LinearOpMode {
             {
                 robot.rightServo.setPosition(0.5);
             }
-
-
-
-
 
             if(reverseMode)
             {
@@ -184,36 +173,11 @@ public class TeleOpMax4 extends LinearOpMode {
                 robot.backRightMotor.setPower(right);
             }
 
-            /*if(shoot){
-                shooterTarget = shooterTarget + ticksPerRotation;
-                robot.shooterMotor.setTargetPosition(shooterTarget);
-                robot.shooterMotor.setPower(1);
-                Thread.sleep(400);
-            }
-            if(robot.shooterMotor.getCurrentPosition() >= shooterTarget && robot.shooterMotor.getCurrentPosition() <= shooterTarget+50){
-                robot.shooterMotor.setPower(0);
-            }*/
-
-            /*if(shoot)
+            if(shoot)
             {
-                robot.shooterMotor.setPower(1);
-            }
-            if(revShoot)
-            {
-                robot.shooterMotor.setPower(-1);
-            }
-            if(!shoot&&!revShoot){
-                robot.shooterMotor.setPower(0);
-            }*/
-
-            //robot.shooterMotor.setPower(testShoot);
-
-            if(otherShoot)
-            {
-                shooterTarget = shooterTarget + ticksPerRotation;
-                robot.shooterMotor.getCurrentPosition();
-                robot.shooterMotor.setTargetPosition(shooterTarget);
+                shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation;
                 robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.shooterMotor.setTargetPosition(shooterTarget);
                 robot.shooterMotor.setPower(1);
             }
             else
