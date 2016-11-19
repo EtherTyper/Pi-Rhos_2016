@@ -55,11 +55,14 @@ public class LinearAutoMax extends LinearOpMode {
   private int backLeftTarget = 0;
   private int shooterTarget = 0;
   int step = 0;
-  int MOTOR_CPR = 1120;
-  double GEAR_RATIO = 27/40;
+  double MOTOR_CPR = 1120;
+  double GEAR_RATIO = 27.0/40.0;
   double WHEEL_DIAMETER = 3.5;
   double distance = 10;
-  int counts = (int)(((MOTOR_CPR*GEAR_RATIO)/WHEEL_DIAMETER*Math.PI)*distance);
+
+    double CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
+    double ROTATIONS = distance/CIRCUMFERENCE;
+  int counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
 
 
 
@@ -189,18 +192,21 @@ public class LinearAutoMax extends LinearOpMode {
   }
 
   public void calcForward(double dist){
-      this.distance += dist;
-      counts = (int)(((MOTOR_CPR*GEAR_RATIO)/(WHEEL_DIAMETER*Math.PI))*distance);
+      this.distance = dist;
+      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
+      ROTATIONS = distance/CIRCUMFERENCE;
+      counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
   }
   public void forward(double dist){
-      this.distance += dist;
-      counts = (int)(((MOTOR_CPR*GEAR_RATIO)/(WHEEL_DIAMETER*Math.PI))*distance);
-
+      calcForward(dist);
       telemetry.addData("Calculated","");
       telemetry.update();
       while(robot.frontLeftMotor.getCurrentPosition()<=counts){
-          telemetry.addData("Motor power front",robot.frontLeftMotor.getPower());
-          telemetry.addData("Motor power back",robot.backLeftMotor.getPower());
+          //counts = 1000;
+          telemetry.addData("Counts", counts);
+          telemetry.addData("Distance", distance);
+          telemetry.addData("Circumference", CIRCUMFERENCE);
+          telemetry.addData("Rotations", ROTATIONS);
           telemetry.update();
           robot.frontLeftMotor.setTargetPosition(counts);
           robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -250,6 +256,7 @@ public class LinearAutoMax extends LinearOpMode {
       //shootBall();
       moveScrewUp();
       forward(10);
+      //sleep(1000);
       telemetry.addData("It's not Moving","");
       telemetry.update();
       resetEncoders();
