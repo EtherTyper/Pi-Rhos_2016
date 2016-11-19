@@ -32,19 +32,20 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Tun Auto Test", group = "Concept")
-public class TurnTest extends OpMode {
+@Autonomous(name = "Linear Drive Test", group = "Concept")
+//TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
+public class LinearAutoMax extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private HardwareConfigurationMax robot = new HardwareConfigurationMax();
+  private HardwareConfigMaxLinearTest robot = new HardwareConfigMaxLinearTest();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -59,18 +60,19 @@ public class TurnTest extends OpMode {
   double WHEEL_DIAMETER = 3.5;
   double distance = 4.45;
   int counts = (int)(((MOTOR_CPR*GEAR_RATIO)/WHEEL_DIAMETER*Math.PI)*distance);
-  int flCounts = 0;
-  int blCounts = 0;
-  int frCounts = 0;
-  int brCounts = 0;
 
-  @Override
-  public void init() {
+
+
+  public void my_init() {
     telemetry.addData("Status", "Initialized");
 
     robot.init(hardwareMap);
 
-    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    /*robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
 
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -84,19 +86,22 @@ public class TurnTest extends OpMode {
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    //robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    //robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
   }
 
-  public void delay(long mils){
+
+  /*public void delay(long mils){
     try {
       Thread.sleep(mils);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-  }
-  public void haltDrive(){
+  }*/
+
+  //Will be uncommented once confirmation of LinearOpMode function is present.
+  /*public void haltDrive(){
     robot.frontLeftMotor.setPower(0);
     robot.frontRightMotor.setPower(0);
     robot.backLeftMotor.setPower(0);
@@ -110,77 +115,49 @@ public class TurnTest extends OpMode {
     robot.elevatorMotor.setPower(0);
   }
 
-  public void moveForwardTo(double distance){
-    if(step==6) {
-      this.distance = distance;
-      int targPosLF = robot.frontLeftMotor.getCurrentPosition() + counts;
-        robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - counts);
-        robot.frontLeftMotor.setPower(1);
-        robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
-        robot.frontRightMotor.setPower(1);
-        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
-        robot.backLeftMotor.setPower(1);
-        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
-        robot.backRightMotor.setPower(1);
-        if(robot.frontLeftMotor.getCurrentPosition()>=robot.frontLeftMotor.getCurrentPosition() - counts){
-          step++;
-      }
-    }
-  }
-
-  public void calculateForward(double dist, int stp){
-    if(step==stp){
-      distance = dist;
-      blCounts = robot.backLeftMotor.getCurrentPosition() - counts;
-      brCounts = robot.backRightMotor.getCurrentPosition() - counts;
-      step++;
-    }
-  }
-  public void calculateTurnRight(double dist, int stp){
-    if(step==stp){
-      distance = dist;
-      blCounts = robot.backLeftMotor.getCurrentPosition() - counts;
-      brCounts = robot.backRightMotor.getCurrentPosition() - counts;
-      step++;
-    }
-  }
-
-  public void moveBackTo(double distance){
-    this.distance = distance;
-    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - counts);
-    robot.frontLeftMotor.setPower(-1);
-    robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
-    robot.frontRightMotor.setPower(-1);
-    robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
-    robot.backLeftMotor.setPower(-1);
-    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
-    robot.backRightMotor.setPower(-1);
-  }
-
-  public void turnLeftTo(double distance){
-    this.distance = distance;
-    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + counts);
+  public void moveForwardTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
     robot.frontLeftMotor.setPower(1);
-    robot.backLeftMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
     robot.backLeftMotor.setPower(1);
-    robot.frontRightMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
+    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(1);
+  }
+
+  public void moveBackTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(-1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
     robot.frontRightMotor.setPower(-1);
-    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(-1);
+    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
     robot.backRightMotor.setPower(-1);
   }
 
-  public void turnRightTo(double distance){
-    if(step == 4) {
-      this.distance = distance;
-      robot.frontLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
-      robot.frontLeftMotor.setPower(1);
-      robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
-      robot.backLeftMotor.setPower(1);
-      if(robot.frontLeftMotor.getCurrentPosition() <= robot.frontRightMotor.getCurrentPosition() - counts){
-        step++;
-      }
-    }
+  public void turnLeftTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(-1);
+    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(-1);
   }
+
+  public void turnRightTo(int moveInRotations){
+    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
+    robot.frontLeftMotor.setPower(-1);
+    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setPower(-1);
+    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setPower(1);
+    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setPower(1);
+  }*/
 
   public void moveElevator(int rotationTime){
 
@@ -194,46 +171,57 @@ public class TurnTest extends OpMode {
 
   }
 
-  public void shootBall(){
-    if(step==0) {
+ /*public void shootBall(){
+
       robot.shooterMotor.setTargetPosition(ticksPerRotation);
       robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.shooterMotor.setPower(1);
-      if (robot.shooterMotor.getCurrentPosition() >= ticksPerRotation) {
+     /* if (robot.shooterMotor.getCurrentPosition() >= ticksPerRotation) {
         step++;
       }
-    }
-  }
-  public void shoot2ndBall(){
-    if(step==2) {
+
+  }*/
+ /* public void shoot2ndBall(){
+
       robot.shooterMotor.setTargetPosition(ticksPerRotation * 2);
       robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.shooterMotor.setPower(1);
-      if(robot.shooterMotor.getCurrentPosition()>=ticksPerRotation * 2){
-        step++;
-      }
-    }
-  }
+
+  }*/
   public void moveScrewUp(){
-    if(step==1) {
+
       robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
       robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.elevatorMotor.setPower(1);
-      if(robot.elevatorMotor.getCurrentPosition()>=ticksPerRotation*3){
+      /*if(robot.elevatorMotor.getCurrentPosition()>=ticksPerRotation*3){
         step++;
-      }
-    }
+      }*/
+
   }
 
+  public void forward(int dist){
+      robot.frontLeftMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.frontLeftMotor.setPower(1);
 
-  public void pushButton(int pushCase){
-    //Left is 1 and right is 2
-    switch (pushCase) {
-      case 1: robot.leftServo.setPosition(1);
-        break;
-      case 2: robot.rightServo.setPosition(1);
-        break;
-    }
+      robot.backLeftMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.backLeftMotor.setPower(1);
+
+      robot.frontRightMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.frontRightMotor.setPower(1);
+  }
+
+  public void resetEncoders()
+  {
+   // robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
   }
 
   public boolean findLeftColor(String findColor){
@@ -245,22 +233,26 @@ public class TurnTest extends OpMode {
   }
 
   @Override
-  public void loop() {
-    shootBall();
-    moveScrewUp();
-    shoot2ndBall();
-    calculateTurnRight(4.45,3);
-    turnRightTo(4.45);
-    calculateForward(100,5);
-    moveForwardTo(100);
+  public void runOpMode() throws InterruptedException {
+      my_init();
+      waitForStart();
 
-    telemetry.addData("Position",robot.shooterMotor.getCurrentPosition());
-    telemetry.addData("Step", step);
+          telemetry.addData("Breaky?", "");
+          //shootBall();
+          sleep(500);
+          forward(20);
+          sleep(5000);
 
-    //moveForwardTo(3);
-    //turnRightTo(2);
+          resetEncoders();
+          sleep(24500);
+          //shootBall();
+
 
   }
+
+
+
+
 
 
 }
