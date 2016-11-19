@@ -90,13 +90,13 @@ public class CompetitionAutoLinearTest extends LinearOpMode {
   }
 
 
-  public void delay(long mils){
+  /*public void delay(long mils){
     try {
       Thread.sleep(mils);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-  }
+  }*/
 
   //Will be uncommented once confirmation of LinearOpMode function is present.
   /*public void haltDrive(){
@@ -223,11 +223,12 @@ public class CompetitionAutoLinearTest extends LinearOpMode {
 
           telemetry.addData("Breaky?", "");
           //shootBall();
-          delay(500);
+          sleep(500);
           moveScrewUp();
-          delay(500);
+          sleep(5000);
 
-          //resetEncoders();
+          resetEncoders();
+          sleep(24500);
           //shootBall();
 
 
