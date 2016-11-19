@@ -199,18 +199,26 @@ public class LinearAutoMax extends LinearOpMode {
 
   }
 
-  public void forward(int dist){
-      robot.frontLeftMotor.setTargetPosition(ticksPerRotation * 3);
+  public double calcForward(double dist){
+      distance += dist;
+      return counts;
+  }
+  public void forward(){
+      robot.frontLeftMotor.setTargetPosition(counts);
       robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.frontLeftMotor.setPower(1);
 
-      robot.backLeftMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.backLeftMotor.setTargetPosition(counts);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setPower(1);
 
-      robot.frontRightMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.frontRightMotor.setTargetPosition(counts);
       robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.frontRightMotor.setPower(1);
+
+      robot.backRightMotor.setTargetPosition(counts);
+      robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.backRightMotor.setPower(1);
   }
 
   public void resetEncoders()
@@ -240,7 +248,8 @@ public class LinearAutoMax extends LinearOpMode {
           telemetry.addData("Breaky?", "");
           //shootBall();
           sleep(500);
-          forward(20);
+          calcForward(10);
+          forward();
           sleep(5000);
 
           resetEncoders();

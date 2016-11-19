@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Pleeeease Work", group = "Concept")
+//@Autonomous(name = "Pleeeease Work", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class PleaseWorkAuto extends OpMode {
 

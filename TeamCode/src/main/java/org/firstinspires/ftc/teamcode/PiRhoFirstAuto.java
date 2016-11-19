@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by kevin on 11/8/2016.
  */
-@Autonomous(name = "Autonomous", group = "Concept")
+//@Autonomous(name = "Autonomous", group = "Concept")
 public class PiRhoFirstAuto extends PiRhoAutoMaster {
     public void runOpMode() throws InterruptedException
 

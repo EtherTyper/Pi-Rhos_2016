@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Created by kevin on 11/8/2016.
  */
-@Autonomous(name = "Work plz", group = "Concept")
+//@Autonomous(name = "Work plz", group = "Concept")
 public class PiRhoFirstAutoTest extends PiRhoAutoMasterTest {
 
 

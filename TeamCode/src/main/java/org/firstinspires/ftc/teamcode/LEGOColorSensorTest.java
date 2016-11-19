@@ -36,7 +36,7 @@ import android.graphics.Color;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: LEGO Color Sensor Test", group = "Linear Opmode")
+//@TeleOp(name = "Test: LEGO Color Sensor Test", group = "Linear Opmode")
 public class LEGOColorSensorTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();

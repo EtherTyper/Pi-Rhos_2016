@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Beacon Red", group = "Linear Opmode")
+//@TeleOp(name = "Test: Beacon Red", group = "Linear Opmode")
 public class BeaconTesterRed extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();

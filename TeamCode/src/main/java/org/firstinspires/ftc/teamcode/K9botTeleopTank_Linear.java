@@ -56,7 +56,7 @@ import org.firstinspires.ftc.teamcode.HardwareK9bot;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name="Template: Finally works?!?!", group="Linear Opmode")
+//@TeleOp(name="Template: Finally works?!?!", group="Linear Opmode")
 //@TeleOp(name="K9bot: Telop Tank", group="K9bot")
 //@Disabled
 public class K9botTeleopTank_Linear extends LinearOpMode {

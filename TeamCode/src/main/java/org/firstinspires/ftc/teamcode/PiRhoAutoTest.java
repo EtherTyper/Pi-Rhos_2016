@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Auto Test", group = "Concept")
+//@Autonomous(name = "Auto Test", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class PiRhoAutoTest extends OpMode {
 

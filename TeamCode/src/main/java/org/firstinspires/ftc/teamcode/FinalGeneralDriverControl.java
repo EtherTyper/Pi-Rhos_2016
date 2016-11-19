@@ -43,7 +43,7 @@ import org.firstinspires.ftc.teamcode.FinalHardwareConfiguration;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Final: General Drive Control", group = "Linear Opmode")
+//@TeleOp(name = "Final: General Drive Control", group = "Linear Opmode")
 public class FinalGeneralDriverControl extends OpMode {
 
   //Objects setup

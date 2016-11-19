@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Tun Auto Test", group = "Concept")
+//@Autonomous(name = "Turn Auto Test", group = "Concept")
 public class TurnTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
