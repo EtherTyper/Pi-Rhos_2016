@@ -58,7 +58,7 @@ public class LinearAutoMax extends LinearOpMode {
   int MOTOR_CPR = 1120;
   double GEAR_RATIO = 27/40;
   double WHEEL_DIAMETER = 3.5;
-  double distance = 4.45;
+  double distance = 10;
   int counts = (int)(((MOTOR_CPR*GEAR_RATIO)/WHEEL_DIAMETER*Math.PI)*distance);
 
 
@@ -159,18 +159,6 @@ public class LinearAutoMax extends LinearOpMode {
     robot.backRightMotor.setPower(1);
   }*/
 
-  public void moveElevator(int rotationTime){
-
-    robot.elevatorMotor.setPower(1);
-    try {
-      Thread.sleep(rotationTime * 100);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    robot.elevatorMotor.setPower(0);
-
-  }
-
  /*public void shootBall(){
 
       robot.shooterMotor.setTargetPosition(ticksPerRotation);
@@ -189,36 +177,47 @@ public class LinearAutoMax extends LinearOpMode {
 
   }*/
   public void moveScrewUp(){
-
-      robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
-      robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.elevatorMotor.setPower(1);
+      while(robot.elevatorMotor.getCurrentPosition()<=ticksPerRotation * 3) {
+          robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
+          robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.elevatorMotor.setPower(1);
+      }
       /*if(robot.elevatorMotor.getCurrentPosition()>=ticksPerRotation*3){
         step++;
       }*/
 
   }
 
-  public double calcForward(double dist){
-      distance += dist;
-      return counts;
+  public void calcForward(double dist){
+      this.distance += dist;
+      counts = (int)(((MOTOR_CPR*GEAR_RATIO)/(WHEEL_DIAMETER*Math.PI))*distance);
   }
-  public void forward(){
-      robot.frontLeftMotor.setTargetPosition(counts);
-      robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.frontLeftMotor.setPower(1);
+  public void forward(double dist){
+      this.distance += dist;
+      counts = (int)(((MOTOR_CPR*GEAR_RATIO)/(WHEEL_DIAMETER*Math.PI))*distance);
 
-      robot.backLeftMotor.setTargetPosition(counts);
-      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.backLeftMotor.setPower(1);
+      telemetry.addData("Calculated","");
+      telemetry.update();
+      while(robot.frontLeftMotor.getCurrentPosition()<=counts){
+          telemetry.addData("Motor power front",robot.frontLeftMotor.getPower());
+          telemetry.addData("Motor power back",robot.backLeftMotor.getPower());
+          telemetry.update();
+          robot.frontLeftMotor.setTargetPosition(counts);
+          robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.frontLeftMotor.setPower(1);
 
-      robot.frontRightMotor.setTargetPosition(counts);
-      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.frontRightMotor.setPower(1);
+          robot.backLeftMotor.setTargetPosition(counts);
+          robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.backLeftMotor.setPower(1);
 
-      robot.backRightMotor.setTargetPosition(counts);
-      robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.backRightMotor.setPower(1);
+          robot.frontRightMotor.setTargetPosition(counts);
+          robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.frontRightMotor.setPower(1);
+
+          robot.backRightMotor.setTargetPosition(counts);
+          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.backRightMotor.setPower(1);
+      }
   }
 
   public void resetEncoders()
@@ -245,23 +244,18 @@ public class LinearAutoMax extends LinearOpMode {
       my_init();
       waitForStart();
 
-          telemetry.addData("Breaky?", "");
-          //shootBall();
-          sleep(500);
-          calcForward(10);
-          forward();
-          sleep(5000);
-
-          resetEncoders();
-          sleep(24500);
-          //shootBall();
+      telemetry.addData("fl pos:", robot.frontLeftMotor.getCurrentPosition());
+      telemetry.addData("counts:", counts);
+      telemetry.update();
+      //shootBall();
+      moveScrewUp();
+      forward(10);
+      telemetry.addData("It's not Moving","");
+      telemetry.update();
+      resetEncoders();
+      //shootBall();
 
 
   }
-
-
-
-
-
 
 }
