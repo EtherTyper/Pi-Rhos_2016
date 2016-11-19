@@ -225,6 +225,8 @@ public class CompetitionAutoLinearTest extends LinearOpMode {
           //shootBall();
           delay(500);
           moveScrewUp();
+          delay(500);
+
           //resetEncoders();
           //shootBall();
 
