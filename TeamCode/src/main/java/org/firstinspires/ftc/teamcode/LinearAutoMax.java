@@ -181,23 +181,15 @@ public class LinearAutoMax extends LinearOpMode {
       }*/
   }
 
-  public void calcForward(double dist){
+  public void calcDrive(double dist){
       this.distance = dist;
       CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
       ROTATIONS = distance/CIRCUMFERENCE;
       counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
   }
   public void halfForward(double dist){
-      calcForward(dist);
-      telemetry.addData("Calculated","");
-      telemetry.update();
+      calcDrive(dist);
       while(robot.frontLeftMotor.getCurrentPosition()<=counts-100){
-          //counts = 1000;
-          telemetry.addData("Counts", counts);
-          telemetry.addData("Distance", distance);
-          telemetry.addData("Circumference", CIRCUMFERENCE);
-          telemetry.addData("Rotations", ROTATIONS);
-          telemetry.update();
           robot.frontLeftMotor.setTargetPosition(counts);
           robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           robot.frontLeftMotor.setPower(.5);
@@ -217,16 +209,8 @@ public class LinearAutoMax extends LinearOpMode {
   }
 
     public void fullForward(double dist){
-        calcForward(dist);
-        telemetry.addData("Calculated","");
-        telemetry.update();
+        calcDrive(dist);
         while(robot.frontLeftMotor.getCurrentPosition()<=counts){
-            //counts = 1000;
-            telemetry.addData("Counts", counts);
-            telemetry.addData("Distance", distance);
-            telemetry.addData("Circumference", CIRCUMFERENCE);
-            telemetry.addData("Rotations", ROTATIONS);
-            telemetry.update();
             robot.frontLeftMotor.setTargetPosition(counts);
             robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.frontLeftMotor.setPower(1);
@@ -242,6 +226,37 @@ public class LinearAutoMax extends LinearOpMode {
             robot.backRightMotor.setTargetPosition(counts);
             robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backRightMotor.setPower(1);
+        }
+    }
+
+  public void turnLeft(double angle){
+      double dist = (30*Math.PI)*(angle/360);
+      calcDrive(dist);
+      while(robot.frontRightMotor.getCurrentPosition()<=counts-100){
+          robot.frontRightMotor.setTargetPosition(counts);
+          robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.frontRightMotor.setPower(.5);
+
+          robot.backRightMotor.setTargetPosition(counts);
+          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+          robot.backRightMotor.setPower(.5);
+      }
+  }
+
+    public void turnRight(double angle){
+        double dist = (30*Math.PI)*(angle/360);
+        telemetry.addData("Counts",counts);
+        calcDrive(dist);
+        while(robot.frontRightMotor.getCurrentPosition()<=counts-100){
+            telemetry.addData("fl Pos",robot.frontLeftMotor.getCurrentPosition());
+            telemetry.update();
+            robot.frontLeftMotor.setTargetPosition(counts);
+            robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.frontLeftMotor.setPower(.5);
+
+            robot.backLeftMotor.setTargetPosition(counts);
+            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backLeftMotor.setPower(.5);
         }
     }
   public void resetEncoders()
@@ -267,17 +282,25 @@ public class LinearAutoMax extends LinearOpMode {
   public void runOpMode() throws InterruptedException {
       my_init();
       waitForStart();
-
-      telemetry.addData("fl pos:", robot.frontLeftMotor.getCurrentPosition());
-      telemetry.addData("counts:", counts);
-      telemetry.update();
       shootBall(ticksPerRotation);
+      sleep(500);
       moveScrewUp();
+      sleep(500);
       shootBall(ticksPerRotation*2);
+      sleep(500);
+      turnRight(90);
+      telemetry.addData("Turned R","");
+      telemetry.update();
+      resetEncoders();
+      turnLeft(90);
+      telemetry.addData("Turned L","");
+      telemetry.update();
+      resetEncoders();
       halfForward(2);
+      resetEncoders();
       fullForward(10);
+      resetEncoders();
       halfForward(2);
-      //sleep(1000);
       resetEncoders();
 
   }
