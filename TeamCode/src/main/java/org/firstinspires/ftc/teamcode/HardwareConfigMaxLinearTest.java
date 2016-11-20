@@ -71,7 +71,7 @@ public class HardwareConfigMaxLinearTest
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
         backRightMotor = hwMap.dcMotor.get("back right motor");
-        //shooterMotor = hwMap.dcMotor.get("shooter motor");
+        shooterMotor = hwMap.dcMotor.get("shooter motor");
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
@@ -79,8 +79,8 @@ public class HardwareConfigMaxLinearTest
         //rightServo = hwMap.servo.get("right beacon");
 
         //Set motor direction
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        backLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
+        backRightMotor.setDirection(DcMotor.Direction.REVERSE);
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -91,12 +91,12 @@ public class HardwareConfigMaxLinearTest
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-       // shooterMotor.setPower(0);
+        shooterMotor.setPower(0);
         intakeMotor.setPower(0);
 
         // Set Encoder Usage
-        //shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-      //  shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /***

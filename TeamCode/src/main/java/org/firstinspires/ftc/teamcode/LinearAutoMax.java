@@ -89,8 +89,8 @@ public class LinearAutoMax extends LinearOpMode {
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    //robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    //robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
   }
 
@@ -162,23 +162,14 @@ public class LinearAutoMax extends LinearOpMode {
     robot.backRightMotor.setPower(1);
   }*/
 
- /*public void shootBall(){
+ public void shootBall(int ticks){
+    while(robot.shooterMotor.getCurrentPosition()<=ticks){
+        robot.shooterMotor.setTargetPosition(ticks);
+        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.shooterMotor.setPower(1);
+    }
+  }
 
-      robot.shooterMotor.setTargetPosition(ticksPerRotation);
-      robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.shooterMotor.setPower(1);
-     /* if (robot.shooterMotor.getCurrentPosition() >= ticksPerRotation) {
-        step++;
-      }
-
-  }*/
- /* public void shoot2ndBall(){
-
-      robot.shooterMotor.setTargetPosition(ticksPerRotation * 2);
-      robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.shooterMotor.setPower(1);
-
-  }*/
   public void moveScrewUp(){
       while(robot.elevatorMotor.getCurrentPosition()<=ticksPerRotation * 3) {
           robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
@@ -188,7 +179,6 @@ public class LinearAutoMax extends LinearOpMode {
       /*if(robot.elevatorMotor.getCurrentPosition()>=ticksPerRotation*3){
         step++;
       }*/
-
   }
 
   public void calcForward(double dist){
@@ -197,11 +187,11 @@ public class LinearAutoMax extends LinearOpMode {
       ROTATIONS = distance/CIRCUMFERENCE;
       counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
   }
-  public void forward(double dist){
+  public void halfForward(double dist){
       calcForward(dist);
       telemetry.addData("Calculated","");
       telemetry.update();
-      while(robot.frontLeftMotor.getCurrentPosition()<=counts){
+      while(robot.frontLeftMotor.getCurrentPosition()<=counts-100){
           //counts = 1000;
           telemetry.addData("Counts", counts);
           telemetry.addData("Distance", distance);
@@ -210,25 +200,53 @@ public class LinearAutoMax extends LinearOpMode {
           telemetry.update();
           robot.frontLeftMotor.setTargetPosition(counts);
           robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.frontLeftMotor.setPower(1);
+          robot.frontLeftMotor.setPower(.5);
 
           robot.backLeftMotor.setTargetPosition(counts);
           robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backLeftMotor.setPower(1);
+          robot.backLeftMotor.setPower(.5);
 
           robot.frontRightMotor.setTargetPosition(counts);
           robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.frontRightMotor.setPower(1);
+          robot.frontRightMotor.setPower(.5);
 
           robot.backRightMotor.setTargetPosition(counts);
           robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backRightMotor.setPower(1);
+          robot.backRightMotor.setPower(.5);
       }
   }
 
+    public void fullForward(double dist){
+        calcForward(dist);
+        telemetry.addData("Calculated","");
+        telemetry.update();
+        while(robot.frontLeftMotor.getCurrentPosition()<=counts){
+            //counts = 1000;
+            telemetry.addData("Counts", counts);
+            telemetry.addData("Distance", distance);
+            telemetry.addData("Circumference", CIRCUMFERENCE);
+            telemetry.addData("Rotations", ROTATIONS);
+            telemetry.update();
+            robot.frontLeftMotor.setTargetPosition(counts);
+            robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.frontLeftMotor.setPower(1);
+
+            robot.backLeftMotor.setTargetPosition(counts);
+            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backLeftMotor.setPower(1);
+
+            robot.frontRightMotor.setTargetPosition(counts);
+            robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.frontRightMotor.setPower(1);
+
+            robot.backRightMotor.setTargetPosition(counts);
+            robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backRightMotor.setPower(1);
+        }
+    }
   public void resetEncoders()
   {
-   // robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -253,15 +271,14 @@ public class LinearAutoMax extends LinearOpMode {
       telemetry.addData("fl pos:", robot.frontLeftMotor.getCurrentPosition());
       telemetry.addData("counts:", counts);
       telemetry.update();
-      //shootBall();
+      shootBall(ticksPerRotation);
       moveScrewUp();
-      forward(10);
+      shootBall(ticksPerRotation*2);
+      halfForward(2);
+      fullForward(10);
+      halfForward(2);
       //sleep(1000);
-      telemetry.addData("It's not Moving","");
-      telemetry.update();
       resetEncoders();
-      //shootBall();
-
 
   }
 
