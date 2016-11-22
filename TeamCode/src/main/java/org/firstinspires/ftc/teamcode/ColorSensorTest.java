@@ -37,7 +37,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-//@TeleOp(name = "Test: Color Sensor Test", group = "Linear Opmode")
+@TeleOp(name = "Test: Color Sensor Test", group = "Linear Opmode")
 public class ColorSensorTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
@@ -47,7 +47,7 @@ public class ColorSensorTest extends OpMode {
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
   ColorSensor robotColorSensor = null;
-  //ColorSensor otherColorSensor = null;
+  ColorSensor otherColorSensor = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -69,9 +69,11 @@ public class ColorSensorTest extends OpMode {
   public void init() {
     telemetry.addData("Status", "Initialized");
     robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
+    robotColorSensor.setI2cAddress(I2cAddr.create8bit(0x42));
     robotColorSensor.enableLed(false);
-    //otherColorSensor = hardwareMap.colorSensor.get("color sensor 2");
-    //otherColorSensor.enableLed(false);
+    otherColorSensor = hardwareMap.colorSensor.get("color sensor 2");
+    otherColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
+    otherColorSensor.enableLed(false);
   }
 
   /*
@@ -94,7 +96,7 @@ public class ColorSensorTest extends OpMode {
   public void start() {
     //Test for color sensor
     robotColorSensor.enableLed(LEDStatus);
-    //otherColorSensor.enableLed(LEDStatus);
+    otherColorSensor.enableLed(LEDStatus);
 
   }
 
@@ -119,8 +121,8 @@ public class ColorSensorTest extends OpMode {
     telemetry.addData("Color sensor red: ", robotColorSensor.red());
     telemetry.addData("Color sensor hue: ", robotColorSensor.argb());
 
-    //telemetry.addData("Other sensor blue: ", otherColorSensor.blue());
-    //telemetry.addData("Other sensor red: ", otherColorSensor.red());
+    telemetry.addData("Other sensor blue: ", otherColorSensor.blue());
+    telemetry.addData("Other sensor red: ", otherColorSensor.red());
 
     //telemetry.addData("LED Status: ", LEDStatus);
 

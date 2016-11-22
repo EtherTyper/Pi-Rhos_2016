@@ -46,8 +46,6 @@ public class GyroSensorTest extends OpMode {
   //Initialize Variables
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
-  //ColorSensor robotColorSensor = null;
-  //ColorSensor otherColorSensor = null;
   GyroSensor robotGyroSensor = null;
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -68,71 +66,30 @@ public class GyroSensorTest extends OpMode {
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
-    //robotColorSensor = hardwareMap.colorSensor.get("color sensor 1");
-    //robotColorSensor.enableLed(false);
-    //otherColorSensor = hardwareMap.colorSensor.get("color sensor 2");
     robotGyroSensor = hardwareMap.gyroSensor.get("gyro sensor");
-    //otherColorSensor.enableLed(false);
     robotGyroSensor.calibrate();
   }
-
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
   @Override
   public void init_loop() {
 
-   // robotColorSensor.enableLed(LEDStatus);
-    //otherColorSensor.enableLed(LEDStatus);
-
   }
 
-  /*
-   * This method will be called ONCE when start is pressed
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
   @Override
   public void start() {
-    //Test for color sensor
-    //robotColorSensor.enableLed(LEDStatus);
-    //otherColorSensor.enableLed(LEDStatus);
 
     robotGyroSensor.calibrate();
     telemetry.addData("Is calibrating?", robotGyroSensor.isCalibrating());
   }
 
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   *///
   //The code for the robot while running driver control
   //This method acts as a while loop
   @Override
   public void loop() {
-    //Driver Controller
-    //robotColorSensor.enableLed(LEDStatus);
-    //otherColorSensor.enableLed(LEDStatus);
-
-    //robotColorSensor.setI2cAddress(I2cAddr)
-
-    /*telemetry.addData("Sensor placement 1: ", robotColorSensor.getI2cAddress());
-    //telemetry.addData("Sensor placement 2: ", otherColorSensor.getI2cAddress());
-
-    telemetry.addData("Color sensor blue: ", robotColorSensor.blue());
-    telemetry.addData("Color sensor red: ", robotColorSensor.red());
-    telemetry.addData("Color sensor hue: ", robotColorSensor.argb());*/
-
-    //telemetry.addData("Other sensor blue: ", otherColorSensor.blue());
-    //telemetry.addData("Other sensor red: ", otherColorSensor.red());
-
-    //telemetry.addData("LED Status: ", LEDStatus);
     telemetry.addData("Gyro X Value", robotGyroSensor.rawX());
     telemetry.addData("Gyro Y Value", robotGyroSensor.rawY());
     telemetry.addData("Gyro Z Value", robotGyroSensor.rawZ());
     telemetry.addData("Heading!", robotGyroSensor.getHeading());
     telemetry.addData("Sensor Status: ", robotGyroSensor.status());
-
 
   }
 }
