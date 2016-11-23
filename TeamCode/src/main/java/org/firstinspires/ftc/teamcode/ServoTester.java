@@ -43,7 +43,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-//@TeleOp(name = "Servo Crap", group = "Linear Opmode")
+@TeleOp(name = "Servo Test Code", group = "Linear Opmode")
 public class ServoTester extends OpMode {
 
   //Objects setup
@@ -88,7 +88,7 @@ public class ServoTester extends OpMode {
   @Override
   public void init_loop() {
     telemetry.addData("Status", "(Initialized) Loop");
-    rightServo = hardwareMap.servo.get("right servo");
+    rightServo = hardwareMap.servo.get("servo 1");
   }
 
   //Runs once when start button is pressed
@@ -102,17 +102,11 @@ public class ServoTester extends OpMode {
 
   //          ===Robot Functions===        //
 
-  void MoveTheDamServo(double motorPosition) {
-
-    rightServo.setPosition(motorPosition);
-
-  }
-
-  void ControlTheDangServo(double motorPosition) {
-    if (gamepad2.a) {
-
-
-      rightServo.setPosition(motorPosition);
+  void ControlTheDankServo() {
+    if (gamepad1.a) {
+      rightServo.setPosition(1);
+    }else if (gamepad1.b){
+      rightServo.setPosition(0);
     } else
       rightServo.setPosition(0.5);
   }
@@ -124,7 +118,7 @@ public class ServoTester extends OpMode {
 
       telemetry.addData("Status", "(Running) Main Loop");
       //MoveTheDamServo(0);
-      ControlTheDangServo(1);
+      ControlTheDankServo();
       telemetry.addData("Motor position", rightServo.getPosition());
 
     }
