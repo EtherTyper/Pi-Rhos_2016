@@ -29,6 +29,7 @@ import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -72,6 +73,7 @@ public class GyroSensorTest extends OpMode {
     leftMotor = hardwareMap.dcMotor.get("left motor");
     rightMotor = hardwareMap.dcMotor.get("right motor");
     robotGyroSensor.calibrate();
+    leftMotor.setDirection(DcMotor.Direction.REVERSE);
   }
   @Override
   public void init_loop() {
@@ -162,6 +164,7 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Heading!", robotGyroSensor.getHeading());
     telemetry.addData("Sensor Status: ", robotGyroSensor.status());
     //turnRightNintyAndStop();
+    turnLeftNintyAndStop();
   }
 }
 
