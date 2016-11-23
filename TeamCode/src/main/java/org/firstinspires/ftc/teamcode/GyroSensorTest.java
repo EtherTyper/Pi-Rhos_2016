@@ -51,6 +51,7 @@ public class GyroSensorTest extends OpMode {
   private final int ticksPerRotation = 1120;
   private int motorTarget = 3 * ticksPerRotation;
   private int realTimeTicks = 0;
+  public int threshold = 5;
 
   private double time = 0;
   private double wheelDiameter = 2.75;
@@ -61,6 +62,7 @@ public class GyroSensorTest extends OpMode {
   private double motorSpeed = 0;
 
   private boolean LEDStatus = false;
+  public boolean goalReached = false;
 
 
   @Override
@@ -83,6 +85,73 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Is calibrating?", robotGyroSensor.isCalibrating());
   }
 
+  public void turnRightNintyAndStop() {
+    if (!robotGyroSensor.isCalibrating()){
+      if (robotGyroSensor.getHeading() > (90 - threshold) && robotGyroSensor.getHeading() < (90 + threshold)) {
+        goalReached = true;
+      }
+    if (goalReached == true) {
+      leftMotor.setPower(0);
+      rightMotor.setPower(0);
+    } else if (goalReached == false) {
+      leftMotor.setPower(1);
+      rightMotor.setPower(-1);
+    }
+  }
+  }
+
+  public void turnLeftNintyAndStop() {
+    if (!robotGyroSensor.isCalibrating()){
+      if (robotGyroSensor.getHeading() > (270 - threshold) && robotGyroSensor.getHeading() < (270 + threshold)) {
+        goalReached = true;
+      }
+      if (goalReached == true) {
+        leftMotor.setPower(0);
+        rightMotor.setPower(0);
+      } else if (goalReached == false) {
+        leftMotor.setPower(-1);
+        rightMotor.setPower(1);
+      }
+    }
+  }
+
+  public void turnRightVariableAndStop(int power, int heading)
+  {
+    if (!robotGyroSensor.isCalibrating()){
+      if (robotGyroSensor.getHeading() > (heading - threshold) && robotGyroSensor.getHeading() < (heading + threshold)) {
+        goalReached = true;
+      }
+      if (goalReached == true) {
+        leftMotor.setPower(0);
+        rightMotor.setPower(0);
+      } else if (goalReached == false) {
+        leftMotor.setPower(power);
+        rightMotor.setPower(-power);
+      }
+    }
+  }
+
+  public void turnLeftVariableAndStop(int power, int heading)
+  {
+    if (!robotGyroSensor.isCalibrating()){
+      if (robotGyroSensor.getHeading() > ((360-heading) - threshold) && robotGyroSensor.getHeading() < ((360-heading) + threshold)) {
+        goalReached = true;
+      }
+      if (goalReached == true) {
+        leftMotor.setPower(0);
+        rightMotor.setPower(0);
+      } else if (goalReached == false) {
+        leftMotor.setPower(-power);
+        rightMotor.setPower(power);
+      }
+    }
+  }
+
+  public void recalibrateGyro()
+  {
+    robotGyroSensor.calibrate();
+  }
+
   //The code for the robot while running driver control
   //This method acts as a while loop
   @Override
@@ -92,6 +161,7 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Gyro Z Value", robotGyroSensor.rawZ());
     telemetry.addData("Heading!", robotGyroSensor.getHeading());
     telemetry.addData("Sensor Status: ", robotGyroSensor.status());
-
+    //turnRightNintyAndStop();
   }
 }
+
