@@ -67,6 +67,8 @@ public class GyroSensorTest extends OpMode {
   public void init() {
     telemetry.addData("Status", "Initialized");
     robotGyroSensor = hardwareMap.gyroSensor.get("gyro sensor");
+    leftMotor = hardwareMap.dcMotor.get("left motor");
+    rightMotor = hardwareMap.dcMotor.get("right motor");
     robotGyroSensor.calibrate();
   }
   @Override
