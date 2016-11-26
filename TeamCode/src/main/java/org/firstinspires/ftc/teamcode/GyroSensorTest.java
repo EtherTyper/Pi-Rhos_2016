@@ -163,11 +163,11 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Gyro Z Value", robotGyroSensor.rawZ());
     telemetry.addData("Heading!", robotGyroSensor.getHeading());
     telemetry.addData("Sensor Status: ", robotGyroSensor.status());
-    turnRightNintyAndStop();
-    recalibrateGyro();
-    turnLeftNintyAndStop();
-    recalibrateGyro();
-    turnRightVariableAndStop(0.5, 45);
+    turnRightVariableAndStop(0.25, 90);
+    //recalibrateGyro();
+    //turnLeftNintyAndStop();
+    //recalibrateGyro();
+    //turnRightVariableAndStop(0.5, 45);
   }
 }
 
