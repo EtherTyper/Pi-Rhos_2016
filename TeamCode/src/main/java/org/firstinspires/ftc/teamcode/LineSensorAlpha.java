@@ -114,7 +114,7 @@ public class LineSensorAlpha extends OpMode {
   @Override
   public void loop() {
     //Driver Controller
-    while(!reached){
+    if(!reached){
       testForLine();
     }
   }
@@ -125,7 +125,7 @@ public class LineSensorAlpha extends OpMode {
       stopRobot();
       reached = true;
       try {
-        Thread.sleep(5000);
+        Thread.sleep(100);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -172,8 +172,8 @@ public class LineSensorAlpha extends OpMode {
 
   //Move robot none stop
   public void moveForwardNonStop(){
-    leftMotor.setPower(0.5);
-    rightMotor.setPower(0.5);
+    leftMotor.setPower(0.15);
+    rightMotor.setPower(0.15);
   }
 
   //Stop robot

@@ -120,8 +120,11 @@ public class BeaconBlueBeta extends OpMode {
       if (!pressed) {
         moveRobotForward(3);
         boolean crap = testForBlue();
+        telemetry.addData("Pressed status ", pressed);
+
       }
       this.initialize = false;
+      telemetry.addData("initialize status ", this.initialize);
     }
   }
 
