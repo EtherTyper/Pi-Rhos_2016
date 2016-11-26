@@ -68,7 +68,7 @@ public class LineSensorAlpha extends OpMode {
   private double lastSecondsTick = 0;
   private double motorSpeed = 0;
 
-  private boolean initialize = true;
+  private boolean reached = false;
 
   @Override
   public void init() {
@@ -114,19 +114,24 @@ public class LineSensorAlpha extends OpMode {
   @Override
   public void loop() {
     //Driver Controller
-    if(!testForLine()){
-      moveForwardNonStop();
-    } else {
-      stopRobot();
+    while(!reached){
+      testForLine();
     }
   }
 
   //Test for line
-  public boolean testForLine() {
-    if(colorSensor.alpha() >= 40) {
-      return true;
+  public void testForLine() {
+    if(colorSensor.alpha() >= 5) {
+      stopRobot();
+      reached = true;
+      try {
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } else {
+      moveForwardNonStop();
     }
-    return false;
   }
 
   //Test for blue
