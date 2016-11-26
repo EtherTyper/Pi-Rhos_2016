@@ -35,6 +35,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -67,6 +69,8 @@ public class BeaconBlueBeta extends OpMode {
   private double lastSecondsTick = 0;
   private double motorSpeed = 0;
 
+  private boolean initialize = true;
+
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
@@ -80,13 +84,11 @@ public class BeaconBlueBeta extends OpMode {
   public void init_loop() {
 
     leftMotor = hardwareMap.dcMotor.get("left motor");
+    leftMotor.setDirection(DcMotor.Direction.REVERSE);
     rightMotor = hardwareMap.dcMotor.get("right motor");
     colorSensor = hardwareMap.colorSensor.get("color sensor");
+    colorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
     servo = hardwareMap.servo.get("servo");
-
-    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
   }
 
@@ -109,35 +111,34 @@ public class BeaconBlueBeta extends OpMode {
   @Override
   public void loop() {
     //Driver Controller
+    if (this.initialize) {
+      telemetry.addData("Color sensor blue: ", colorSensor.blue());  //return right blue value
+      telemetry.addData("Color sensor red: ", colorSensor.red());    //return right red value
 
-    telemetry.addData("Right color sensor blue: ", colorSensor.blue());  //return right blue value
-    telemetry.addData("Right color sensor red: ", colorSensor.red());    //return right red value
-    telemetry.addData("Left color sensor blue: ", colorSensor.blue());    //return left blue value
-    telemetry.addData("Left color sensor red: ", colorSensor.red());     //return left red value
+      boolean pressed = testForBlue(colorSensor.blue(), colorSensor.red());  //tests for blue color
 
-    boolean pressed = testForBlue(colorSensor.blue(), colorSensor.red());  //tests for blue color
-
-    if (!pressed){
-      moveRobotForward(1);
-      testForBlue(colorSensor.blue(), colorSensor.red());
+      if (!pressed) {
+        moveRobotForward(1);
+        pressed = testForBlue(colorSensor.blue(), colorSensor.red());
+      }
+      this.initialize = false;
     }
-
   }
 
   //Test for blue
   public boolean testForBlue(int blueValue, int redValue) {
     //Stop
     try {
-      Thread.sleep(300);
+      Thread.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
 
     //Stop servo
-    if ((blueValue >= 4) && (redValue < 3)){
+    if ((blueValue >= 3) && (redValue < 2)){
       servo.setPosition(1);
       try {
-        Thread.sleep(300);
+        Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -152,7 +153,7 @@ public class BeaconBlueBeta extends OpMode {
     leftMotor.setPower(1);
     rightMotor.setPower(1);
     try {
-      Thread.sleep(seconds * 100);
+      Thread.sleep(seconds * 1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
