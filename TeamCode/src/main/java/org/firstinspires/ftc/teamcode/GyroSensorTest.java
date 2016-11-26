@@ -117,7 +117,7 @@ public class GyroSensorTest extends OpMode {
     }
   }
 
-  public void turnRightVariableAndStop(int power, int heading)
+  public void turnRightVariableAndStop(double power, int heading)
   {
     if (!robotGyroSensor.isCalibrating()){
       if (robotGyroSensor.getHeading() > (heading - threshold) && robotGyroSensor.getHeading() < (heading + threshold)) {
@@ -133,7 +133,7 @@ public class GyroSensorTest extends OpMode {
     }
   }
 
-  public void turnLeftVariableAndStop(int power, int heading)
+  public void turnLeftVariableAndStop(double power, int heading)
   {
     if (!robotGyroSensor.isCalibrating()){
       if (robotGyroSensor.getHeading() > ((360-heading) - threshold) && robotGyroSensor.getHeading() < ((360-heading) + threshold)) {
@@ -163,8 +163,11 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Gyro Z Value", robotGyroSensor.rawZ());
     telemetry.addData("Heading!", robotGyroSensor.getHeading());
     telemetry.addData("Sensor Status: ", robotGyroSensor.status());
-    //turnRightNintyAndStop();
-    turnLeftNintyAndStop();
+    turnRightVariableAndStop(0.25, 90);
+    //recalibrateGyro();
+    //turnLeftNintyAndStop();
+    //recalibrateGyro();
+    //turnRightVariableAndStop(0.5, 45);
   }
 }
 
