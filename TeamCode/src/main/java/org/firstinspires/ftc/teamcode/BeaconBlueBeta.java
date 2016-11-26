@@ -115,27 +115,27 @@ public class BeaconBlueBeta extends OpMode {
       telemetry.addData("Color sensor blue: ", colorSensor.blue());  //return right blue value
       telemetry.addData("Color sensor red: ", colorSensor.red());    //return right red value
 
-      boolean pressed = testForBlue(colorSensor.blue(), colorSensor.red());  //tests for blue color
+      boolean pressed = testForBlue();  //tests for blue color
 
       if (!pressed) {
         moveRobotForward(3);
-        pressed = testForBlue(colorSensor.blue(), colorSensor.red());
+        boolean crap = testForBlue();
       }
       this.initialize = false;
     }
   }
 
   //Test for blue
-  public boolean testForBlue(int blueValue, int redValue) {
+  public boolean testForBlue() {
     //Stop
     try {
-      Thread.sleep(1000);
+      Thread.sleep(2000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
 
     //Stop servo
-    if ((blueValue >= 3) && (redValue < 2)){
+    if ((colorSensor.blue() >= 3) && (colorSensor.red() < 2)){
       servo.setPosition(1);
       try {
         Thread.sleep(2000);
