@@ -1,16 +1,22 @@
 /* Copyright (c) 2014, 2015 Qualcomm Technologies Inc
+
 All rights reserved.
+
 Redistribution and use in source and binary forms, with or without modification,
 are permitted (subject to the limitations in the disclaimer below) provided that
 the following conditions are met:
+
 Redistributions of source code must retain the above copyright notice, this list
 of conditions and the following disclaimer.
+
 Redistributions in binary form must reproduce the above copyright notice, this
 list of conditions and the following disclaimer in the documentation and/or
 other materials provided with the distribution.
+
 Neither the name of Qualcomm Technologies Inc nor the names of its contributors
 may be used to endorse or promote products derived from this software without
 specific prior written permission.
+
 NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
 LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -29,16 +35,15 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.I2cAddr;
-import com.qualcomm.robotcore.hardware.LED;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Test: Color Sensor Test", group = "Linear Opmode")
-public class ColorSensorTest extends OpMode {
+@TeleOp(name = "Test: Beacon Blue Beta", group = "Linear Opmode")
+public class BeaconBlueBeta extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -46,9 +51,8 @@ public class ColorSensorTest extends OpMode {
   //Initialize Variables
   DcMotor leftMotor = null;
   DcMotor rightMotor = null;
-  ColorSensor robotColorSensor1 = null;
-  ColorSensor robotColorSensor2 = null;
-  ColorSensor robotColorSensor3 = null;
+  ColorSensor colorSensor = null;
+  Servo servo = null;
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -63,21 +67,9 @@ public class ColorSensorTest extends OpMode {
   private double lastSecondsTick = 0;
   private double motorSpeed = 0;
 
-  private boolean LEDStatus = false;
-
-
   @Override
   public void init() {
     telemetry.addData("Status", "Initialized");
-    robotColorSensor1 = hardwareMap.colorSensor.get("color sensor 1");
-    robotColorSensor1.setI2cAddress(I2cAddr.create8bit(0x10));
-    robotColorSensor1.enableLed(false);
-    robotColorSensor2 = hardwareMap.colorSensor.get("color sensor 2");
-    robotColorSensor2.setI2cAddress(I2cAddr.create8bit(0x12));
-    robotColorSensor2.enableLed(false);
-    robotColorSensor3 = hardwareMap.colorSensor.get("color sensor 3");
-    robotColorSensor3.setI2cAddress(I2cAddr.create8bit(0x14));
-    robotColorSensor3.enableLed(false);
   }
 
   /*
@@ -87,9 +79,14 @@ public class ColorSensorTest extends OpMode {
   @Override
   public void init_loop() {
 
-    robotColorSensor1.enableLed(LEDStatus);
-    robotColorSensor2.enableLed(LEDStatus);
-    robotColorSensor3.enableLed(LEDStatus);
+    leftMotor = hardwareMap.dcMotor.get("left motor");
+    rightMotor = hardwareMap.dcMotor.get("right motor");
+    colorSensor = hardwareMap.colorSensor.get("color sensor");
+    servo = hardwareMap.servo.get("servo");
+
+    leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    leftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
   }
 
@@ -103,30 +100,64 @@ public class ColorSensorTest extends OpMode {
 
   }
 
-
   /*
    * This method will be called repeatedly in a loop
    * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   *///
+   */
   //The code for the robot while running driver control
   //This method acts as a while loop
   @Override
   public void loop() {
     //Driver Controller
 
-    //telemetry.addData("Sensor placement 1: ", robotColorSensor1.getI2cAddress());
-    //telemetry.addData("Sensor placement 2: ", robotColorSensor2.getI2cAddress());
+    telemetry.addData("Right color sensor blue: ", colorSensor.blue());  //return right blue value
+    telemetry.addData("Right color sensor red: ", colorSensor.red());    //return right red value
+    telemetry.addData("Left color sensor blue: ", colorSensor.blue());    //return left blue value
+    telemetry.addData("Left color sensor red: ", colorSensor.red());     //return left red value
 
-    telemetry.addData("Color sensor 1 blue: ", robotColorSensor1.blue());
-    telemetry.addData("Color sensor 1 red: ", robotColorSensor1.red());
-    //telemetry.addData("Color sensor 1 hue: ", robotColorSensor1.argb());
+    boolean pressed = testForBlue(colorSensor.blue(), colorSensor.red());  //tests for blue color
 
-    telemetry.addData("Color sensor 2 blue: ", robotColorSensor2.blue());
-    telemetry.addData("Color sensor 2 red: ", robotColorSensor2.red());
-
-    telemetry.addData("Color sensor 3 blue: ", robotColorSensor3.blue());
-    telemetry.addData("Color sensor 3 red: ", robotColorSensor3.red());
+    if (!pressed){
+      moveRobotForward(1);
+      testForBlue(colorSensor.blue(), colorSensor.red());
+    }
 
   }
-}
 
+  //Test for blue
+  public boolean testForBlue(int blueValue, int redValue) {
+    //Stop
+    try {
+      Thread.sleep(300);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    //Stop servo
+    if ((blueValue >= 4) && (redValue < 3)){
+      servo.setPosition(1);
+      try {
+        Thread.sleep(300);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      servo.setPosition(0.5);
+      return true;
+    }
+    return false;
+  }
+
+  //Move robot
+  public void moveRobotForward(int seconds){
+    leftMotor.setPower(1);
+    rightMotor.setPower(1);
+    try {
+      Thread.sleep(seconds * 100);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    leftMotor.setPower(0);
+    rightMotor.setPower(0);
+  }
+
+}
