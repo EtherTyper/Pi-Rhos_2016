@@ -118,7 +118,7 @@ public class BeaconBlueBeta extends OpMode {
       boolean pressed = testForBlue(colorSensor.blue(), colorSensor.red());  //tests for blue color
 
       if (!pressed) {
-        moveRobotForward(1);
+        moveRobotForward(3);
         pressed = testForBlue(colorSensor.blue(), colorSensor.red());
       }
       this.initialize = false;
@@ -150,10 +150,10 @@ public class BeaconBlueBeta extends OpMode {
 
   //Move robot
   public void moveRobotForward(int seconds){
-    leftMotor.setPower(1);
-    rightMotor.setPower(1);
+    leftMotor.setPower(0.2);
+    rightMotor.setPower(0.2);
     try {
-      Thread.sleep(seconds * 1000);
+      Thread.sleep(seconds * 100);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
