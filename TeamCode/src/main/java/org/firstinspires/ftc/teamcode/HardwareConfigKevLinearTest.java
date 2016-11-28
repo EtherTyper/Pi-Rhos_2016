@@ -71,12 +71,12 @@ public class HardwareConfigKevLinearTest
         frontRightMotor = hwMap.dcMotor.get("front right motor");
         backLeftMotor = hwMap.dcMotor.get("back left motor");
         backRightMotor = hwMap.dcMotor.get("back right motor");
-        //shooterMotor = hwMap.dcMotor.get("shooter motor");
+        shooterMotor = hwMap.dcMotor.get("shooter motor");
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
-       // leftServo = hwMap.servo.get("left beacon");
-        //rightServo = hwMap.servo.get("right beacon");
+        leftServo = hwMap.servo.get("left beacon");
+        rightServo = hwMap.servo.get("right beacon");
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -84,19 +84,19 @@ public class HardwareConfigKevLinearTest
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
-       // rightServo.setDirection(Servo.Direction.REVERSE);
+        rightServo.setDirection(Servo.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-       // shooterMotor.setPower(0);
+        shooterMotor.setPower(0);
         intakeMotor.setPower(0);
 
         // Set Encoder Usage
         //shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-      //  shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /***
