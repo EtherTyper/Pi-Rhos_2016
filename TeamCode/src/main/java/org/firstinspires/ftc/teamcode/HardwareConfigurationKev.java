@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -83,7 +84,19 @@ public class HardwareConfigurationKev
         leftServo = hwMap.servo.get("left beacon");
         rightServo = hwMap.servo.get("right beacon");
 
+        rightColorSensor = hwMap.colorSensor.get("right sensor");
+        rightColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
+        rightColorSensor.enableLed(false);
 
+        leftColorSensor = hwMap.colorSensor.get("left sensor");
+        leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
+        leftColorSensor.enableLed(false);
+
+        lineColorSensor = hwMap.colorSensor.get("line sensor");
+        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x14));
+        lineColorSensor.enableLed(false);
+
+        gyro = hwMap.gyroSensor.get("gyro sensor");
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
