@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Linear Drive Test", group = "Concept")
+@Autonomous(name = "Linear Color Auto", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class LinearAutoMaxNew extends LinearOpMode {
 
@@ -282,12 +282,12 @@ public class LinearAutoMaxNew extends LinearOpMode {
   public void runOpMode() throws InterruptedException {
       my_init();
       waitForStart();
-      shootBall(ticksPerRotation);
+      /*shootBall(ticksPerRotation);
       sleep(500);
       moveScrewUp();
       sleep(500);
       shootBall(ticksPerRotation*2);
-      sleep(500);
+      sleep(500);*/
       turnRight(90);
       telemetry.addData("Turned R","");
       telemetry.update();
@@ -296,12 +296,8 @@ public class LinearAutoMaxNew extends LinearOpMode {
       telemetry.addData("Turned L","");
       telemetry.update();
       resetEncoders();
-      halfForward(2);
-      resetEncoders();
       fullForward(10);
-      resetEncoders();
-      halfForward(2);
-      resetEncoders();
+
 
   }
 
