@@ -61,12 +61,6 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
     robot.init(hardwareMap);
 
-    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -79,7 +73,6 @@ public class Autonomous2ndEdition extends LinearOpMode {
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
