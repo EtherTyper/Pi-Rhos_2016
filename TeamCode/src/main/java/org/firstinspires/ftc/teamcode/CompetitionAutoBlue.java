@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Linear Drive Test", group = "Concept")
+//@Autonomous(name = "Linear Drive Test", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class CompetitionAutoBlue extends LinearOpMode {
 

@@ -39,13 +39,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-//@Autonomous(name = "Linear Drive Test", group = "Concept")
-//TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
-public class CompetitionAutoRed extends LinearOpMode {
+@Autonomous(name = "Autonomous 2nd Edition", group = "Concept")
+public class Autonomous2ndEdition extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private HardwareConfigMaxLinearTest robot = new HardwareConfigMaxLinearTest();
+  private HardwareConfigKevLinearTest robot = new HardwareConfigKevLinearTest();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -55,27 +54,18 @@ public class CompetitionAutoRed extends LinearOpMode {
   private int backLeftTarget = 0;
   private int shooterTarget = 0;
   int step = 0;
-  double MOTOR_CPR = 1120;
-  double GEAR_RATIO = 27.0/40.0;
-  double WHEEL_DIAMETER = 3.5;
-  double distance = 10;
 
-    double CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
-    double ROTATIONS = distance/CIRCUMFERENCE;
-  int counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
-
-
-
-  public void my_init() {
+  //Initialization
+  public void init_hardware() {
     telemetry.addData("Status", "Initialized");
 
     robot.init(hardwareMap);
 
-    /*robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+    robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -89,35 +79,47 @@ public class CompetitionAutoRed extends LinearOpMode {
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+    robot.bottomSensor.enableLed(true);
   }
 
-
-  /*public void delay(long mils){
+  //Stop Function
+  public void delay(long mils){
     try {
       Thread.sleep(mils);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-  }*/
-
-  //Will be uncommented once confirmation of LinearOpMode function is present.
-  /*public void haltDrive(){
-    robot.frontLeftMotor.setPower(0);
-    robot.frontRightMotor.setPower(0);
-    robot.backLeftMotor.setPower(0);
-    robot.backRightMotor.setPower(0);
   }
+
+  public void haltDrive(){
+        robot.frontLeftMotor.setPower(0);
+        robot.frontRightMotor.setPower(0);
+        robot.backLeftMotor.setPower(0);
+        robot.backRightMotor.setPower(0);
+    }
 
   public void haltALL(){
-    haltDrive();
-    robot.intakeMotor.setPower(0);
-    robot.shooterMotor.setPower(0);
-    robot.elevatorMotor.setPower(0);
-  }
+        haltDrive();
+        robot.intakeMotor.setPower(0);
+        robot.shooterMotor.setPower(0);
+        robot.elevatorMotor.setPower(0);
+    }
 
+  public void resetEncoders() {
+        robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+    }
+
+  //Move the Robot
   public void moveForwardTo(int moveInRotations){
     robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
     robot.frontLeftMotor.setPower(1);
@@ -160,116 +162,41 @@ public class CompetitionAutoRed extends LinearOpMode {
     robot.frontRightMotor.setPower(1);
     robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
     robot.backRightMotor.setPower(1);
-  }*/
+  }
 
- public void shootBall(int ticks){
-    while(robot.shooterMotor.getCurrentPosition()<=ticks){
-        robot.shooterMotor.setTargetPosition(ticks);
-        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.shooterMotor.setPower(1);
+  public void moveElevator(int rotationTime){
+
+    robot.elevatorMotor.setPower(1);
+    try {
+      Thread.sleep(rotationTime * 100);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
+    robot.elevatorMotor.setPower(0);
+
+  }
+
+  //Robot Parts
+  public void shootBall(){
+
+      robot.shooterMotor.setTargetPosition(ticksPerRotation);
+      robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.shooterMotor.setPower(1);
+      if (robot.shooterMotor.getCurrentPosition() >= ticksPerRotation) {
+        step++;
+      }
+
   }
 
   public void moveScrewUp(){
-      while(robot.elevatorMotor.getCurrentPosition()<=ticksPerRotation * 3) {
-          robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
-          robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.elevatorMotor.setPower(1);
-      }
-      /*if(robot.elevatorMotor.getCurrentPosition()>=ticksPerRotation*3){
-        step++;
-      }*/
-  }
 
-  public void calcDrive(double dist){
-      this.distance = dist;
-      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
-      ROTATIONS = distance/CIRCUMFERENCE;
-      counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
-  }
-  public void halfForward(double dist){
-      calcDrive(dist);
-      while(robot.frontLeftMotor.getCurrentPosition()<=counts-100){
-          robot.frontLeftMotor.setTargetPosition(counts);
-          robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.frontLeftMotor.setPower(.5);
-
-          robot.backLeftMotor.setTargetPosition(counts);
-          robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backLeftMotor.setPower(.5);
-
-          robot.frontRightMotor.setTargetPosition(counts);
-          robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.frontRightMotor.setPower(.5);
-
-          robot.backRightMotor.setTargetPosition(counts);
-          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backRightMotor.setPower(.5);
-      }
-  }
-
-    public void fullForward(double dist){
-        calcDrive(dist);
-        while(robot.frontLeftMotor.getCurrentPosition()<=counts){
-            robot.frontLeftMotor.setTargetPosition(counts);
-            robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.frontLeftMotor.setPower(1);
-
-            robot.backLeftMotor.setTargetPosition(counts);
-            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.backLeftMotor.setPower(1);
-
-            robot.frontRightMotor.setTargetPosition(counts);
-            robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.frontRightMotor.setPower(1);
-
-            robot.backRightMotor.setTargetPosition(counts);
-            robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.backRightMotor.setPower(1);
-        }
-    }
-
-  public void turnLeft(double angle){
-      double dist = (30*Math.PI)*(angle/360);
-      calcDrive(dist);
-      while(robot.frontRightMotor.getCurrentPosition()<=counts-100){
-          robot.frontRightMotor.setTargetPosition(counts);
-          robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.frontRightMotor.setPower(.5);
-
-          robot.backRightMotor.setTargetPosition(counts);
-          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backRightMotor.setPower(.5);
-      }
-  }
-
-    public void turnRight(double angle){
-        double dist = (30*Math.PI)*(angle/360);
-        telemetry.addData("Counts",counts);
-        calcDrive(dist);
-        while(robot.frontRightMotor.getCurrentPosition()<=counts-100){
-            telemetry.addData("fl Pos",robot.frontLeftMotor.getCurrentPosition());
-            telemetry.update();
-            robot.frontLeftMotor.setTargetPosition(counts);
-            robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.frontLeftMotor.setPower(.5);
-
-            robot.backLeftMotor.setTargetPosition(counts);
-            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.backLeftMotor.setPower(.5);
-        }
-    }
-  public void resetEncoders()
-  {
-    robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.elevatorMotor.setPower(1);
 
   }
 
+  //Read Color
   public boolean findLeftColor(String findColor){
     return true;
   }
@@ -280,29 +207,26 @@ public class CompetitionAutoRed extends LinearOpMode {
 
   @Override
   public void runOpMode() throws InterruptedException {
-      my_init();
+      telemetry.addData("Stage: ", "Called runOpMode");
+
+      //Initialize Robot
+      init_hardware();
       waitForStart();
-      shootBall(ticksPerRotation);
-      sleep(500);
-      moveScrewUp();
-      sleep(500);
-      shootBall(ticksPerRotation*2);
-      sleep(500);
-      turnRight(90);
-      telemetry.addData("Turned R","");
-      telemetry.update();
-      resetEncoders();
-      turnLeft(90);
-      telemetry.addData("Turned L","");
-      telemetry.update();
-      resetEncoders();
-      halfForward(2);
-      resetEncoders();
-      fullForward(10);
-      resetEncoders();
-      halfForward(2);
-      resetEncoders();
+
+      //Shoot Ball One
+      shootBall();
+      //delay(500);
+      //moveScrewUp();
+      //delay(600);
+
+      //Shoot Ball Two
+      //shootBall();
+      //delay(500);
+
+      //Move the Robot
+      //resetEncoders();
+      //delay(100);
+
 
   }
-
 }

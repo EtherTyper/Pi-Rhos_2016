@@ -81,22 +81,24 @@ public class HardwareConfigurationKev
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
+        //Servos
         leftServo = hwMap.servo.get("left beacon");
         rightServo = hwMap.servo.get("right beacon");
 
+        //Sensors
         rightColorSensor = hwMap.colorSensor.get("right sensor");
         rightColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
         rightColorSensor.enableLed(false);
 
-        leftColorSensor = hwMap.colorSensor.get("left sensor");
-        leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
-        leftColorSensor.enableLed(false);
+        //leftColorSensor = hwMap.colorSensor.get("left sensor");
+        //leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
+        //leftColorSensor.enableLed(false);
 
         lineColorSensor = hwMap.colorSensor.get("line sensor");
         lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x14));
         lineColorSensor.enableLed(false);
 
-        gyro = hwMap.gyroSensor.get("gyro sensor");
+        //gyro = hwMap.gyroSensor.get("gyro sensor");
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);

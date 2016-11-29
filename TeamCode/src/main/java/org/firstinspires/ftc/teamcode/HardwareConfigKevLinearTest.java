@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -38,11 +39,11 @@ public class HardwareConfigKevLinearTest
     //Color sensor
     ColorSensor rightColorSensor = null;
     ColorSensor leftColorSensor = null;
+    ColorSensor bottomSensor = null;
 
     //Servos
     Servo leftServo = null;
     Servo rightServo = null;
-
 
     //Variables
     public Servo intake = null;
@@ -75,8 +76,17 @@ public class HardwareConfigKevLinearTest
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
+        // Define Servos
         leftServo = hwMap.servo.get("left beacon");
         rightServo = hwMap.servo.get("right beacon");
+
+        // Define Color Sensors
+        leftColorSensor = hwMap.colorSensor.get("left color sensor");
+        leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
+        //rightColorSensor = hwMap.colorSensor.get("right color sensor");
+        //rightColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
+        bottomSensor = hwMap.colorSensor.get("bottom color sensor");
+        bottomSensor.setI2cAddress(I2cAddr.create8bit(0x14));
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
