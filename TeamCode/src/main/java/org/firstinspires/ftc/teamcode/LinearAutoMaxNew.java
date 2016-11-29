@@ -41,19 +41,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @Autonomous(name = "Linear Drive Test", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
-public class LinearAutoMax extends LinearOpMode {
+public class LinearAutoMaxNew extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private HardwareConfigMaxLinearNew robot = new HardwareConfigMaxLinearNew();
+  private HardwareConfigMaxLinearTest robot = new HardwareConfigMaxLinearTest();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  /*private int frontRightTarget = 0;
+  private int frontRightTarget = 0;
   private int frontLeftTarget = 0;
   private int backRightTarget = 0;
   private int backLeftTarget = 0;
-  private int shooterTarget = 0;*/
+  private int shooterTarget = 0;
   int step = 0;
   double MOTOR_CPR = 1120;
   double GEAR_RATIO = 27.0/40.0;
@@ -176,6 +176,9 @@ public class LinearAutoMax extends LinearOpMode {
           robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           robot.elevatorMotor.setPower(1);
       }
+      /*if(robot.elevatorMotor.getCurrentPosition()>=ticksPerRotation*3){
+        step++;
+      }*/
   }
 
   public void calcDrive(double dist){

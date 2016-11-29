@@ -24,7 +24,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *   As the arm servo approaches 0, the arm position moves up (away from the floor).
  *   As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-public class HardwareConfigMaxLinearTest
+public class HardwareConfigMaxLinearNew
 {
     // Hardware Components
     DcMotor frontLeftMotor   = null;
@@ -47,19 +47,14 @@ public class HardwareConfigMaxLinearTest
 
     //Variables
     public Servo intake = null;
-    public final static double ARM_HOME = 0.2;
-    public final static double CLAW_HOME = 0.2;
-    public final static double ARM_MIN_RANGE  = 0.20;
-    public final static double ARM_MAX_RANGE  = 0.90;
-    public final static double CLAW_MIN_RANGE  = 0.20;
-    public final static double CLAW_MAX_RANGE  = 0.7;
+
 
     /* Local OpMode members. */
     HardwareMap hwMap  = null;
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwareConfigMaxLinearTest() {
+    public HardwareConfigMaxLinearNew() {
     }
 
     /* Initialize standard Hardware interfaces */
@@ -76,8 +71,14 @@ public class HardwareConfigMaxLinearTest
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
-        //leftServo = hwMap.servo.get("left beacon");
-        //rightServo = hwMap.servo.get("right beacon");
+        leftServo = hwMap.servo.get("left beacon");
+        rightServo = hwMap.servo.get("right beacon");
+
+        //Color Sensors
+        rightColorSensor = hwMap.colorSensor.get("right color sensor");
+        leftColorSensor = hwMap.colorSensor.get("left color sensor");
+        lineSensor = hwMap.colorSensor.get("line sensor");
+
 
         //Set motor direction
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
