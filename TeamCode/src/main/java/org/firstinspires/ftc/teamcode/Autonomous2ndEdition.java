@@ -179,12 +179,9 @@ public class Autonomous2ndEdition extends LinearOpMode {
   //Robot Parts
   public void shootBall(){
 
-      robot.shooterMotor.setTargetPosition(ticksPerRotation);
+      robot.shooterMotor.setTargetPosition(robot.shooterMotor.getCurrentPosition() + ticksPerRotation);
       robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.shooterMotor.setPower(1);
-      if (robot.shooterMotor.getCurrentPosition() >= ticksPerRotation) {
-        step++;
-      }
 
   }
 

@@ -38,15 +38,15 @@ public class HardwareConfigurationKev
     DcMotor elevatorMotor = null;
 
     //Color sensor
-    ColorSensor rightColorSensor = null;
-    ColorSensor leftColorSensor = null;
+    //ColorSensor rightColorSensor = null;
+    //ColorSensor leftColorSensor = null;
     ColorSensor lineColorSensor = null;
 
     //Gyro Sensor
     GyroSensor gyro = null;
 
     //Servos
-    Servo leftServo = null;
+    //Servo leftServo = null;
     Servo rightServo = null;
 
 
@@ -82,13 +82,13 @@ public class HardwareConfigurationKev
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
         //Servos
-        leftServo = hwMap.servo.get("left beacon");
+        //leftServo = hwMap.servo.get("left beacon");
         rightServo = hwMap.servo.get("right beacon");
 
         //Sensors
-        rightColorSensor = hwMap.colorSensor.get("right sensor");
-        rightColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
-        rightColorSensor.enableLed(false);
+        //rightColorSensor = hwMap.colorSensor.get("right sensor");
+        //rightColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
+        //rightColorSensor.enableLed(false);
 
         //leftColorSensor = hwMap.colorSensor.get("left sensor");
         //leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
