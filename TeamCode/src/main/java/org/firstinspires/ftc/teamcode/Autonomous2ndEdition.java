@@ -44,7 +44,7 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private HardwareConfigKevLinearTest robot = new HardwareConfigKevLinearTest();
+  private HardwareConfigurationKev robot = new HardwareConfigurationKev();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -83,7 +83,7 @@ public class Autonomous2ndEdition extends LinearOpMode {
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.bottomSensor.enableLed(true);
+    robot.lineColorSensor.enableLed(true);
   }
 
   //Stop Function
@@ -208,11 +208,12 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
       //Initialize Robot
       init_hardware();
-      waitForStart();
+      //waitForStart();
 
       //Shoot Ball One
+      delay(500);
       shootBall();
-      //delay(500);
+      delay(500);
       //moveScrewUp();
       //delay(600);
 
