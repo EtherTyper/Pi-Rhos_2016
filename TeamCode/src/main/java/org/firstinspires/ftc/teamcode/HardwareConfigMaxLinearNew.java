@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -35,10 +36,11 @@ public class HardwareConfigMaxLinearNew
     DcMotor intakeMotor = null;
     DcMotor elevatorMotor = null;
 
-    //Color sensor
+    //Sensors
     ColorSensor rightColorSensor = null;
     ColorSensor leftColorSensor = null;
     ColorSensor lineSensor = null;
+    GyroSensor gyro = null;
 
     //Servos
     Servo leftServo = null;
@@ -74,10 +76,11 @@ public class HardwareConfigMaxLinearNew
         leftServo = hwMap.servo.get("left beacon");
         rightServo = hwMap.servo.get("right beacon");
 
-        //Color Sensors
+        //Sensors
         rightColorSensor = hwMap.colorSensor.get("right color sensor");
         leftColorSensor = hwMap.colorSensor.get("left color sensor");
         lineSensor = hwMap.colorSensor.get("line sensor");
+        gyro = hwMap.gyroSensor.get("gyro sensor");
 
 
         //Set motor direction

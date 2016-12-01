@@ -45,7 +45,7 @@ public class LinearAutoMaxNew extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private HardwareConfigMaxLinearTest robot = new HardwareConfigMaxLinearTest();
+  private HardwareConfigMaxLinearNew robot = new HardwareConfigMaxLinearNew();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -55,6 +55,8 @@ public class LinearAutoMaxNew extends LinearOpMode {
   private int backLeftTarget = 0;
   private int shooterTarget = 0;
   int step = 0;
+  public int threshold = 5;
+  public boolean goalReached = false;
   double MOTOR_CPR = 1120;
   double GEAR_RATIO = 27.0/40.0;
   double WHEEL_DIAMETER = 3.5;
@@ -194,17 +196,13 @@ public class LinearAutoMaxNew extends LinearOpMode {
           robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           robot.frontLeftMotor.setPower(.5);
 
-          robot.backLeftMotor.setTargetPosition(counts);
-          robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backLeftMotor.setPower(.5);
+          robot.backLeftMotor.setPower(robot.frontLeftMotor.getPower());
 
           robot.frontRightMotor.setTargetPosition(counts);
           robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           robot.frontRightMotor.setPower(.5);
 
-          robot.backRightMotor.setTargetPosition(counts);
-          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backRightMotor.setPower(.5);
+          robot.backRightMotor.setPower(robot.frontRightMotor.getPower());
       }
   }
 
@@ -230,33 +228,32 @@ public class LinearAutoMaxNew extends LinearOpMode {
     }
 
   public void turnLeft(double angle){
-      double dist = (30*Math.PI)*(angle/360.0);
-      calcDrive(dist);
-      while(robot.frontRightMotor.getCurrentPosition()<=counts-100){
-          robot.frontRightMotor.setTargetPosition(counts);
-          robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.frontRightMotor.setPower(.5);
-
-          robot.backRightMotor.setTargetPosition(counts);
-          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backRightMotor.setPower(.5);
+      while(!robot.gyro.isCalibrating()){
+          if (robot.gyro.getHeading() > (angle - threshold) && robot.gyro.getHeading() < (angle + threshold)) {
+              goalReached = true;
+          }
+          if (goalReached) {
+              robot.frontLeftMotor.setPower(0);
+              robot.frontRightMotor.setPower(0);
+          } else if (!goalReached) {
+              robot.frontLeftMotor.setPower(-.5);
+              robot.frontRightMotor.setPower(.5);
+          }
       }
   }
 
     public void turnRight(double angle){
-        double dist = (30*Math.PI)*(angle/360.0);
-        telemetry.addData("Counts",counts);
-        calcDrive(dist);
-        while(robot.frontRightMotor.getCurrentPosition()<=counts-100){
-            telemetry.addData("fl Pos",robot.frontLeftMotor.getCurrentPosition());
-            telemetry.update();
-            robot.frontLeftMotor.setTargetPosition(counts);
-            robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.frontLeftMotor.setPower(.5);
-
-            robot.backLeftMotor.setTargetPosition(counts);
-            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.backLeftMotor.setPower(.5);
+        while(!robot.gyro.isCalibrating()){
+            if (robot.gyro.getHeading() > (angle - threshold) && robot.gyro.getHeading() < (angle + threshold)) {
+                goalReached = true;
+            }
+            if (goalReached) {
+                robot.frontLeftMotor.setPower(0);
+                robot.frontRightMotor.setPower(0);
+            } else if (!goalReached) {
+                robot.frontLeftMotor.setPower(.5);
+                robot.frontRightMotor.setPower(-.5);
+            }
         }
     }
   public void resetEncoders()
@@ -287,7 +284,7 @@ public class LinearAutoMaxNew extends LinearOpMode {
       moveScrewUp();
       sleep(500);
       shootBall(ticksPerRotation*2);
-      sleep(500);*/
+      sleep(500);
       turnRight(90);
       telemetry.addData("Turned R","");
       telemetry.update();
@@ -296,7 +293,9 @@ public class LinearAutoMaxNew extends LinearOpMode {
       telemetry.addData("Turned L","");
       telemetry.update();
       resetEncoders();
-      fullForward(10);
+      fullForward(10);*/
+      //turnRight(90);
+      halfForward(10);
 
 
   }
