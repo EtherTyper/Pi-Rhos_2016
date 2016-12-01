@@ -180,19 +180,27 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
   public void moveScrewUp(){
 
-      robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
+      robot.elevatorMotor.setTargetPosition(ticksPerRotation * 2);
       robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.elevatorMotor.setPower(1);
 
   }
 
   //Read Color
-  public boolean findLeftColor(String findColor){
-    return true;
+  public void findLeftRed(){
+
   }
 
-  public boolean findRightColor(String findColor){
-    return true;
+  public void findLeftBlue(){
+
+    }
+
+  public void findRightRed(){
+
+  }
+
+  public void findRightBlue(){
+
   }
 
   @Override
@@ -204,18 +212,18 @@ public class Autonomous2ndEdition extends LinearOpMode {
       //waitForStart();
 
       //Shoot Ball One
-      delay(500);
+      delay(1000);
       shootBall();
-      delay(500);
-      //moveScrewUp();
-      //delay(600);
+      delay(1000);
+      moveScrewUp();
+      delay(1000);
 
       //Shoot Ball Two
-      //shootBall();
-      //delay(500);
+      shootBall();
+      delay(1000);
 
       //Move the Robot
-      //resetEncoders();
+      resetEncoders();
       //delay(100);
 
 
