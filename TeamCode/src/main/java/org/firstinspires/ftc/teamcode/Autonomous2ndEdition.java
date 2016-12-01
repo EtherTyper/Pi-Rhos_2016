@@ -55,6 +55,15 @@ public class Autonomous2ndEdition extends LinearOpMode {
   private int shooterTarget = 0;
   int step = 0;
 
+  //Calculation Variables
+  double MOTOR_CPR = 1120;
+  double GEAR_RATIO = 27.0/40.0;
+  double WHEEL_DIAMETER = 3.5;
+  double distance = 00;
+  double CIRCUMFERENCE = 0;
+  double ROTATIONS = 0;
+  int counts = 0;
+
   //Initialization
   public void init_hardware() {
     telemetry.addData("Status", "Initialized");
@@ -76,7 +85,7 @@ public class Autonomous2ndEdition extends LinearOpMode {
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.lineColorSensor.enableLed(true);
+    //robot.lineColorSensor.enableLed(true);
   }
 
   //Stop Function
@@ -114,12 +123,19 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
   //Move the Robot
   public void moveForwardTo(int moveInRotations){
+    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
     robot.frontLeftMotor.setPower(1);
+
+    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
     robot.frontRightMotor.setPower(1);
+
+    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
     robot.backLeftMotor.setPower(1);
+
+    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
     robot.backRightMotor.setPower(1);
   }
@@ -203,16 +219,25 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
   }
 
+  //Calc Rotations
+  public int calcDrive(double dist){
+    CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
+    ROTATIONS = dist/CIRCUMFERENCE;
+    counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
+    return counts;
+  }
+
   @Override
   public void runOpMode() throws InterruptedException {
       telemetry.addData("Stage: ", "Called runOpMode");
 
       //Initialize Robot
       init_hardware();
-      //waitForStart();
+      waitForStart();
+      haltALL();
 
       //Shoot Ball One
-      delay(1000);
+      /*delay(1000);
       shootBall();
       delay(1000);
       moveScrewUp();
@@ -220,9 +245,14 @@ public class Autonomous2ndEdition extends LinearOpMode {
 
       //Shoot Ball Two
       shootBall();
-      delay(1000);
+      delay(1000);*/
 
       //Move the Robot
+      telemetry.addData("Counts: ", calcDrive(1));
+      moveForwardTo(calcDrive(1));
+      delay(7000);
+
+      //Stop All Movement
       resetEncoders();
       //delay(100);
 
