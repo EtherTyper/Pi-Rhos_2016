@@ -45,7 +45,7 @@ public class LinearAutoMax extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
-  private HardwareConfigMaxLinearNew robot = new HardwareConfigMaxLinearNew();
+  private HardwareConfigMaxLinearTest robot = new HardwareConfigMaxLinearTest();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -191,17 +191,13 @@ public class LinearAutoMax extends LinearOpMode {
           robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           robot.frontLeftMotor.setPower(.5);
 
-          robot.backLeftMotor.setTargetPosition(counts);
-          robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backLeftMotor.setPower(.5);
+          robot.backLeftMotor.setPower(robot.frontLeftMotor.getPower());
 
           robot.frontRightMotor.setTargetPosition(counts);
           robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
           robot.frontRightMotor.setPower(.5);
 
-          robot.backRightMotor.setTargetPosition(counts);
-          robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-          robot.backRightMotor.setPower(.5);
+          robot.backRightMotor.setPower(robot.frontRightMotor.getPower());
       }
   }
 
@@ -279,12 +275,14 @@ public class LinearAutoMax extends LinearOpMode {
   public void runOpMode() throws InterruptedException {
       my_init();
       waitForStart();
-      /*shootBall(ticksPerRotation);
+      halfForward(7.5);
+      sleep(500);
+      shootBall(ticksPerRotation);
       sleep(500);
       moveScrewUp();
       sleep(500);
       shootBall(ticksPerRotation*2);
-      sleep(500);*/
+      /*sleep(500);
       turnRight(90);
       telemetry.addData("Turned R","");
       telemetry.update();
@@ -298,7 +296,7 @@ public class LinearAutoMax extends LinearOpMode {
       fullForward(10);
       resetEncoders();
       halfForward(2);
-      resetEncoders();
+      resetEncoders();*/
 
   }
 

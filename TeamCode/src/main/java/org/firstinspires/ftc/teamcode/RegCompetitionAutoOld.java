@@ -32,7 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -40,9 +39,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Reg Competition Auto Try", group = "Concept")
+@Autonomous(name = "Reg Competition Auto", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
-public class RegCompetitionAuto extends OpMode {
+public class RegCompetitionAutoOld extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -104,7 +103,6 @@ public class RegCompetitionAuto extends OpMode {
   }
 
   public void moveForwardTo(int moveInRotations){
-    if(step == 0) {
       robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
       robot.frontLeftMotor.setPower(1);
       robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
@@ -113,7 +111,6 @@ public class RegCompetitionAuto extends OpMode {
       robot.backLeftMotor.setPower(1);
       robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
       robot.backRightMotor.setPower(1);
-    }
   }
 
   public void moveBackTo(int moveInRotations){
@@ -162,7 +159,7 @@ public class RegCompetitionAuto extends OpMode {
   }
 
   public void shootBall(){
-    if(step==1) {
+    if(step==0) {
       robot.shooterMotor.setTargetPosition(ticksPerRotation);
       robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.shooterMotor.setPower(1);
@@ -172,14 +169,14 @@ public class RegCompetitionAuto extends OpMode {
     }
   }
   public void shoot2ndBall(){
-    if(step==3) {
+    if(step==2) {
       robot.shooterMotor.setTargetPosition(ticksPerRotation * 2);
       robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.shooterMotor.setPower(1);
     }
   }
   public void moveScrewUp(){
-    if(step==2) {
+    if(step==1) {
       robot.elevatorMotor.setTargetPosition(ticksPerRotation * 3);
       robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.elevatorMotor.setPower(1);
@@ -210,7 +207,6 @@ public class RegCompetitionAuto extends OpMode {
 
   @Override
   public void loop() {
-    moveBackTo(1120);
     shootBall();
     moveScrewUp();
     shoot2ndBall();
