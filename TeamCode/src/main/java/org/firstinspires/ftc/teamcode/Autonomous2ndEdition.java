@@ -59,7 +59,7 @@ public class Autonomous2ndEdition extends LinearOpMode {
   double MOTOR_CPR = 1120;
   double GEAR_RATIO = 27.0/40.0;
   double WHEEL_DIAMETER = 3.5;
-  double distance = 00;
+  double distance = 0;
   double CIRCUMFERENCE = 0;
   double ROTATIONS = 0;
   int counts = 0;
@@ -124,20 +124,20 @@ public class Autonomous2ndEdition extends LinearOpMode {
   //Move the Robot
   public void moveForwardTo(int moveInRotations){
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
-    robot.frontLeftMotor.setPower(1);
+    robot.frontLeftMotor.setTargetPosition(moveInRotations);
+    robot.frontLeftMotor.setPower(0.2);
 
     robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
-    robot.frontRightMotor.setPower(1);
+    robot.frontRightMotor.setTargetPosition(moveInRotations);
+    robot.frontRightMotor.setPower(0.2);
 
     robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
-    robot.backLeftMotor.setPower(1);
+    robot.backLeftMotor.setTargetPosition(moveInRotations);
+    robot.backLeftMotor.setPower(0.2);
 
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
-    robot.backRightMotor.setPower(1);
+    robot.backRightMotor.setTargetPosition(moveInRotations);
+    robot.backRightMotor.setPower(0.2);
   }
 
   public void moveBackTo(int moveInRotations){
@@ -223,7 +223,7 @@ public class Autonomous2ndEdition extends LinearOpMode {
   public int calcDrive(double dist){
     CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
     ROTATIONS = dist/CIRCUMFERENCE;
-    counts = (int)(MOTOR_CPR*ROTATIONS*GEAR_RATIO);
+    counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
     return counts;
   }
 
@@ -248,9 +248,9 @@ public class Autonomous2ndEdition extends LinearOpMode {
       delay(1000);*/
 
       //Move the Robot
-      telemetry.addData("Counts: ", calcDrive(1));
-      moveForwardTo(calcDrive(1));
-      delay(7000);
+      telemetry.update();
+      moveForwardTo(calcDrive(10));
+      delay(15000);
 
       //Stop All Movement
       resetEncoders();
