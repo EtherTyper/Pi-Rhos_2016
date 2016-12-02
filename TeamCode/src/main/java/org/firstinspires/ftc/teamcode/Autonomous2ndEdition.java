@@ -124,53 +124,53 @@ public class Autonomous2ndEdition extends LinearOpMode {
   //Move the Robot
   public void moveForwardTo(int moveInRotations){
     robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.frontLeftMotor.setTargetPosition(moveInRotations);
+    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
     robot.frontLeftMotor.setPower(0.2);
 
     robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.frontRightMotor.setTargetPosition(moveInRotations);
+    robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
     robot.frontRightMotor.setPower(0.2);
 
     robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.backLeftMotor.setTargetPosition(moveInRotations);
+    robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
     robot.backLeftMotor.setPower(0.2);
 
     robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    robot.backRightMotor.setTargetPosition(moveInRotations);
+    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
     robot.backRightMotor.setPower(0.2);
   }
 
   public void moveBackTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
-    robot.frontLeftMotor.setPower(-1);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
-    robot.frontRightMotor.setPower(-1);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
-    robot.backLeftMotor.setPower(-1);
-    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
-    robot.backRightMotor.setPower(-1);
+    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
+    robot.frontLeftMotor.setPower(-0.2);
+    robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
+    robot.frontRightMotor.setPower(-0.2);
+    robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
+    robot.backLeftMotor.setPower(-0.2);
+    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
+    robot.backRightMotor.setPower(-0.2);
   }
 
   public void turnLeftTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
-    robot.frontLeftMotor.setPower(1);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
-    robot.backLeftMotor.setPower(1);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
-    robot.frontRightMotor.setPower(-1);
-    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
-    robot.backRightMotor.setPower(-1);
+    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
+    robot.frontLeftMotor.setPower(0.2);
+    robot.backLeftMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
+    robot.backLeftMotor.setPower(0.2);
+    robot.frontRightMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
+    robot.frontRightMotor.setPower(-0.2);
+    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
+    robot.backRightMotor.setPower(-0.2);
   }
 
   public void turnRightTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
-    robot.frontLeftMotor.setPower(-1);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
-    robot.backLeftMotor.setPower(-1);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
-    robot.frontRightMotor.setPower(1);
-    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
-    robot.backRightMotor.setPower(1);
+    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
+    robot.frontLeftMotor.setPower(0.2);
+    robot.backLeftMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
+    robot.backLeftMotor.setPower(0.2);
+    robot.frontRightMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
+    robot.frontRightMotor.setPower(-0.2);
+    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
+    robot.backRightMotor.setPower(-0.2);
   }
 
   public void moveElevator(int rotationTime){
@@ -248,13 +248,11 @@ public class Autonomous2ndEdition extends LinearOpMode {
       delay(1000);*/
 
       //Move the Robot
-      telemetry.update();
       moveForwardTo(calcDrive(10));
-      delay(15000);
+      delay(1000);
 
       //Stop All Movement
       resetEncoders();
-      //delay(100);
 
 
   }
