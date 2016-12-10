@@ -289,8 +289,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
       //Move the Robot
       //moveForwardTo(calcDrive(10));
-      moveForwardStable(calcDrive(10));
-      delay(1000);
+      moveForwardStable(calcDrive(24));
+      delay(200000);
 
       //Stop All Movement
       resetEncoders();
