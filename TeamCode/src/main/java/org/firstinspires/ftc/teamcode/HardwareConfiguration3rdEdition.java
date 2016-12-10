@@ -99,7 +99,7 @@ public class HardwareConfiguration3rdEdition
         lineColorSensor.enableLed(false);
 
         gyro = hwMap.gyroSensor.get("gyro sensor");
-        
+        gyro.calibrate();
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);

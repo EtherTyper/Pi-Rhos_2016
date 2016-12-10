@@ -204,7 +204,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   }
   //A test method to fix the jiggling issue
 
-  public void moveForwardJiggleTest(int moveInRotations){
+  public void moveForwardStable(int moveInRotations){
     //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
     robot.frontLeftMotor.setPower(0.2);
@@ -222,18 +222,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
     robot.backRightMotor.setPower(0.2);
 
     if((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
-            robot.frontLeftMotor.getCurrentPosition()<=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
-            (robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE &&
-                    robot.backLeftMotor.getCurrentPosition()<=robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-            (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
-                    robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE) &&
-            (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
-                    robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))
+        robot.frontLeftMotor.getCurrentPosition()<=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
+        (robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE &&
+        robot.backLeftMotor.getCurrentPosition()<=robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
+        (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
+        robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE) &&
+        (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
+        robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))
     {
-      robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      /*robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
       robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-      robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+      robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
 
       robot.frontLeftMotor.setPower(0);
       robot.frontRightMotor.setPower(0);
@@ -259,7 +259,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   }
 
-  //Calc Rotations
+  //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
     CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
     ROTATIONS = dist/CIRCUMFERENCE;
@@ -289,7 +289,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
       //Move the Robot
       //moveForwardTo(calcDrive(10));
-      moveForwardJiggleTest(calcDrive(10));
+      moveForwardStable(calcDrive(10));
       delay(1000);
 
       //Stop All Movement
