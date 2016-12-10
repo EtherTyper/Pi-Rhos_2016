@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 
 /**
  * This is NOT an opmode.
@@ -91,13 +92,14 @@ public class HardwareConfiguration3rdEdition
 
         leftColorSensor = hwMap.colorSensor.get("left sensor");
         leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
-        leftColorSensor.enableLed(false);
+        leftColorSensor.enableLed(false);*/
 
         lineColorSensor = hwMap.colorSensor.get("line sensor");
         lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x14));
         lineColorSensor.enableLed(false);
 
-        gyro = hwMap.gyroSensor.get("gyro sensor");*/
+        gyro = hwMap.gyroSensor.get("gyro sensor");
+        
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
