@@ -150,22 +150,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
       robot.elevatorMotor.setPower(1);
 
   }
-  //A test method to fix the jiggling issue
 
+  //Robot Movement
   public void moveBackTo(int moveInRotations){
-    //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
     robot.frontLeftMotor.setPower(0.2);
 
-    //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
     robot.frontRightMotor.setPower(0.2);
 
-    //robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
     robot.backLeftMotor.setPower(0.2);
 
-    //robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
     robot.backRightMotor.setPower(0.2);
 
@@ -185,6 +181,36 @@ public class Autonomous3rdEdition extends LinearOpMode {
       robot.backRightMotor.setPower(0);
     }
   }
+
+  public void moveForwardTo(int moveInRotations){
+        robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
+        robot.frontLeftMotor.setPower(0.2);
+
+        robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
+        robot.frontRightMotor.setPower(0.2);
+
+        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
+        robot.backLeftMotor.setPower(0.2);
+
+        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
+        robot.backRightMotor.setPower(0.2);
+
+        if((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
+                robot.frontLeftMotor.getCurrentPosition()<=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
+                (robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE &&
+                        robot.backLeftMotor.getCurrentPosition()<=robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
+                (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
+                        robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
+                        robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))
+        {
+
+            robot.frontLeftMotor.setPower(0);
+            robot.frontRightMotor.setPower(0);
+            robot.backLeftMotor.setPower(0);
+            robot.backRightMotor.setPower(0);
+        }
+    }
 
   //Read Color
   public void findLeftRed(){
