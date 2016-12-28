@@ -219,21 +219,17 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void turnRightVariableAndStop(double power, int heading)
   {
      boolean goalReached = false;
-      if (!robot.gyro.isCalibrating()){
-          if (robot.gyro.getHeading() > (heading - threshold) && robot.gyro.getHeading() < (heading + threshold)) {
-              goalReached = true;
-          }
-          if (goalReached == true) {
-              robot.frontLeftMotor.setPower(0);
-              robot.backLeftMotor.setPower(0);
-              robot.frontRightMotor.setPower(0);
-              robot.backRightMotor.setPower(0);
-          } else if (goalReached == false) {
+      if (!robot.gyro.isCalibrating()) {
+          while (robot.gyro.getHeading() < (heading - threshold)) {
               robot.frontLeftMotor.setPower(power);
               robot.backLeftMotor.setPower(power);
               robot.frontRightMotor.setPower(-power);
               robot.backRightMotor.setPower(-power);
           }
+          robot.frontLeftMotor.setPower(0);
+          robot.backLeftMotor.setPower(0);
+          robot.frontRightMotor.setPower(0);
+          robot.backRightMotor.setPower(0);
       }
   }
 
@@ -241,20 +237,17 @@ public class Autonomous3rdEdition extends LinearOpMode {
     {
         boolean goalReached = false;
         if (!robot.gyro.isCalibrating()){
-            if (robot.gyro.getHeading() > ((360-heading) - threshold) && robot.gyro.getHeading() < ((360-heading) + threshold)) {
-                goalReached = true;
-            }
-            if (goalReached == true) {
-                robot.frontLeftMotor.setPower(0);
-                robot.backLeftMotor.setPower(0);
-                robot.frontRightMotor.setPower(0);
-                robot.backRightMotor.setPower(0);
-            } else if (goalReached == false) {
+            while (robot.gyro.getHeading() > ((360 - heading) - threshold)) {
                 robot.frontLeftMotor.setPower(-power);
                 robot.backLeftMotor.setPower(-power);
                 robot.frontRightMotor.setPower(power);
                 robot.backRightMotor.setPower(power);
             }
+            robot.frontLeftMotor.setPower(0);
+            robot.backLeftMotor.setPower(0);
+            robot.frontRightMotor.setPower(0);
+            robot.backRightMotor.setPower(0);
+
         }
     }
 
