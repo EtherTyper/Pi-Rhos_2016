@@ -155,63 +155,62 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   //Robot Movement
   public void moveBackTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
-    robot.frontLeftMotor.setPower(0.2);
 
-    robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
-    robot.frontRightMotor.setPower(0.2);
-
-    robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
-    robot.backLeftMotor.setPower(0.2);
-
-    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
-    robot.backRightMotor.setPower(0.2);
-
-    if((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
+    while(!((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
         robot.frontLeftMotor.getCurrentPosition()<=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
         (robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE &&
         robot.backLeftMotor.getCurrentPosition()<=robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
         (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
         robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE) &&
         (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
-        robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))
+        robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE)))
     {
+        robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
+        robot.frontLeftMotor.setPower(0.2);
 
+        robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
+        robot.frontRightMotor.setPower(0.2);
+
+        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
+        robot.backLeftMotor.setPower(0.2);
+
+        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
+        robot.backRightMotor.setPower(0.2);
+
+    }
       robot.frontLeftMotor.setPower(0);
       robot.frontRightMotor.setPower(0);
       robot.backLeftMotor.setPower(0);
       robot.backRightMotor.setPower(0);
-    }
   }
 
   public void moveForwardTo(int moveInRotations){
-        robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
-        robot.frontLeftMotor.setPower(0.2);
 
-        robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
-        robot.frontRightMotor.setPower(0.2);
-
-        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
-        robot.backLeftMotor.setPower(0.2);
-
-        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
-        robot.backRightMotor.setPower(0.2);
-
-        if((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
+        while(!((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
                 robot.frontLeftMotor.getCurrentPosition()<=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
                 (robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE &&
                         robot.backLeftMotor.getCurrentPosition()<=robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
                 (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
                         robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE) &&
                 (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
-                        robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))
+                        robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE)))
         {
+            robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
+            robot.frontLeftMotor.setPower(0.2);
 
-            robot.frontLeftMotor.setPower(0);
-            robot.frontRightMotor.setPower(0);
-            robot.backLeftMotor.setPower(0);
-            robot.backRightMotor.setPower(0);
+            robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
+            robot.frontRightMotor.setPower(0.2);
+
+            robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
+            robot.backLeftMotor.setPower(0.2);
+
+            robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
+            robot.backRightMotor.setPower(0.2);
         }
+      robot.frontLeftMotor.setPower(0);
+      robot.frontRightMotor.setPower(0);
+      robot.backLeftMotor.setPower(0);
+      robot.backRightMotor.setPower(0);
     }
 
 
@@ -305,6 +304,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //moveForwardTo(calcDrive(10));
       moveForwardTo(calcDrive(24));
       delay(50000);
+      turnLeftVariableAndStop(0.5,90);
 
       //Stop All Movement
       resetEncoders();
