@@ -64,6 +64,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
   double CIRCUMFERENCE = 0;
   double ROTATIONS = 0;
   int counts = 0;
+  int threshold = 5;
+
 
   //Initialization
   public void init_hardware() {
@@ -211,6 +213,55 @@ public class Autonomous3rdEdition extends LinearOpMode {
             robot.backRightMotor.setPower(0);
         }
     }
+
+
+  //Turning
+  public void turnRightVariableAndStop(double power, int heading)
+  {
+     boolean goalReached = false;
+      if (!robot.gyro.isCalibrating()){
+          if (robot.gyro.getHeading() > (heading - threshold) && robot.gyro.getHeading() < (heading + threshold)) {
+              goalReached = true;
+          }
+          if (goalReached == true) {
+              robot.frontLeftMotor.setPower(0);
+              robot.backLeftMotor.setPower(0);
+              robot.frontRightMotor.setPower(0);
+              robot.backRightMotor.setPower(0);
+          } else if (goalReached == false) {
+              robot.frontLeftMotor.setPower(power);
+              robot.backLeftMotor.setPower(power);
+              robot.frontRightMotor.setPower(-power);
+              robot.backRightMotor.setPower(-power);
+          }
+      }
+  }
+
+    public void turnLeftVariableAndStop(double power, int heading)
+    {
+        boolean goalReached = false;
+        if (!robot.gyro.isCalibrating()){
+            if (robot.gyro.getHeading() > ((360-heading) - threshold) && robot.gyro.getHeading() < ((360-heading) + threshold)) {
+                goalReached = true;
+            }
+            if (goalReached == true) {
+                robot.frontLeftMotor.setPower(0);
+                robot.backLeftMotor.setPower(0);
+                robot.frontRightMotor.setPower(0);
+                robot.backRightMotor.setPower(0);
+            } else if (goalReached == false) {
+                robot.frontLeftMotor.setPower(-power);
+                robot.backLeftMotor.setPower(-power);
+                robot.frontRightMotor.setPower(power);
+                robot.backRightMotor.setPower(power);
+            }
+        }
+    }
+
+  public void recalibrate()
+  {
+      robot.gyro.calibrate();
+  }
 
   //Read Color
   public void findLeftRed(){
