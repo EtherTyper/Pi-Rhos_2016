@@ -215,7 +215,6 @@ public class Autonomous3rdEdition extends LinearOpMode {
   //Turning
   public void turnRightVariableAndStop(double power, int heading)
   {
-     boolean goalReached = false;
       if (!robot.gyro.isCalibrating()) {
           while (robot.gyro.getHeading() < (heading - threshold)) {
               robot.frontLeftMotor.setPower(power);
@@ -232,25 +231,32 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     public void turnLeftVariableAndStop(double power, int heading)
     {
-        boolean goalReached = false;
-        if (!robot.gyro.isCalibrating()){
-            while (robot.gyro.getHeading() > ((360 - heading) - threshold)) {
-                robot.frontLeftMotor.setPower(-power);
-                robot.backLeftMotor.setPower(-power);
-                robot.frontRightMotor.setPower(power);
-                robot.backRightMotor.setPower(power);
-            }
-            robot.frontLeftMotor.setPower(0);
-            robot.backLeftMotor.setPower(0);
-            robot.frontRightMotor.setPower(0);
-            robot.backRightMotor.setPower(0);
-
+        telemetry.addData("Step 1","Turn initiated");
+        telemetry.update();
+        while (robot.gyro.getHeading() > ((360 - heading) - threshold)) {
+            robot.frontLeftMotor.setPower(-power);
+            robot.backLeftMotor.setPower(-power);
+            robot.frontRightMotor.setPower(power);
+            robot.backRightMotor.setPower(power);
         }
+        robot.frontLeftMotor.setPower(0);
+        robot.backLeftMotor.setPower(0);
+        robot.frontRightMotor.setPower(0);
+        robot.backRightMotor.setPower(0);
+
+
     }
 
   public void recalibrate()
   {
       robot.gyro.calibrate();
+  }
+
+  public void waitForGyroToCalibrate(){
+      robot.gyro.calibrate();
+      while(robot.gyro.isCalibrating()){
+          delay(100);
+      }
   }
 
   //Read Color
@@ -302,9 +308,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //Move the Robot
       //moveForwardTo(calcDrive(10));
       moveForwardTo(calcDrive(24));
-      telemetry.addData("Step 2: ", "drove forward");
-      telemetry.update();
+      waitForGyroToCalibrate();
       turnLeftVariableAndStop(0.5,90);
+      telemetry.addData("Step 2: ", "turned");
+      telemetry.update();
 
       //Stop All Movement
       resetEncoders();
