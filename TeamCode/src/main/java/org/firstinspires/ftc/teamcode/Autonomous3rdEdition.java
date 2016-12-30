@@ -88,6 +88,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+    robot.gyro.calibrate();
     //robot.lineColorSensor.enableLed(true);
   }
 
@@ -251,24 +252,15 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   public void waitForGyroToCalibrate(){
       robot.gyro.calibrate();
-      delay(200);
+      delay(500);
 
   }
 
   //Read Color and press.
-  public void findLeftRed(){
+  public void findRed(){
 
   }
-
-  public void findLeftBlue(){
-
-    }
-
-  public void findRightRed(){
-
-  }
-
-  public void findRightBlue(){
+  public void findBlue(){
 
   }
 
@@ -304,9 +296,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //Move the Robot
       //moveForwardTo(calcDrive(10));
       moveForwardTo(calcDrive(24));
-      waitForGyroToCalibrate();
-      turnLeftVariableAndStop(0.5,90);
+      //waitForGyroToCalibrate();
+      turnRightVariableAndStop(1,90);
       telemetry.addData("Step 2: ", "turned");
+      telemetry.addData("Current Heading", robot.gyro.getHeading());
       telemetry.update();
 
       //Stop All Movement
