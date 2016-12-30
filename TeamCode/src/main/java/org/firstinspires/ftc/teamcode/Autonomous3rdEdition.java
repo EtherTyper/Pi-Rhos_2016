@@ -121,7 +121,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        delay(300);
     }
 
   //Robot Parts
@@ -247,19 +247,15 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     }
 
-  public void recalibrate()
-  {
-      robot.gyro.calibrate();
-  }
+
 
   public void waitForGyroToCalibrate(){
       robot.gyro.calibrate();
-      while(robot.gyro.isCalibrating()){
-          delay(100);
-      }
+      delay(200);
+
   }
 
-  //Read Color
+  //Read Color and press.
   public void findLeftRed(){
 
   }
