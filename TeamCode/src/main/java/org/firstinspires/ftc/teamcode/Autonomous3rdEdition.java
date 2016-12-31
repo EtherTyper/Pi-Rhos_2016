@@ -64,7 +64,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   double CIRCUMFERENCE = 0;
   double ROTATIONS = 0;
   int counts = 0;
-  int threshold = 5;
+  int threshold = 2;
 
 
   //Initialization
@@ -99,6 +99,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }
+
+  public int absHeading(){
+      return Math.abs(robot.gyro.getHeading());
   }
 
   public void haltDrive(){
@@ -216,25 +220,25 @@ public class Autonomous3rdEdition extends LinearOpMode {
   //Turning
   public void turnRightVariableAndStop(double power, int heading)
   {
-      if (!robot.gyro.isCalibrating()) {
-          while (robot.gyro.getHeading() < (heading - threshold)) {
+
+          while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold*/) {
               robot.frontLeftMotor.setPower(power);
               robot.backLeftMotor.setPower(power);
               robot.frontRightMotor.setPower(-power);
               robot.backRightMotor.setPower(-power);
           }
-          robot.frontLeftMotor.setPower(0);
+          /*robot.frontLeftMotor.setPower(0);
           robot.backLeftMotor.setPower(0);
           robot.frontRightMotor.setPower(0);
-          robot.backRightMotor.setPower(0);
-      }
+          robot.backRightMotor.setPower(0);*/
+      
   }
 
     public void turnLeftVariableAndStop(double power, int heading)
     {
         telemetry.addData("Step 1","Turn initiated");
         telemetry.update();
-        while (robot.gyro.getHeading() > ((360 - heading) - threshold)) {
+        while (absHeading() < (heading - threshold) || absHeading() > (heading + threshold)) {
             robot.frontLeftMotor.setPower(-power);
             robot.backLeftMotor.setPower(-power);
             robot.frontRightMotor.setPower(power);
