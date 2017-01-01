@@ -41,18 +41,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @Autonomous(name = "Autonomous 3rd Edition", group = "Concept")
 public class Autonomous3rdEdition extends LinearOpMode {
-
-  private ElapsedTime runtime = new ElapsedTime();
-  private ElapsedTime speedTimer = new ElapsedTime();
   private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private int frontRightTarget = 0;
-  private int frontLeftTarget = 0;
-  private int backRightTarget = 0;
-  private int backLeftTarget = 0;
-  private int shooterTarget = 0;
   private final int TOLERANCE = 100;
   int step = 0;
 
@@ -128,19 +120,6 @@ public class Autonomous3rdEdition extends LinearOpMode {
         robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         delay(300);
     }
-
-  //Robot Parts
-  public void moveElevator(int rotationTime){
-
-    robot.elevatorMotor.setPower(1);
-    try {
-      Thread.sleep(rotationTime * 100);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    robot.elevatorMotor.setPower(0);
-
-  }
 
   public void shootBall(){
 
@@ -234,7 +213,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       
   }
 
-    public void turnLeftVariableAndStop(double power, int heading)
+  /*  public void turnLeftVariableAndStop(double power, int heading)
     {
         telemetry.addData("Step 1","Turn initiated");
         telemetry.update();
@@ -250,23 +229,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         robot.backRightMotor.setPower(0);
 
 
-    }
-
-
-
-  public void waitForGyroToCalibrate(){
-      robot.gyro.calibrate();
-      delay(500);
-
-  }
-
-  //Read Color and press.
-  public void findRed(){
-
-  }
-  public void findBlue(){
-
-  }
+    }*/
 
   //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
@@ -299,12 +262,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
       //Move the Robot
       //moveForwardTo(calcDrive(10));
-      moveForwardTo(calcDrive(24));
       //waitForGyroToCalibrate();
-      turnRightVariableAndStop(1,90);
+      /*telemetry.addData("FL power",robot.frontLeftMotor.getPower());
+      telemetry.addData("BL power",robot.backLeftMotor.getPower());
+      telemetry.addData("FR power",robot.frontRightMotor.getPower());
+      telemetry.addData("BR power",robot.backRightMotor.getPower());
+      telemetry.update();*/
+      //turnRightVariableAndStop(1,90);
+      moveForwardTo(calcDrive(24));
       telemetry.addData("Step 2: ", "turned");
       telemetry.addData("Current Heading", robot.gyro.getHeading());
-      telemetry.update();
+
+
 
       //Stop All Movement
       resetEncoders();

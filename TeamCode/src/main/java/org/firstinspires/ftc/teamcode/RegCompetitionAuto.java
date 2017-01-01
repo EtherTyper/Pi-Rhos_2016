@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Reg Competition Auto Try", group = "Concept")
+//@Autonomous(name = "Reg Competition Auto Try", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class RegCompetitionAuto extends OpMode {
 

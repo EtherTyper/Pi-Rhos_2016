@@ -42,7 +42,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Linear Test", group = "Concept")
+//@Autonomous(name = "Linear Test", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class CompetitionAutoLinearTest extends LinearOpMode {
 

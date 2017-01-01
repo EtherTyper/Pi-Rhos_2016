@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Autonomous 2nd Edition", group = "Concept")
+//@Autonomous(name = "Autonomous 2nd Edition", group = "Concept")
 public class Autonomous2ndEdition extends LinearOpMode {
 
   private ElapsedTime runtime = new ElapsedTime();

@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Linear Color Auto", group = "Concept")
+//@Autonomous(name = "Linear Color Auto", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class LinearAutoMaxNew extends LinearOpMode {
 

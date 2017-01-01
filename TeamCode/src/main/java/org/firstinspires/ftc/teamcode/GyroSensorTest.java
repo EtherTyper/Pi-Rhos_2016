@@ -45,8 +45,10 @@ public class GyroSensorTest extends OpMode {
   private ElapsedTime speedTimer = new ElapsedTime();
 
   //Initialize Variables
-  DcMotor leftMotor = null;
-  DcMotor rightMotor = null;
+  DcMotor frontLeftMotor = null;
+  DcMotor backLeftMotor = null;
+  DcMotor frontRightMotor = null;
+  DcMotor backRightMotor = null;
   GyroSensor robotGyroSensor = null;
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -70,14 +72,12 @@ public class GyroSensorTest extends OpMode {
   public void init() {
     telemetry.addData("Status", "Initialized");
     robotGyroSensor = hardwareMap.gyroSensor.get("gyro sensor");
-    leftMotor = hardwareMap.dcMotor.get("left motor");
-    rightMotor = hardwareMap.dcMotor.get("right motor");
+    frontLeftMotor = hardwareMap.dcMotor.get("front left motor");
+    backLeftMotor = hardwareMap.dcMotor.get("back left motor");
+    frontRightMotor = hardwareMap.dcMotor.get("front right motor");
+    backRightMotor = hardwareMap.dcMotor.get("back right motor");
     robotGyroSensor.calibrate();
-    leftMotor.setDirection(DcMotor.Direction.REVERSE);
-  }
-  @Override
-  public void init_loop() {
-
+    frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
   }
 
   @Override
@@ -87,72 +87,21 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Is calibrating?", robotGyroSensor.isCalibrating());
   }
 
-  public void turnRightNintyAndStop() {
-    if (!robotGyroSensor.isCalibrating()){
-      if (robotGyroSensor.getHeading() > (90 - threshold) && robotGyroSensor.getHeading() < (90 + threshold)) {
-        goalReached = true;
-      }
-    if (goalReached == true) {
-      leftMotor.setPower(0);
-      rightMotor.setPower(0);
-    } else if (goalReached == false) {
-      leftMotor.setPower(1);
-      rightMotor.setPower(-1);
-    }
-  }
-  }
-
-  public void turnLeftNintyAndStop() {
-    if (!robotGyroSensor.isCalibrating()){
-      if (robotGyroSensor.getHeading() > (270 - threshold) && robotGyroSensor.getHeading() < (270 + threshold)) {
-        goalReached = true;
-      }
-      if (goalReached == true) {
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-      } else if (goalReached == false) {
-        leftMotor.setPower(-1);
-        rightMotor.setPower(1);
-      }
-    }
-  }
-
-  public void turnRightVariableAndStop(double power, int heading)
+  /*public void turnRightVariableAndStop(double power, int heading)
   {
     if (!robotGyroSensor.isCalibrating()){
       if (robotGyroSensor.getHeading() > (heading - threshold) && robotGyroSensor.getHeading() < (heading + threshold)) {
         goalReached = true;
       }
       if (goalReached == true) {
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
       } else if (goalReached == false) {
-        leftMotor.setPower(power);
-        rightMotor.setPower(-power);
+        frontLeftMotor.setPower(power);
+        frontRightMotor.setPower(-power);
       }
     }
-  }
-
-  public void turnLeftVariableAndStop(double power, int heading)
-  {
-    if (!robotGyroSensor.isCalibrating()){
-      if (robotGyroSensor.getHeading() > ((360-heading) - threshold) && robotGyroSensor.getHeading() < ((360-heading) + threshold)) {
-        goalReached = true;
-      }
-      if (goalReached == true) {
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-      } else if (goalReached == false) {
-        leftMotor.setPower(-power);
-        rightMotor.setPower(power);
-      }
-    }
-  }
-
-  public void recalibrateGyro()
-  {
-    robotGyroSensor.calibrate();
-  }
+  }*/
 
   //The code for the robot while running driver control
   //This method acts as a while loop
@@ -163,7 +112,10 @@ public class GyroSensorTest extends OpMode {
     telemetry.addData("Gyro Z Value", robotGyroSensor.rawZ());
     telemetry.addData("Heading!", robotGyroSensor.getHeading());
     telemetry.addData("Sensor Status: ", robotGyroSensor.status());
-    turnRightVariableAndStop(0.25, 90);
+    frontLeftMotor.setPower(gamepad1.left_stick_x);
+    backLeftMotor.setPower(gamepad1.left_stick_x);
+    frontRightMotor.setPower(gamepad1.right_stick_x);
+    backRightMotor.setPower(gamepad1.right_stick_x);
     //recalibrateGyro();
     //turnLeftNintyAndStop();
     //recalibrateGyro();

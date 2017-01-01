@@ -39,9 +39,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Reg Competition Auto", group = "Concept")
+//@Autonomous(name = "Auto Test", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
-public class RegCompetitionAutoOld extends OpMode {
+
+
+public class RegOpModeAutoTest extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
   private ElapsedTime speedTimer = new ElapsedTime();
@@ -55,6 +57,15 @@ public class RegCompetitionAutoOld extends OpMode {
   private int backLeftTarget = 0;
   private int shooterTarget = 0;
   int step = 0;
+  int MOTOR_CPR = 1120;
+  double GEAR_RATIO = 27/40;
+  double WHEEL_DIAMETER = 3.5;
+  double distance = 4.45;
+  int counts = (int)(((MOTOR_CPR*GEAR_RATIO)/WHEEL_DIAMETER*Math.PI)*distance);
+  int flCounts = 0;
+  int blCounts = 0;
+  int frCounts = 0;
+  int brCounts = 0;
 
   @Override
   public void init() {
@@ -102,48 +113,81 @@ public class RegCompetitionAutoOld extends OpMode {
     robot.elevatorMotor.setPower(0);
   }
 
-  public void moveForwardTo(int moveInRotations){
-      robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
+  public void moveForwardTo(){
+    if(step==6) {
+      robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + counts);
+      robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.frontLeftMotor.setPower(1);
-      robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
+      robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
+      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.frontRightMotor.setPower(1);
-      robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
+      robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
+      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setPower(1);
-      robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
+      robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - counts);
+      robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setPower(1);
+      if(robot.frontLeftMotor.getCurrentPosition()>=robot.frontLeftMotor.getCurrentPosition() + counts){
+        step++;
+      }
+    }
   }
 
-  public void moveBackTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
+  public void calculateForward(double dist, int stp){
+    if(step==stp){
+      distance = dist;
+      blCounts = robot.backLeftMotor.getCurrentPosition() - counts;
+      brCounts = robot.backRightMotor.getCurrentPosition() + counts;
+      flCounts = robot.backLeftMotor.getCurrentPosition() - counts;
+      frCounts = robot.backRightMotor.getCurrentPosition() + counts;
+      step++;
+    }
+  }
+  public void calculateTurnRight(double dist, int stp){
+    if(step==stp){
+      distance = dist;
+      blCounts = robot.backLeftMotor.getCurrentPosition() - counts;
+      brCounts = robot.backRightMotor.getCurrentPosition() - counts;
+      step++;
+    }
+  }
+
+  public void moveBackTo(double distance){
+    this.distance = distance;
+    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - counts);
     robot.frontLeftMotor.setPower(-1);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
     robot.frontRightMotor.setPower(-1);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
     robot.backLeftMotor.setPower(-1);
-    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
     robot.backRightMotor.setPower(-1);
   }
 
-  public void turnLeftTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget + moveInRotations * ticksPerRotation);
+  public void turnLeftTo(double distance){
+    this.distance = distance;
+    robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + counts);
     robot.frontLeftMotor.setPower(1);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget + moveInRotations * ticksPerRotation);
+    robot.backLeftMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
     robot.backLeftMotor.setPower(1);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget - moveInRotations * ticksPerRotation);
+    robot.frontRightMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
     robot.frontRightMotor.setPower(-1);
-    robot.backRightMotor.setTargetPosition(backRightTarget - moveInRotations * ticksPerRotation);
+    robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
     robot.backRightMotor.setPower(-1);
   }
 
-  public void turnRightTo(int moveInRotations){
-    robot.frontLeftMotor.setTargetPosition(frontLeftTarget - moveInRotations * ticksPerRotation);
-    robot.frontLeftMotor.setPower(-1);
-    robot.backLeftMotor.setTargetPosition(backLeftTarget - moveInRotations * ticksPerRotation);
-    robot.backLeftMotor.setPower(-1);
-    robot.frontRightMotor.setTargetPosition(frontRightTarget + moveInRotations * ticksPerRotation);
-    robot.frontRightMotor.setPower(1);
-    robot.backRightMotor.setTargetPosition(backRightTarget + moveInRotations * ticksPerRotation);
-    robot.backRightMotor.setPower(1);
+  public void turnRightTo(){
+    if(step == 4) {
+      robot.frontLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
+      robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.frontLeftMotor.setPower(1);
+      robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
+      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.backLeftMotor.setPower(1);
+      if(robot.frontLeftMotor.getCurrentPosition() <= robot.frontRightMotor.getCurrentPosition() - counts){
+        step++;
+      }
+    }
   }
 
   public void moveElevator(int rotationTime){
@@ -173,6 +217,9 @@ public class RegCompetitionAutoOld extends OpMode {
       robot.shooterMotor.setTargetPosition(ticksPerRotation * 2);
       robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.shooterMotor.setPower(1);
+      if(robot.shooterMotor.getCurrentPosition()>=ticksPerRotation * 2){
+        step++;
+      }
     }
   }
   public void moveScrewUp(){
@@ -210,6 +257,10 @@ public class RegCompetitionAutoOld extends OpMode {
     shootBall();
     moveScrewUp();
     shoot2ndBall();
+    calculateTurnRight(4.45,3);
+    turnRightTo();
+    calculateForward(100,5);
+    moveForwardTo();
 
     telemetry.addData("Position",robot.shooterMotor.getCurrentPosition());
     telemetry.addData("Step", step);
