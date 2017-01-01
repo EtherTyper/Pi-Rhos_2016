@@ -55,7 +55,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name="Competition TeleOp", group="Linear Opmode")
-public class TeleOpMax4 extends LinearOpMode {
+public class TeleOpFinal extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareConfigurationMax robot = new HardwareConfigurationMax();              // Use a K9'shardware
@@ -66,6 +66,8 @@ public class TeleOpMax4 extends LinearOpMode {
 
     //Other Vaiables
     private boolean shooterActive;
+    boolean step1;
+    boolean step2;
     final int ticksPerRotation = 1120;
     private int shooterTarget = ticksPerRotation;
     @Override
@@ -86,6 +88,8 @@ public class TeleOpMax4 extends LinearOpMode {
         boolean toggleFlapsIn;
         boolean flapsOut = false;   //flaps push ball out
         boolean toggleFlapsOut;
+        float varShootBack;
+        boolean varShoot;
         boolean shoot;
 
         boolean reverseMode = false;
@@ -121,7 +125,10 @@ public class TeleOpMax4 extends LinearOpMode {
             screwDown = gamepad2.dpad_down;
             toggleFlapsIn = gamepad2.x;
             toggleFlapsOut = gamepad2.b;
+            varShoot = gamepad2.left_bumper;
+            varShootBack = gamepad2.left_trigger;
             shoot = gamepad2.right_bumper;
+
 
             if(preciseMode)
             {
@@ -173,16 +180,41 @@ public class TeleOpMax4 extends LinearOpMode {
                 robot.backRightMotor.setPower(right);
             }
 
-            if(shoot)
+            if(varShoot)
             {
                 shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation;
                 robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.shooterMotor.setTargetPosition(shooterTarget);
                 robot.shooterMotor.setPower(1);
             }
-            else
-            {
+            else if(varShootBack>.6){
+                shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation;
+                robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.shooterMotor.setTargetPosition(shooterTarget);
+                robot.shooterMotor.setPower(-1);
+            }
+            else if(!shooterActive){
                 robot.shooterMotor.setPower(0);
+            }
+
+            if(shoot){
+                shooterActive=true;
+                step1=true;
+            }
+            if(step1){
+                shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation;
+                step2=true;
+                step1=false;
+            }
+            if(step2){
+                robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.shooterMotor.setTargetPosition(shooterTarget);
+                robot.shooterMotor.setPower(1);
+                if(robot.shooterMotor.getCurrentPosition()>shooterTarget){
+                    robot.shooterMotor.setPower(0);
+                    shooterActive=false;
+                    step2=false;
+                }
             }
 
             if(screwUp)
