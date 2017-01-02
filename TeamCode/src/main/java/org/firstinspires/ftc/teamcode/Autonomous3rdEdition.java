@@ -54,6 +54,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   double WHEEL_DIAMETER = 3.5;
   double distance = 0;
   final double radius = 7.44;
+  final double driveSpeed = 0.5;
   double CIRCUMFERENCE = 0;
   double ROTATIONS = 0;
   int counts = 0;
@@ -152,13 +153,13 @@ public class Autonomous3rdEdition extends LinearOpMode {
               (robot.frontRightMotor.getCurrentPosition()<= robot.frontRightMotor.getTargetPosition()+TOLERANCE &&
               robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
 
-        robot.frontLeftMotor.setPower(-1);
+        robot.frontLeftMotor.setPower(-driveSpeed);
 
-        robot.frontRightMotor.setPower(-1);
+        robot.frontRightMotor.setPower(-driveSpeed);
 
-        robot.backLeftMotor.setPower(-1);
+        robot.backLeftMotor.setPower(-driveSpeed);
 
-        robot.backRightMotor.setPower(-1);
+        robot.backRightMotor.setPower(-driveSpeed);
 
     }
       haltDrive();
@@ -177,13 +178,13 @@ public class Autonomous3rdEdition extends LinearOpMode {
                 (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
                  robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
 
-          robot.frontLeftMotor.setPower(1);
+          robot.frontLeftMotor.setPower(driveSpeed);
 
-          robot.frontRightMotor.setPower(1);
+          robot.frontRightMotor.setPower(driveSpeed);
 
-          robot.backLeftMotor.setPower(1);
+          robot.backLeftMotor.setPower(driveSpeed);
 
-          robot.backRightMotor.setPower(1);
+          robot.backRightMotor.setPower(driveSpeed);
       }
       haltDrive();
     }
@@ -369,7 +370,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("FR power",robot.frontRightMotor.getPower());
       telemetry.addData("BR power",robot.backRightMotor.getPower());
       telemetry.update();*/
-      moveForwardTo(calcDrive(24));
+      moveForwardTo(calcDrive(24));/*
       resetEncoders();
       moveBackTo(calcDrive(24));
       resetEncoders();
@@ -377,7 +378,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("Step 2: ", "turn init");
       telemetry.update();
       turnRightTest(1,90);
-      telemetry.addData("Current Heading", robot.gyro.getHeading());
+      telemetry.addData("Current Heading", robot.gyro.getHeading());*/
 
       //Stop All Movement
       resetEncoders();
