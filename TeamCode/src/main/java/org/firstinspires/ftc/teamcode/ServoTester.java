@@ -43,7 +43,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * Demonstrates empty OpMode
  */
 //@Autonomous(name = "Test: Motor Encoder", group = "Concept")
-@TeleOp(name = "Servo Test Code", group = "Linear Opmode")
+//@TeleOp(name = "Servo Test Code", group = "Linear Opmode")
 public class ServoTester extends OpMode {
 
   //Objects setup

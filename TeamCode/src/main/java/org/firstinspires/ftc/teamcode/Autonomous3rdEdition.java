@@ -200,12 +200,12 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void turnRightVariableAndStop(double power, int heading)
   {
 
-          while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold*/) {
+          //while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold*/) {
               robot.frontLeftMotor.setPower(power);
-              robot.backLeftMotor.setPower(power);
+              //robot.backLeftMotor.setPower(power);
               robot.frontRightMotor.setPower(-power);
-              robot.backRightMotor.setPower(-power);
-          }
+              //robot.backRightMotor.setPower(-power);
+          //}
           /*robot.frontLeftMotor.setPower(0);
           robot.backLeftMotor.setPower(0);
           robot.frontRightMotor.setPower(0);
@@ -268,11 +268,14 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("FR power",robot.frontRightMotor.getPower());
       telemetry.addData("BR power",robot.backRightMotor.getPower());
       telemetry.update();*/
-      //turnRightVariableAndStop(1,90);
       moveForwardTo(calcDrive(24));
-      telemetry.addData("Step 2: ", "turned");
+      moveBackTo(calcDrive(24));
+      delay(2000);
+      telemetry.addData("Step 2: ", "turn init");
+      telemetry.update();
+      turnRightVariableAndStop(1,90);
       telemetry.addData("Current Heading", robot.gyro.getHeading());
-
+      delay(30000);
 
 
       //Stop All Movement

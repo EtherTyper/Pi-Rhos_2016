@@ -111,9 +111,8 @@ public class TeleOpFinal extends LinearOpMode {
 
             telemetry.addData("Say","Op mode Active.");
             //Gamepad 1 controls
-            // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-            left = -gamepad1.left_stick_y;
-            right = -gamepad1.right_stick_y;
+            left = gamepad1.left_stick_y;
+            right = gamepad1.right_stick_y;
             toggleDriveOrient = gamepad1.x;
             beaconLeftOut = gamepad1.left_trigger;
             beaconLeftIn = gamepad1.left_bumper;
@@ -187,11 +186,11 @@ public class TeleOpFinal extends LinearOpMode {
                 robot.shooterMotor.setTargetPosition(shooterTarget);
                 robot.shooterMotor.setPower(1);
             }
-            else if(varShootBack>.6){
-                shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation;
+            else if(varShootBack>.05){
+                shooterTarget = robot.shooterMotor.getCurrentPosition() - ticksPerRotation;
                 robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.shooterMotor.setTargetPosition(shooterTarget);
-                robot.shooterMotor.setPower(-1);
+                robot.shooterMotor.setPower(varShootBack);
             }
             else if(!shooterActive){
                 robot.shooterMotor.setPower(0);
@@ -202,7 +201,7 @@ public class TeleOpFinal extends LinearOpMode {
                 step1=true;
             }
             if(step1){
-                shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation;
+                shooterTarget = robot.shooterMotor.getCurrentPosition() + ticksPerRotation-100;
                 step2=true;
                 step1=false;
             }
@@ -269,8 +268,8 @@ public class TeleOpFinal extends LinearOpMode {
                         Thread.sleep(200);
                     }
 
-            telemetry.addData("left",  "%.2f", left);
-            telemetry.addData("right", "%.2f", right);
+            telemetry.addData("Rev Mode Stat",reverseMode);
+            telemetry.addData("Prec Mode Stat",preciseMode);
             //telemetry.addData("encoder!", robot.encoderTest.getCurrentPosition());
             telemetry.update();
 
