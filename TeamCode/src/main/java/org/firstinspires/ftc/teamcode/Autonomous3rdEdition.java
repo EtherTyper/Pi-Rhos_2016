@@ -370,7 +370,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("FR power",robot.frontRightMotor.getPower());
       telemetry.addData("BR power",robot.backRightMotor.getPower());
       telemetry.update();*/
-      moveForwardTo(calcDrive(24));/*
+      moveForwardTo(calcDrive(24));
+      haltDrive();
+      /*
       resetEncoders();
       moveBackTo(calcDrive(24));
       resetEncoders();
