@@ -45,7 +45,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private final int TOLERANCE = 100;
+  private final int TOLERANCE = 50;
   int step = 0;
 
   //Calculation Variables
@@ -53,6 +53,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   double GEAR_RATIO = 27.0/40.0;
   double WHEEL_DIAMETER = 3.5;
   double distance = 0;
+  final double radius = 7.44;
   double CIRCUMFERENCE = 0;
   double ROTATIONS = 0;
   int counts = 0;
@@ -65,8 +66,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     robot.init(hardwareMap);
 
-    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -114,7 +115,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void resetEncoders() {
         robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -139,16 +140,16 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   //Robot Movement
   public void moveBackTo(int moveInRotations){
-      robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
+      //robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
       robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
-      robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.frontLeftMotor.getCurrentPosition()<= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
-              robot.frontLeftMotor.getCurrentPosition()>=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
+      while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE &&
+              robot.backLeftMotor.getCurrentPosition()>=robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
               (robot.frontRightMotor.getCurrentPosition()<= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
               robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
 
@@ -161,23 +162,19 @@ public class Autonomous3rdEdition extends LinearOpMode {
         robot.backRightMotor.setPower(-0.2);
 
     }
-      robot.frontLeftMotor.setPower(0);
-      robot.frontRightMotor.setPower(0);
-      robot.backLeftMotor.setPower(0);
-      robot.backRightMotor.setPower(0);
+      haltDrive();
   }
 
   public void moveForwardTo(int moveInRotations){
-      robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
+      //robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
       robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
-      robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.frontLeftMotor.getCurrentPosition()>= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
-                robot.frontLeftMotor.getCurrentPosition()<=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
+      while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
                 (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
                  robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
 
@@ -189,10 +186,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
           robot.backRightMotor.setPower(0.2);
       }
-      robot.frontLeftMotor.setPower(0);
-      robot.frontRightMotor.setPower(0);
-      robot.backLeftMotor.setPower(0);
-      robot.backRightMotor.setPower(0);
+      haltDrive();
     }
 
 
@@ -200,36 +194,106 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void turnRightVariableAndStop(double power, int heading)
   {
 
-          //while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold*/) {
+          /*while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold) {
               robot.frontLeftMotor.setPower(power);
-              //robot.backLeftMotor.setPower(power);
+              robot.backLeftMotor.setPower(power);
               robot.frontRightMotor.setPower(-power);
-              //robot.backRightMotor.setPower(-power);
-          //}
-          /*robot.frontLeftMotor.setPower(0);
+              robot.backRightMotor.setPower(-power);
+          }
+          robot.frontLeftMotor.setPower(0);
           robot.backLeftMotor.setPower(0);
           robot.frontRightMotor.setPower(0);
           robot.backRightMotor.setPower(0);*/
-      
+      calcTurn(heading);
+      robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
+      robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
+      robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - counts);
+      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
+              (robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
+
+          robot.frontLeftMotor.setPower(power);
+
+          robot.frontRightMotor.setPower(-power);
+
+          robot.backLeftMotor.setPower(power);
+
+          robot.backRightMotor.setPower(-power);
+      }
+      haltDrive();
+      correctTurn(power,heading);
   }
 
-  /*  public void turnLeftVariableAndStop(double power, int heading)
+    public void correctTurn(double power, double headingGoal){
+        if(absHeading() < (headingGoal - threshold)){
+            calcTurn(headingGoal-absHeading());
+            robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
+            robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
+            robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - counts);
+            robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
+                    (robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
+
+                robot.frontLeftMotor.setPower(power);
+
+                robot.frontRightMotor.setPower(-power);
+
+                robot.backLeftMotor.setPower(power);
+
+                robot.backRightMotor.setPower(-power);
+            }
+        }
+        else if(absHeading() > headingGoal + threshold){
+            calcTurn(absHeading()-headingGoal);
+            robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
+            robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
+            robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
+            robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
+                    (robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
+
+                robot.frontLeftMotor.setPower(-power);
+
+                robot.frontRightMotor.setPower(power);
+
+                robot.backLeftMotor.setPower(-power);
+
+                robot.backRightMotor.setPower(power);
+            }
+        }
+        haltDrive();
+    }
+  public void turnLeftVariableAndStop(double power, int heading)
     {
-        telemetry.addData("Step 1","Turn initiated");
-        telemetry.update();
-        while (absHeading() < (heading - threshold) || absHeading() > (heading + threshold)) {
+        calcTurn(heading);
+        robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
+        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
+        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
+        robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
+                (robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
+
             robot.frontLeftMotor.setPower(-power);
-            robot.backLeftMotor.setPower(-power);
+
             robot.frontRightMotor.setPower(power);
+
+            robot.backLeftMotor.setPower(-power);
+
             robot.backRightMotor.setPower(power);
         }
-        robot.frontLeftMotor.setPower(0);
-        robot.backLeftMotor.setPower(0);
-        robot.frontRightMotor.setPower(0);
-        robot.backRightMotor.setPower(0);
+        haltDrive();
 
+        correctTurn(power,heading);
 
-    }*/
+    }
 
   //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
@@ -237,6 +301,14 @@ public class Autonomous3rdEdition extends LinearOpMode {
     ROTATIONS = dist/CIRCUMFERENCE;
     counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
     return counts;
+  }
+
+  public int calcTurn(double deg){
+      double dist = deg*radius/360;
+      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
+      ROTATIONS = dist/CIRCUMFERENCE;
+      counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
+      return counts;
   }
 
   @Override
@@ -269,14 +341,14 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("BR power",robot.backRightMotor.getPower());
       telemetry.update();*/
       moveForwardTo(calcDrive(24));
+      resetEncoders();
       moveBackTo(calcDrive(24));
+      resetEncoders();
       delay(2000);
       telemetry.addData("Step 2: ", "turn init");
       telemetry.update();
       turnRightVariableAndStop(1,90);
       telemetry.addData("Current Heading", robot.gyro.getHeading());
-      delay(30000);
-
 
       //Stop All Movement
       resetEncoders();
