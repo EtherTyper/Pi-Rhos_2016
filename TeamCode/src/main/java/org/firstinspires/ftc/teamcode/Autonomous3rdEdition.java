@@ -70,8 +70,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
     //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -84,6 +84,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     robot.gyro.calibrate();
     //robot.lineColorSensor.enableLed(true);
+    robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
   }
 
   //Stop Function
@@ -100,8 +102,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
   }
 
   public void haltDrive(){
-        robot.frontLeftMotor.setPower(0);
-        robot.frontRightMotor.setPower(0);
+        //robot.frontLeftMotor.setPower(0);
+        //robot.frontRightMotor.setPower(0);
         robot.backLeftMotor.setPower(0);
         robot.backRightMotor.setPower(0);
     }
@@ -116,9 +118,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void resetEncoders() {
         robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         delay(300);
     }
@@ -142,20 +144,20 @@ public class Autonomous3rdEdition extends LinearOpMode {
   //Robot Movement
   public void moveBackTo(int moveInRotations){
       //robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
-      robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
+      //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
       //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-              (robot.frontRightMotor.getCurrentPosition()<= robot.frontRightMotor.getTargetPosition()+TOLERANCE &&
-              robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
+              (robot.backRightMotor.getCurrentPosition()<= robot.backRightMotor.getTargetPosition()+TOLERANCE &&
+              robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()-TOLERANCE))){
 
-        robot.frontLeftMotor.setPower(-driveSpeed);
+        //robot.frontLeftMotor.setPower(-driveSpeed);
 
-        robot.frontRightMotor.setPower(-driveSpeed);
+        //robot.frontRightMotor.setPower(-driveSpeed);
 
         robot.backLeftMotor.setPower(-driveSpeed);
 
@@ -167,20 +169,20 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   public void moveForwardTo(int moveInRotations){
       //robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() + moveInRotations);
-      robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
+      //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + moveInRotations);
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
       //robot.frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-                (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
-                 robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
+                (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
+                 robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
 
-          robot.frontLeftMotor.setPower(driveSpeed);
+          //robot.frontLeftMotor.setPower(driveSpeed);
 
-          robot.frontRightMotor.setPower(driveSpeed);
+          //robot.frontRightMotor.setPower(driveSpeed);
 
           robot.backLeftMotor.setPower(driveSpeed);
 
@@ -203,18 +205,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
           robot.frontRightMotor.setPower(0);
           robot.backRightMotor.setPower(0);*/
       calcTurn(heading);
-      robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
+      //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - counts);
-      robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+      //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-              (robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
+              (robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
 
-          robot.frontLeftMotor.setPower(power);
+          //robot.frontLeftMotor.setPower(power);
 
-          robot.frontRightMotor.setPower(-power);
+          //robot.frontRightMotor.setPower(-power);
 
           robot.backLeftMotor.setPower(power);
 
@@ -227,18 +229,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void correctTurn(double power, double headingGoal){
         if(absHeading() < (headingGoal - threshold)){
             calcTurn(headingGoal-absHeading());
-            robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
+            //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
             robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
             robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - counts);
-            robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-                    (robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
+                    (robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
 
-                robot.frontLeftMotor.setPower(power);
+                //robot.frontLeftMotor.setPower(power);
 
-                robot.frontRightMotor.setPower(-power);
+               //robot.frontRightMotor.setPower(-power);
 
                 robot.backLeftMotor.setPower(power);
 
@@ -247,18 +249,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
         else if(absHeading() > headingGoal + threshold){
             calcTurn(absHeading()-headingGoal);
-            robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
+            //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
             robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
             robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
-            robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-                    (robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
+                    (robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()-TOLERANCE))){
 
-                robot.frontLeftMotor.setPower(-power);
+                //robot.frontLeftMotor.setPower(-power);
 
-                robot.frontRightMotor.setPower(power);
+                //robot.frontRightMotor.setPower(power);
 
                 robot.backLeftMotor.setPower(-power);
 
@@ -270,18 +272,18 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   public void turnLeftVariableAndStop(double power, int heading) {
         calcTurn(heading);
-        robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
+        //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
         robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
         robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
-        robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-                (robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
+                (robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()-TOLERANCE))){
 
-            robot.frontLeftMotor.setPower(-power);
+            //robot.frontLeftMotor.setPower(-power);
 
-            robot.frontRightMotor.setPower(power);
+            //robot.frontRightMotor.setPower(power);
 
             robot.backLeftMotor.setPower(-power);
 
@@ -296,15 +298,15 @@ public class Autonomous3rdEdition extends LinearOpMode {
   public void turnLeftTest(double power, int heading) {
         while (absHeading() > ((360 - heading) - threshold)) {
 
-            robot.frontLeftMotor.setPower(-power);
+            //robot.frontLeftMotor.setPower(-power);
             robot.backLeftMotor.setPower(-power);
-            robot.frontRightMotor.setPower(power);
+            //robot.frontRightMotor.setPower(power);
             robot.backRightMotor.setPower(power);
         }
 
-        robot.frontLeftMotor.setPower(0);
+        //robot.frontLeftMotor.setPower(0);
         robot.backLeftMotor.setPower(0);
-        robot.frontRightMotor.setPower(0);
+        //robot.frontRightMotor.setPower(0);
         robot.backRightMotor.setPower(0);
     }
 
@@ -312,15 +314,15 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
             while (absHeading() > ((360 - heading) - threshold)) {
 
-                robot.frontLeftMotor.setPower(-power);
+                //robot.frontLeftMotor.setPower(-power);
                 robot.backLeftMotor.setPower(-power);
-                robot.frontRightMotor.setPower(power);
+                //robot.frontRightMotor.setPower(power);
                 robot.backRightMotor.setPower(power);
             }
 
-            robot.frontLeftMotor.setPower(0);
+            //robot.frontLeftMotor.setPower(0);
             robot.backLeftMotor.setPower(0);
-            robot.frontRightMotor.setPower(0);
+            //robot.frontRightMotor.setPower(0);
             robot.backRightMotor.setPower(0);
 
     }
