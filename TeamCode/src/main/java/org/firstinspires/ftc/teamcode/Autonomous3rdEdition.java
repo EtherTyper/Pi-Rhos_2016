@@ -188,10 +188,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
     }
 
-
   //Turning
-  public void turnRightVariableAndStop(double power, int heading)
-  {
+  public void turnRightVariableAndStop(double power, int heading) {
 
           /*while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold) {
               robot.frontLeftMotor.setPower(power);
@@ -225,7 +223,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       correctTurn(power,heading);
   }
 
-    public void correctTurn(double power, double headingGoal){
+  public void correctTurn(double power, double headingGoal){
         if(absHeading() < (headingGoal - threshold)){
             calcTurn(headingGoal-absHeading());
             robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
@@ -268,8 +266,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
         haltDrive();
     }
-  public void turnLeftVariableAndStop(double power, int heading)
-    {
+
+  public void turnLeftVariableAndStop(double power, int heading) {
         calcTurn(heading);
         robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
         robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - counts);
@@ -294,9 +292,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     }
 
-
-    public void turnLeftTest(double power, int heading)
-    {
+  public void turnLeftTest(double power, int heading) {
         while (absHeading() > ((360 - heading) - threshold)) {
 
             robot.frontLeftMotor.setPower(-power);
@@ -311,8 +307,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         robot.backRightMotor.setPower(0);
     }
 
-    public void turnRightTest(double power, int heading)
-    {
+  public void turnRightTest(double power, int heading) {
 
             while (absHeading() > ((360 - heading) - threshold)) {
 
@@ -328,6 +323,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
             robot.backRightMotor.setPower(0);
 
     }
+
   //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
     CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
