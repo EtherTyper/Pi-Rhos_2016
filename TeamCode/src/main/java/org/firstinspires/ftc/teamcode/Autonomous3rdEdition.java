@@ -45,7 +45,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
-  private final int TOLERANCE = 50;
+  private final int TOLERANCE = 100;
   int step = 0;
 
   //Calculation Variables
@@ -148,18 +148,17 @@ public class Autonomous3rdEdition extends LinearOpMode {
       robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       //robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.frontLeftMotor.getCurrentPosition()<= robot.frontLeftMotor.getTargetPosition()-TOLERANCE &&
-              robot.frontLeftMotor.getCurrentPosition()>=robot.frontLeftMotor.getTargetPosition()+TOLERANCE) &&
-              (robot.frontRightMotor.getCurrentPosition()<= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
-              robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
+      while(!((robot.frontLeftMotor.getCurrentPosition()<= robot.frontLeftMotor.getTargetPosition()-TOLERANCE) &&
+              (robot.frontRightMotor.getCurrentPosition()<= robot.frontRightMotor.getTargetPosition()+TOLERANCE &&
+              robot.frontRightMotor.getCurrentPosition()>=robot.frontRightMotor.getTargetPosition()-TOLERANCE))){
 
-        robot.frontLeftMotor.setPower(-0.2);
+        robot.frontLeftMotor.setPower(-1);
 
-        robot.frontRightMotor.setPower(-0.2);
+        robot.frontRightMotor.setPower(-1);
 
-        robot.backLeftMotor.setPower(-0.2);
+        robot.backLeftMotor.setPower(-1);
 
-        robot.backRightMotor.setPower(-0.2);
+        robot.backRightMotor.setPower(-1);
 
     }
       haltDrive();
@@ -178,13 +177,13 @@ public class Autonomous3rdEdition extends LinearOpMode {
                 (robot.frontRightMotor.getCurrentPosition()>= robot.frontRightMotor.getTargetPosition()-TOLERANCE &&
                  robot.frontRightMotor.getCurrentPosition()<=robot.frontRightMotor.getTargetPosition()+TOLERANCE))){
 
-          robot.frontLeftMotor.setPower(0.2);
+          robot.frontLeftMotor.setPower(1);
 
-          robot.frontRightMotor.setPower(0.2);
+          robot.frontRightMotor.setPower(1);
 
-          robot.backLeftMotor.setPower(0.2);
+          robot.backLeftMotor.setPower(1);
 
-          robot.backRightMotor.setPower(0.2);
+          robot.backRightMotor.setPower(1);
       }
       haltDrive();
     }
@@ -295,6 +294,40 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     }
 
+
+    public void turnLeftTest(double power, int heading)
+    {
+        while (absHeading() > ((360 - heading) - threshold)) {
+
+            robot.frontLeftMotor.setPower(-power);
+            robot.backLeftMotor.setPower(-power);
+            robot.frontRightMotor.setPower(power);
+            robot.backRightMotor.setPower(power);
+        }
+
+        robot.frontLeftMotor.setPower(0);
+        robot.backLeftMotor.setPower(0);
+        robot.frontRightMotor.setPower(0);
+        robot.backRightMotor.setPower(0);
+    }
+
+    public void turnRightTest(double power, int heading)
+    {
+
+            while (absHeading() > ((360 - heading) - threshold)) {
+
+                robot.frontLeftMotor.setPower(-power);
+                robot.backLeftMotor.setPower(-power);
+                robot.frontRightMotor.setPower(power);
+                robot.backRightMotor.setPower(power);
+            }
+
+            robot.frontLeftMotor.setPower(0);
+            robot.backLeftMotor.setPower(0);
+            robot.frontRightMotor.setPower(0);
+            robot.backRightMotor.setPower(0);
+
+    }
   //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
     CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
@@ -347,7 +380,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       delay(2000);
       telemetry.addData("Step 2: ", "turn init");
       telemetry.update();
-      turnRightVariableAndStop(1,90);
+      turnRightTest(1,90);
       telemetry.addData("Current Heading", robot.gyro.getHeading());
 
       //Stop All Movement
