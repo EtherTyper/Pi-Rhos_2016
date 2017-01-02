@@ -374,6 +374,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.update();*/
       moveForwardTo(calcDrive(24));
       haltDrive();
+      moveBackTo(calcDrive(24));
+      haltDrive();
+      turnRightTest(1,90);
       /*
       resetEncoders();
       moveBackTo(calcDrive(24));
