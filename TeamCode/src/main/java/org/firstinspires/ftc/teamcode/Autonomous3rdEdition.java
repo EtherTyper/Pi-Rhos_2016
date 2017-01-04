@@ -54,7 +54,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   double WHEEL_DIAMETER = 3.5;
   double distance = 0;
   final double radius = 7.44;
-  final double driveSpeed = 0.5;
+  final double driveSpeed = 0.2;
   double CIRCUMFERENCE = 0;
   double ROTATIONS = 0;
   int counts = 0;
@@ -151,9 +151,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-              (robot.backRightMotor.getCurrentPosition()<= robot.backRightMotor.getTargetPosition()+TOLERANCE &&
-              robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()-TOLERANCE))){
+      while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
+              (robot.backRightMotor.getCurrentPosition()<= robot.backRightMotor.getTargetPosition()+TOLERANCE /*&&
+              robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()-TOLERANCE*/))){
 
         //robot.frontLeftMotor.setPower(-driveSpeed);
 
@@ -176,9 +176,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
       robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-                (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE &&
-                 robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
+      while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE /*&&
+                 robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE*/))){
 
           //robot.frontLeftMotor.setPower(driveSpeed);
 
@@ -270,16 +270,16 @@ public class Autonomous3rdEdition extends LinearOpMode {
         haltDrive();
     }
 
-  public void turnLeftVariableAndStop(double power, int heading) {
-        calcTurn(heading);
+  public void turnLeftVariableAndStop(double power, int degrees) {
+        calcTurn(degrees);
         //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
         robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
         robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + counts);
         //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-                (robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()-TOLERANCE))){
+        while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()-TOLERANCE))){
 
             //robot.frontLeftMotor.setPower(-power);
 
@@ -291,7 +291,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
         haltDrive();
 
-        correctTurn(power,heading);
+        //correctTurn(power,degrees);
 
     }
 
@@ -336,7 +336,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
   }
 
   public int calcTurn(double deg){
-      double dist = deg*radius/360;
+      double dist = deg*2.0*radius*Math.PI/360.0;
       CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
       ROTATIONS = dist/CIRCUMFERENCE;
       counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
@@ -376,7 +376,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
       moveBackTo(calcDrive(24));
       haltDrive();
-      turnRightTest(1,90);
+      turnLeftVariableAndStop(.2,90);
       /*
       resetEncoders();
       moveBackTo(calcDrive(24));
