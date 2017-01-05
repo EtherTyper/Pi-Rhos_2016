@@ -142,6 +142,14 @@ public class Autonomous3rdEdition extends LinearOpMode {
   }
 
   //Robot Movement
+
+    public void goFoward(double power){
+        robot.backLeftMotor.setPower(power);
+        robot.backRightMotor.setPower(power);
+        telemetry.addData("Motor Power", robot.backLeftMotor.getPower());
+        telemetry.addData("Motor Variable", power);
+    }
+
   public void moveBackTo(int moveInRotations){
       //robot.frontLeftMotor.setTargetPosition(robot.frontLeftMotor.getCurrentPosition() - moveInRotations);
       //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - moveInRotations);
@@ -328,14 +336,24 @@ public class Autonomous3rdEdition extends LinearOpMode {
     }
 
     //Color Sensors
-    public void stopOnLine(){
+    public boolean onWhiteLine(){
+        if(robot.lineColorSensor.alpha()>=40){
+            return true;
+        }
+        return false;
+    }
 
-        while(opModeIsActive()){
-            telemetry.addData("argb", robot.lineColorSensor.argb());
-            telemetry.addData("alpha", robot.lineColorSensor.alpha());
-            telemetry.addData("red+green+blue", robot.lineColorSensor.red()+robot.lineColorSensor.green()+robot.lineColorSensor.blue());
+    public void stopOnLine(double power){
+        telemetry.addData("loop","not init");
+        telemetry.update();
+        while(!(robot.lineColorSensor.alpha()>=40)){
+            telemetry.addData("loop","init");
+            goFoward(power);
+            telemetry.addData("alpha",robot.lineColorSensor.alpha());
             telemetry.update();
         }
+        //robot.backLeftMotor.setPower(0);
+        //robot.backRightMotor.setPower(0);
     }
 
   //Calc Rotations -> Converts inches into ticks
@@ -394,8 +412,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
       turnLeftVariableAndStop(.2,90);
       */
-      stopOnLine();
-      delay(30000);
+      stopOnLine(0.5);
+
 
 
       /*
@@ -409,7 +427,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("Current Heading", robot.gyro.getHeading());*/
 
       //Stop All Movement
-      resetEncoders();
+      //resetEncoders();
 
 
   }
