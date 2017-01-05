@@ -83,7 +83,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
     robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     robot.gyro.calibrate();
-    //robot.lineColorSensor.enableLed(true);
+    robot.lineColorSensor.enableLed(true);
     robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
   }
@@ -327,6 +327,17 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     }
 
+    //Color Sensors
+    public void stopOnLine(){
+
+        while(opModeIsActive()){
+            telemetry.addData("argb", robot.lineColorSensor.argb());
+            telemetry.addData("alpha", robot.lineColorSensor.alpha());
+            telemetry.addData("red+green+blue", robot.lineColorSensor.red()+robot.lineColorSensor.green()+robot.lineColorSensor.blue());
+            telemetry.update();
+        }
+    }
+
   //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
     CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
@@ -348,6 +359,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("Stage: ", "Called runOpMode");
       telemetry.update();
       //Initialize Robot
+      //robot.lineColorSensor.enableLed(true);
       init_hardware();
       resetEncoders();
       waitForStart();
@@ -372,11 +384,20 @@ public class Autonomous3rdEdition extends LinearOpMode {
       telemetry.addData("FR power",robot.frontRightMotor.getPower());
       telemetry.addData("BR power",robot.backRightMotor.getPower());
       telemetry.update();*/
+
+
+      //Working Drive Code
+      /*
       moveForwardTo(calcDrive(24));
       haltDrive();
       moveBackTo(calcDrive(24));
       haltDrive();
       turnLeftVariableAndStop(.2,90);
+      */
+      stopOnLine();
+      delay(30000);
+
+
       /*
       resetEncoders();
       moveBackTo(calcDrive(24));

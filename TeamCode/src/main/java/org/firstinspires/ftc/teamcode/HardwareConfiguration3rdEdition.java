@@ -95,7 +95,7 @@ public class HardwareConfiguration3rdEdition
         leftColorSensor.enableLed(false);*/
 
         lineColorSensor = hwMap.colorSensor.get("line sensor");
-        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x14));
+        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
         lineColorSensor.enableLed(false);
 
         gyro = hwMap.gyroSensor.get("gyro sensor");
