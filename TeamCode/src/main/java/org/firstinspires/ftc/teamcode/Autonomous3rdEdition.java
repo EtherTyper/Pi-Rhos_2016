@@ -352,9 +352,27 @@ public class Autonomous3rdEdition extends LinearOpMode {
             telemetry.addData("alpha",robot.lineColorSensor.alpha());
             telemetry.update();
         }
-        //robot.backLeftMotor.setPower(0);
-        //robot.backRightMotor.setPower(0);
+        robot.backLeftMotor.setPower(0);
+        robot.backRightMotor.setPower(0);
     }
+    public boolean rightBeaconIsRed(){
+        if(robot.rightColorSensor.red()>220){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    public void pressBeacon(){
+        if(rightBeaconIsRed()){
+            //move and extend beacon presser
+        }
+        else{
+            //move and extend beacon presser
+        }
+    }
+
 
   //Calc Rotations -> Converts inches into ticks
   public int calcDrive(double dist){
@@ -383,9 +401,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
       waitForStart();
       haltALL();
 
-      //Shoot Ball One
       /*delay(1000);
       shootBall();
+      //Shoot Ball One
       delay(1000);
       moveScrewUp();
       delay(1000);

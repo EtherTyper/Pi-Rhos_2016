@@ -98,7 +98,7 @@ public class SensorMRColor extends LinearOpMode {
       bCurrState = gamepad1.x;
 
       // check for button state transitions.
-      if ((bCurrState == true) && (bCurrState != bPrevState))  {
+      if (bCurrState && (bCurrState != bPrevState))  {
 
         // button is transitioning to a pressed state. So Toggle LED
         bLedOn = !bLedOn;
