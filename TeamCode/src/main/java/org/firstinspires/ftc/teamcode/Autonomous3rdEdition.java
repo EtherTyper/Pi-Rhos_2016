@@ -399,17 +399,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       shootBall();
       delay(1000);*/
 
-      //Move the Robot
-      //moveForwardTo(calcDrive(10));
-      //waitForGyroToCalibrate();
-      /*telemetry.addData("FL power",robot.frontLeftMotor.getPower());
-      telemetry.addData("BL power",robot.backLeftMotor.getPower());
-      telemetry.addData("FR power",robot.frontRightMotor.getPower());
-      telemetry.addData("BR power",robot.backRightMotor.getPower());
-      telemetry.update();*/
-
-
-      //Working Drive Code
+      //Not Working Drive Code
       /*
       moveForwardTo(calcDrive(24));
       haltDrive();
@@ -421,25 +411,6 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //turnLeftVariableAndStop(0.3,90);
       //delay(5000);
       //turnRightVariableAndStop(0.3,90);
-
-      /*
-
-
-      moveForwardTo(calcDrive(12.0));
-      haltDrive();
-      turnLeftVariableAndStop(.3,45);
-      */
-
-
-      /*
-      resetEncoders();
-      moveBackTo(calcDrive(24));
-      resetEncoders();
-      delay(2000);
-      telemetry.addData("Step 2: ", "turn init");
-      telemetry.update();
-      turnRightTest(1,90);
-      telemetry.addData("Current Heading", robot.gyro.getHeading());*/
 
       //Stop All Movement
       //resetEncoders();
