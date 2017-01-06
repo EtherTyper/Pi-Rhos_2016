@@ -252,16 +252,16 @@ public class Autonomous3rdEdition extends LinearOpMode {
         //robot.frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-                (robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
+        while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
 
             //robot.frontLeftMotor.setPower(-power);
 
             //robot.frontRightMotor.setPower(power);
 
-            robot.backLeftMotor.setPower(power);
+            robot.backLeftMotor.setPower(-power);
 
-            robot.backRightMotor.setPower(-power);
+            robot.backRightMotor.setPower(power);
         }
         haltDrive();
     }
@@ -422,10 +422,11 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
       turnLeftVariableAndStop(.2,90);
       */
-      //stopOnLine(0.5);
-      turnLeftVariableAndStop(0.3,90);
-      delay(5000);
-      turnRightVariableAndStop(0.3,90);
+      stopOnLine(0.5);
+      //turnLeftVariableAndStop(0.3,90);
+      //delay(5000);
+      //turnRightVariableAndStop(0.3,90);
+
 
 
       /*
