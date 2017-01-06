@@ -200,7 +200,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
     }
 
   //Turning
-  public void turnRightVariableAndStop(double power, int heading) {
+  public void turnLeftVariableAndStop(double power, int degrees) {
 
           /*while (true/*absHeading() < (heading - threshold) || absHeading() > heading + threshold) {
               robot.frontLeftMotor.setPower(power);
@@ -212,7 +212,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
           robot.backLeftMotor.setPower(0);
           robot.frontRightMotor.setPower(0);
           robot.backRightMotor.setPower(0);*/
-      calcTurn(heading);
+      calcTurn(degrees);
       //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() - counts);
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - counts);
@@ -231,7 +231,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
           robot.backRightMotor.setPower(-power);
       }
       haltDrive();
-      correctTurn(power,heading);
+      //correctTurn(power,heading);
   }
 
   public void correctTurn(double power, double headingGoal){
@@ -278,7 +278,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         haltDrive();
     }
 
-  public void turnLeftVariableAndStop(double power, int degrees) {
+  public void turnRightVariableAndStop(double power, int degrees) {
         calcTurn(degrees);
         //robot.frontRightMotor.setTargetPosition(robot.frontRightMotor.getCurrentPosition() + counts);
         robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - counts);
@@ -430,8 +430,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
       turnLeftVariableAndStop(.2,90);
       */
-      stopOnLine(0.5);
-
+      //stopOnLine(0.5);
+      turnLeftVariableAndStop(0.3,90);
+      delay(5000);
+      turnRightVariableAndStop(0.3,90);
 
 
       /*
