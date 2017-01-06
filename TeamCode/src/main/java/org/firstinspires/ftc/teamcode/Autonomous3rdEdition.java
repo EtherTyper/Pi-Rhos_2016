@@ -144,6 +144,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
   //Robot Movement
 
     public void goFoward(double power){
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         robot.backLeftMotor.setPower(power);
         robot.backRightMotor.setPower(power);
         telemetry.addData("Motor Power", robot.backLeftMotor.getPower());
@@ -335,8 +338,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
     public void stopOnLine(double power){
         telemetry.addData("loop","not init");
         telemetry.update();
-        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         while(!(robot.lineColorSensor.alpha()>=40)){
             telemetry.addData("loop","init");
@@ -344,8 +347,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
             telemetry.addData("alpha",robot.lineColorSensor.alpha());
             telemetry.update();
         }
-        robot.backLeftMotor.setPower(0);
-        robot.backRightMotor.setPower(0);
+        //robot.backLeftMotor.setPower(0);
+        //robot.backRightMotor.setPower(0);
     }
     public boolean rightBeaconIsRed(){
         if(robot.rightColorSensor.red()>220){
@@ -422,7 +425,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
       turnLeftVariableAndStop(.2,90);
       */
-      stopOnLine(0.2);
+      stopOnLine(0.5);
       //turnLeftVariableAndStop(0.3,90);
       //delay(5000);
       //turnRightVariableAndStop(0.3,90);
