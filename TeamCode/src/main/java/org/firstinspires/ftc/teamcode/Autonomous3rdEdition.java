@@ -252,8 +252,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
         robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-                (robot.backRightMotor.getCurrentPosition()>=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
+        while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition()<=robot.backRightMotor.getTargetPosition()+TOLERANCE))){
 
             //robot.frontLeftMotor.setPower(power);
 
@@ -336,6 +336,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
     public void stopOnLine(double power){
         telemetry.addData("loop","not init");
         telemetry.update();
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         while(!(robot.lineColorSensor.alpha()>=40)){
             telemetry.addData("loop","init");
             goFoward(power);
