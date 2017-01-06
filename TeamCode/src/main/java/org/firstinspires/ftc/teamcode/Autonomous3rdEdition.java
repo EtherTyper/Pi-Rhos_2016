@@ -422,7 +422,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltDrive();
       turnLeftVariableAndStop(.2,90);
       */
-      stopOnLine(0.5);
+      stopOnLine(0.2);
       //turnLeftVariableAndStop(0.3,90);
       //delay(5000);
       //turnRightVariableAndStop(0.3,90);
