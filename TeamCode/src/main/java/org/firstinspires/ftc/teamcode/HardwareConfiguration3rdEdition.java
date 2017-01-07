@@ -38,8 +38,7 @@ public class HardwareConfiguration3rdEdition
     DcMotor elevatorMotor = null;
 
     //Color sensor
-    ColorSensor rightColorSensor = null;
-    ColorSensor leftColorSensor = null;
+    ColorSensor colorSensor = null;
     ColorSensor lineColorSensor = null;
 
     //Gyro Sensor
@@ -47,7 +46,7 @@ public class HardwareConfiguration3rdEdition
 
     //Servos
     //Servo leftServo = null;
-    Servo rightServo = null;
+    Servo beaconServo = null;
 
 
     //Variables
@@ -83,19 +82,19 @@ public class HardwareConfiguration3rdEdition
 
         //Servos
         //leftServo = hwMap.servo.get("left beacon");
-        rightServo = hwMap.servo.get("right beacon");
+        beaconServo = hwMap.servo.get("right beacon");
 
         //Sensors
-        /*rightColorSensor = hwMap.colorSensor.get("right sensor");
-        rightColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
-        rightColorSensor.enableLed(false);
+        colorSensor = hwMap.colorSensor.get("right sensor");
+        colorSensor.setI2cAddress(I2cAddr.create8bit(0x14));
+        colorSensor.enableLed(false);
 
-        leftColorSensor = hwMap.colorSensor.get("left sensor");
+        /*leftColorSensor = hwMap.colorSensor.get("left sensor");
         leftColorSensor.setI2cAddress(I2cAddr.create8bit(0x12));
         leftColorSensor.enableLed(false);*/
 
         lineColorSensor = hwMap.colorSensor.get("line sensor");
-        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x10));
+        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x20));
         lineColorSensor.enableLed(false);
 
         gyro = hwMap.gyroSensor.get("gyro sensor");
@@ -107,7 +106,7 @@ public class HardwareConfiguration3rdEdition
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightServo.setDirection(Servo.Direction.REVERSE);
+        beaconServo.setDirection(Servo.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);

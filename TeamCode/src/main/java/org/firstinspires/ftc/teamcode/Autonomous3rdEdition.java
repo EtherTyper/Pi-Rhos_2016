@@ -279,7 +279,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     }
     public boolean rightBeaconIsRed(){
-        if(robot.rightColorSensor.red()>220){
+        if(robot.colorSensor.red()>220){
             return true;
         }
         else{
@@ -287,13 +287,25 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
 
     }
+    public void extendBeaconPresser(){
+        robot.beaconServo.setPosition(1.0);//left
+    }
+    public void retractBeaconPresser(){
+        robot.beaconServo.setPosition(0.0);//right
+    }
     public void pressBeacon(){
+        telemetry.addData("red", robot.colorSensor.red());
+        telemetry.update();
         if(rightBeaconIsRed()){
             //move and extend beacon presser
+            extendBeaconPresser();
+
+
         }
         else{
             //move and extend beacon presser
         }
+        delay(2000);
     }
 
 
@@ -323,6 +335,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
       resetEncoders();
       waitForStart();
       haltALL();
+
+
+      pressBeacon();
+      delay(2000);
       /*CURRENT AUTONOMOUS CODE
       //move to shooting position
       moveForwardTo(calcDrive(5),0.2, 0.2);

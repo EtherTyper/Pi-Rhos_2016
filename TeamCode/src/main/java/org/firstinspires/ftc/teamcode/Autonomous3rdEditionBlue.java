@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Autonomous 3rd Edition", group = "Concept")
+@Autonomous(name = "Autonomous 3rd Edition Blue", group = "Concept")
 public class Autonomous3rdEditionBlue extends LinearOpMode {
   private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
 
@@ -278,7 +278,7 @@ public class Autonomous3rdEditionBlue extends LinearOpMode {
 
     }
     public boolean rightBeaconIsRed(){
-        if(robot.rightColorSensor.red()>220){
+        if(robot.colorSensor.red()>220){
             return true;
         }
         else{
