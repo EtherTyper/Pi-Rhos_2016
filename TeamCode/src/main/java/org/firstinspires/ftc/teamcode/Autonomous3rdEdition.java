@@ -312,29 +312,31 @@ public class Autonomous3rdEdition extends LinearOpMode {
       waitForStart();
       haltALL();
 
-      /*delay(1000);
-      shootBall();
+      //move to shooting position
+      moveForwardTo(calcDrive(5));
+      turnLeftVariableAndStop(0.3, 50);
+      moveForwardTo(calcDrive(20));
+
       //Shoot Ball One
+      delay(1000);
+      shootBall();
+
+      //Load ball two
       delay(1000);
       moveScrewUp();
       delay(1000);
 
       //Shoot Ball Two
       shootBall();
-      delay(1000);*/
+      delay(1000);
 
-      //Not Working Drive Code
-      /*
-      moveForwardTo(calcDrive(24));
-      haltDrive();
-      moveBackTo(calcDrive(24));
-      haltDrive();
-      turnLeftVariableAndStop(.2,90);
-      */
-      stopOnLine(0.5);
-      //turnLeftVariableAndStop(0.3,90);
-      //delay(5000);
-      //turnRightVariableAndStop(0.3,90);
+      turnLeftVariableAndStop(0.3, 30);
+
+
+
+
+
+
 
       //Stop All Movement
       //resetEncoders();
