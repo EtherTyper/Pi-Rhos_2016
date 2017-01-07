@@ -8,6 +8,6 @@ package org.firstinspires.ftc.teamcode;
         import com.qualcomm.robotcore.hardware.DcMotor;
         import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name = "Autonomous Shoot Only Red", group = "Concept")
-public class AutonomousShootOnly {
+public class AutonomousShootOnlyRed {
 
 }
