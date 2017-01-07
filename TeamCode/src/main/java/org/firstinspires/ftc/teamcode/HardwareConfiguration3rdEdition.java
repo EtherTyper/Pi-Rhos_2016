@@ -85,7 +85,7 @@ public class HardwareConfiguration3rdEdition
         beaconServo = hwMap.servo.get("right beacon");
 
         //Sensors
-        colorSensor = hwMap.colorSensor.get("right sensor");
+        colorSensor = hwMap.colorSensor.get("color sensor");
         colorSensor.setI2cAddress(I2cAddr.create8bit(0x14));
         colorSensor.enableLed(false);
 
