@@ -143,7 +143,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         telemetry.addData("Motor Variable", power);
     }
 
-  public void moveBackTo(int moveInRotations){
+  public void moveBackTo(int moveInRotations, double leftPower, double rightPower){
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
       robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -151,15 +151,15 @@ public class Autonomous3rdEdition extends LinearOpMode {
       while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
               (robot.backRightMotor.getCurrentPosition()<= robot.backRightMotor.getTargetPosition()+TOLERANCE))){
 
-        robot.backLeftMotor.setPower(-driveSpeed);
+        robot.backLeftMotor.setPower(-leftPower);
 
-        robot.backRightMotor.setPower(-driveSpeed);
+        robot.backRightMotor.setPower(-rightPower);
 
     }
       haltDrive();
   }
 
-  public void moveForwardTo(int moveInRotations){
+  public void moveForwardTo(int moveInRotations, double leftPower, double rightPower){
       robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
       robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
 
@@ -168,9 +168,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
       while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
                 (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE))){
 
-          robot.backLeftMotor.setPower(driveSpeed);
+          robot.backLeftMotor.setPower(leftPower);
 
-          robot.backRightMotor.setPower(driveSpeed);
+          robot.backRightMotor.setPower(rightPower);
       }
       haltDrive();
     }
@@ -253,14 +253,26 @@ public class Autonomous3rdEdition extends LinearOpMode {
         return false;
     }
 
-    public void stopOnLine(double power){
+    public void stopOnLineFoward(double power) {
+        telemetry.addData("loop", "not init");
+        telemetry.update();
+
+
+        while (!(robot.lineColorSensor.alpha() >= 40)) {
+            telemetry.addData("loop", "init");
+            goFoward(power);
+            telemetry.addData("alpha", robot.lineColorSensor.alpha());
+            telemetry.update();
+        }
+    }
+    public void stopOnLineBackward(double power){
         telemetry.addData("loop","not init");
         telemetry.update();
 
 
         while(!(robot.lineColorSensor.alpha()>=40)){
             telemetry.addData("loop","init");
-            goFoward(power);
+            goFoward(-power);
             telemetry.addData("alpha",robot.lineColorSensor.alpha());
             telemetry.update();
         }
@@ -311,11 +323,11 @@ public class Autonomous3rdEdition extends LinearOpMode {
       resetEncoders();
       waitForStart();
       haltALL();
-
+      /*CURRENT AUTONOMOUS CODE
       //move to shooting position
-      moveForwardTo(calcDrive(5));
+      moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
-      moveForwardTo(calcDrive(20));
+      moveForwardTo(calcDrive(20),0.2, 0.2);
 
       //Shoot Ball One
       delay(1000);
@@ -330,7 +342,23 @@ public class Autonomous3rdEdition extends LinearOpMode {
       shootBall();
       delay(1000);
 
+      //drive to far beacon
       turnLeftVariableAndStop(0.3, 30);
+      moveForwardTo(calcDrive(82), 0.7, 0.7);
+      turnRightVariableAndStop(0.3, 59);
+      moveForwardTo(calcDrive(24),0.3, 0.3);
+      stopOnLineFoward(0.3);
+
+      //correct for color
+
+      //press beacon
+
+      //move back to close beacon
+      moveBackTo(calcDrive(24), 0.28, 0.3);
+      stopOnLineBackward(0.3);
+      END OF WORKING AUTONOMOUS CODE*/
+
+      //Beacon sensing
 
 
 
