@@ -60,7 +60,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  Press beacon, and retract
  Turn to face field
   */
-@Autonomous(name = "Autonomous Test", group = "Concept")
+//@Autonomous(name = "Autonomous Test", group = "Concept")
 public class AutonomousTest extends LinearOpMode {
   private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
   int threshold = 2;

@@ -305,12 +305,10 @@ public class AutonomousShootOnlyBlue extends LinearOpMode {
         waitForStart();
         haltALL();
 
-
-
-
+        delay(10000);
         //move to shooting position
         moveForwardTo(calcDrive(5),0.2, 0.2);
-        turnRightVariableAndStop(0.3, 50);
+        turnRightVariableAndStop(0.3, 45);
         moveForwardTo(calcDrive(20),0.2, 0.2);
 
         //Shoot Ball One

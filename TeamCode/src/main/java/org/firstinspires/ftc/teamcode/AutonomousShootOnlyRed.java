@@ -304,6 +304,7 @@ public class AutonomousShootOnlyRed extends LinearOpMode{
                 waitForStart();
                 haltALL();
 
+                delay(10000);
                 //move to shooting position
                 moveForwardTo(calcDrive(5),0.2, 0.2);
                 turnLeftVariableAndStop(0.3, 50);
@@ -321,12 +322,6 @@ public class AutonomousShootOnlyRed extends LinearOpMode{
                 //Shoot Ball Two
                 shootBall();
                 delay(1000);
-
-
-
-
-
-
 
 
                 //Stop All Movement

@@ -39,11 +39,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Autonomous 3rd Edition", group = "Concept")
+@Autonomous(name = "Auto Shoot No Move", group = "Concept")
 public class Autonomous3rdEdition extends LinearOpMode {
   private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
 
-  //All units here is inches
+  //All units here are inches
   private final int ticksPerRotation = 1120;
   private final int TOLERANCE = 100;
   int step = 0;
@@ -278,7 +278,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
 
     }
-    public boolean rightBeaconIsRed(){
+    public boolean beaconIsRed(){
         if(robot.colorSensor.red()>=2){
             return true;
         }
@@ -287,9 +287,9 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
 
     }
-    public void extendBeaconPresser(){
+    public void extendBeaconPresser(int time){
         robot.beaconServo.setPosition(0.0);//left
-        delay(2000);
+        delay(time);
 
     }
     public void retractBeaconPresser(){
@@ -305,9 +305,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
     public void pressBeacon(){
         telemetry.addData("red", robot.colorSensor.red());
         telemetry.update();
-        if(rightBeaconIsRed()){
-            //move and extend beacon presser
-            extendBeaconPresser();
+        //move to read beacon color #1
+        extendBeaconPresser(1000);
+        if(beaconIsRed()){
+            extendBeaconPresser(1000);
 
 
         }
@@ -347,13 +348,13 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
 
       //pressBeacon();
-      extendBeaconPresser();
-      delay(2000);
+      //extendBeaconPresser();
+      //delay(2000);
       /*CURRENT AUTONOMOUS CODE
       //move to shooting position
       moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
-      moveForwardTo(calcDrive(20),0.2, 0.2);
+      moveForwardTo(calcDrive(20),0.2, 0.2);*/
 
       //Shoot Ball One
       delay(1000);
@@ -367,7 +368,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //Shoot Ball Two
       shootBall();
       delay(1000);
-
+      /*
       //drive to far beacon
       turnLeftVariableAndStop(0.3, 30);
       moveForwardTo(calcDrive(82), 0.7, 0.7);
