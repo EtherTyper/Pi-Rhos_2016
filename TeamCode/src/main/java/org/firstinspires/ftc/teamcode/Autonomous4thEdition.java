@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 @Autonomous(name = "Autonomous 4th Edition", group = "Concept")
 public class Autonomous4thEdition extends LinearOpMode {
-  private HardwareConfiguration3rdEdition robot = new HardwareConfiguration4thEdition();
+  private HardwareConfiguration4thEdition robot = new HardwareConfiguration4thEdition();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
@@ -278,7 +278,7 @@ public class Autonomous4thEdition extends LinearOpMode {
 
     }
     public boolean rightBeaconIsRed(){
-        if(robot.rightColorSensor.red()>220){
+        if(robot.colorSensor.red()>220){
             return true;
         }
         else{
