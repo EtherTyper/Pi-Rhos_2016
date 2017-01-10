@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.GyroSensor;
@@ -46,7 +47,7 @@ public class HardwareConfiguration3rdEdition
 
     //Servos
     //Servo leftServo = null;
-    Servo beaconServo = null;
+    CRServo beaconServo = null;
 
 
     //Variables
@@ -82,7 +83,7 @@ public class HardwareConfiguration3rdEdition
 
         //Servos
         //leftServo = hwMap.servo.get("left beacon");
-        beaconServo = hwMap.servo.get("right beacon");
+        beaconServo = hwMap.crservo.get("right beacon");
 
         //Sensors
         colorSensor = hwMap.colorSensor.get("color sensor");
@@ -106,7 +107,7 @@ public class HardwareConfiguration3rdEdition
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
-        beaconServo.setDirection(Servo.Direction.REVERSE);
+        beaconServo.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
