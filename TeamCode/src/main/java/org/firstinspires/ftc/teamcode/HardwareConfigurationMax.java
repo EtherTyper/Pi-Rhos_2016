@@ -41,8 +41,7 @@ public class HardwareConfigurationMax
     ColorSensor leftColorSensor = null;
 
     //Servos
-    Servo leftServo = null;
-    Servo rightServo = null;
+    CRServo beaconServo = null;
 
 
     //Variables
@@ -76,8 +75,7 @@ public class HardwareConfigurationMax
         intakeMotor = hwMap.dcMotor.get("intake motor");
         elevatorMotor = hwMap.dcMotor.get("elevator motor");
 
-        leftServo = hwMap.servo.get("left beacon");
-        rightServo = hwMap.servo.get("right beacon");
+        beaconServo = hwMap.crservo.get("right beacon");
 
         //Set motor direction
         frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -85,7 +83,7 @@ public class HardwareConfigurationMax
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         elevatorMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightServo.setDirection(Servo.Direction.REVERSE);
+        beaconServo.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);

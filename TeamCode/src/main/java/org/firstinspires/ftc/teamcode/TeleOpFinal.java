@@ -136,29 +136,18 @@ public class TeleOpFinal extends LinearOpMode {
 
             }
 
-            if(beaconLeftIn)
-            {
-                robot.leftServo.setPosition(1);
-            }
-            else if(beaconLeftOut >= 0.5) {
-                robot.leftServo.setPosition(0);
-            }
-            else
-            {
-                robot.leftServo.setPosition(0.5);
-            }
 
             if(beaconRightIn)
             {
-                robot.rightServo.setPosition(1);
+                robot.beaconServo.setPower(1);
             }
             else if(beaconRightOut >= 0.5)
             {
-                robot.rightServo.setPosition(0);
+                robot.beaconServo.setPower(0);
             }
             else
             {
-                robot.rightServo.setPosition(0.5);
+                robot.beaconServo.setPower(0.5);
             }
 
             if(reverseMode)
