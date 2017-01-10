@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Shoot twice", group = "Concept")
+//@Autonomous(name = "Shoot twice", group = "Concept")
 //TeleOp(name = "Test: Motor Encoder", group = "Linear Opmode")
 public class ShootTwiceAuto extends OpMode {
 

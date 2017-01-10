@@ -92,7 +92,7 @@ public class TeleOpFinal extends LinearOpMode {
         boolean varShoot;
         boolean shoot;
 
-        boolean reverseMode = false;
+        boolean reverseMode = true;
         boolean preciseMode = false;
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -111,8 +111,8 @@ public class TeleOpFinal extends LinearOpMode {
 
             telemetry.addData("Say","Op mode Active.");
             //Gamepad 1 controls
-            left = gamepad1.left_stick_y;
-            right = gamepad1.right_stick_y;
+            left = -gamepad1.left_stick_y;
+            right = -gamepad1.right_stick_y;
             toggleDriveOrient = gamepad1.x;
             beaconLeftOut = gamepad1.left_trigger;
             beaconLeftIn = gamepad1.left_bumper;
@@ -124,9 +124,9 @@ public class TeleOpFinal extends LinearOpMode {
             screwDown = gamepad2.dpad_down;
             toggleFlapsIn = gamepad2.x;
             toggleFlapsOut = gamepad2.b;
-            varShoot = gamepad2.left_bumper;
-            varShootBack = gamepad2.left_trigger;
-            shoot = gamepad2.right_bumper;
+            varShoot = gamepad2.right_bumper;
+            varShootBack = gamepad2.right_trigger;
+            shoot = gamepad2.left_bumper;
 
 
             if(preciseMode)
@@ -136,29 +136,18 @@ public class TeleOpFinal extends LinearOpMode {
 
             }
 
-            if(beaconLeftIn)
-            {
-                robot.leftServo.setPosition(1);
-            }
-            else if(beaconLeftOut >= 0.5) {
-                robot.leftServo.setPosition(0);
-            }
-            else
-            {
-                robot.leftServo.setPosition(0.5);
-            }
 
             if(beaconRightIn)
             {
-                robot.rightServo.setPosition(1);
+                robot.beaconServo.setPower(1);
             }
             else if(beaconRightOut >= 0.5)
             {
-                robot.rightServo.setPosition(0);
+                robot.beaconServo.setPower(0);
             }
             else
             {
-                robot.rightServo.setPosition(0.5);
+                robot.beaconServo.setPower(0.5);
             }
 
             if(reverseMode)
@@ -268,7 +257,7 @@ public class TeleOpFinal extends LinearOpMode {
                         Thread.sleep(200);
                     }
 
-            telemetry.addData("Rev Mode Stat",reverseMode);
+            telemetry.addData("Rev Mode Stat",!reverseMode);
             telemetry.addData("Prec Mode Stat",preciseMode);
             //telemetry.addData("encoder!", robot.encoderTest.getCurrentPosition());
             telemetry.update();

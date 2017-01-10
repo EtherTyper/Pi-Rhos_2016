@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Final Test", group = "Concept")
+//@Autonomous(name = "Final Test", group = "Concept")
 public class AutonomousFinalTest extends LinearOpMode {
   private HardwareConfigurationTest robot = new HardwareConfigurationTest();
 
