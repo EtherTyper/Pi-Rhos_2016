@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 @Autonomous(name = "Autonomous 4th Edition Blue", group = "Concept")
 public class Autonomous4thEditionBlue extends LinearOpMode {
-  private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
+  private HardwareConfiguration3rdEdition robot = new HardwareConfiguration4thEdition();
 
   //All units here is inches
   private final int ticksPerRotation = 1120;
