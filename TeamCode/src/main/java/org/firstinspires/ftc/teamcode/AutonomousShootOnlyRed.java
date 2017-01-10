@@ -256,10 +256,10 @@ public class AutonomousShootOnlyRed extends LinearOpMode{
 
         }
         public void extendBeaconPresser(){
-                robot.beaconServo.setPosition(1.0);//left
+                robot.beaconServo.setPower(1.0);//left
         }
         public void retractBeaconPresser(){
-                robot.beaconServo.setPosition(0.0);//right
+                robot.beaconServo.setPower(0.0);//right
         }
         public void pressBeacon(){
                 telemetry.addData("red", robot.colorSensor.red());

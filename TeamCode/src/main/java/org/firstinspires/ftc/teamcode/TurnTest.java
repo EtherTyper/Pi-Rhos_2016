@@ -229,10 +229,10 @@ public class TurnTest extends OpMode {
   public void pushButton(int pushCase){
     //Left is 1 and right is 2
     switch (pushCase) {
-      case 1: robot.leftServo.setPosition(1);
-        break;
-      case 2: robot.rightServo.setPosition(1);
-        break;
+      //case 1: robot.leftServo.setPosition(1);
+        //break;
+      //case 2: robot.rightServo.setPosition(1);
+        //break;
     }
   }
 

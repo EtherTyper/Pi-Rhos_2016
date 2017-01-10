@@ -134,27 +134,27 @@ public class TeleOpMax3 extends LinearOpMode {
 
             if(!beaconLeftIn && beaconLeftOut==0)
             {
-                robot.leftServo.setPosition(128/255);
+               // robot.leftServo.setPosition(128/255);
             }
             else if(beaconLeftIn){
-                robot.leftServo.setPosition(0);
+              //  robot.leftServo.setPosition(0);
             }
             else
             {
-                robot.leftServo.setPosition(1);
+                //robot.leftServo.setPosition(1);
             }
 
             if(!beaconRightIn && beaconRightOut==0)
             {
-                robot.rightServo.setPosition(128/255);
+                //robot.rightServo.setPosition(128/255);
             }
             else if(beaconRightIn)
             {
-                robot.rightServo.setPosition(0);
+                //robot.rightServo.setPosition(0);
             }
             else
             {
-                robot.rightServo.setPosition(1);
+                //robot.rightServo.setPosition(1);
             }
 
             if(reverseMode)
