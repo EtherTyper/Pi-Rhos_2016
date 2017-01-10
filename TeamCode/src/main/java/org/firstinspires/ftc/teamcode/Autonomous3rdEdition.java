@@ -287,14 +287,14 @@ public class Autonomous3rdEdition extends LinearOpMode {
         }
 
     }
-    public void extendBeaconPresser(int time){
-        robot.beaconServo.setPosition(0.0);//left
+    public void extendBeaconPresser(double power, int time){
+        robot.beaconServo.setPower(power);//left
         delay(time);
 
     }
-    public void retractBeaconPresser(){
-        robot.beaconServo.setPosition(1.0);//right
-        delay(2000);
+    public void retractBeaconPresser(double power, int time){
+        robot.beaconServo.setPower(-power);//right
+        delay(time);
     }
     public void displayRedValue(){
         while(opModeIsActive()){
@@ -306,9 +306,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
         telemetry.addData("red", robot.colorSensor.red());
         telemetry.update();
         //move to read beacon color #1
-        extendBeaconPresser(1000);
+        extendBeaconPresser(1.0, 1000);
+
         if(beaconIsRed()){
-            extendBeaconPresser(1000);
+            extendBeaconPresser(0.5, 1000);
 
 
         }
