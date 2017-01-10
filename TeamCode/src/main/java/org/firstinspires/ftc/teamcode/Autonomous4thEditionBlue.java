@@ -278,7 +278,7 @@ public class Autonomous4thEditionBlue extends LinearOpMode {
 
     }
     public boolean rightBeaconIsRed(){
-        if(robot.rightColorSensor.red()>220){
+        if(robot.colorSensor.red()>220){
             return true;
         }
         else{
