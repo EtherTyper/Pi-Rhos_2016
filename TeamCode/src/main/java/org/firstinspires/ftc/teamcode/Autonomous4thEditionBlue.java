@@ -47,14 +47,14 @@ public class Autonomous4thEditionBlue extends Autonomous4thEdition {
       telemetry.update();
       //Initialize Robot
       //robot.lineColorSensor.enableLed(true);
-      init_hardware();
-      resetEncoders();
-      waitForStart();
-      haltALL();
+      super.init_hardware();
+      super.resetEncoders();
+      super.waitForStart();
+      super.haltALL();
 
 
-      extendBeaconPresser(0.5,1000);
-      retractBeaconPresser(0.5,1000);
+      super.extendBeaconPresser(0.5,1000);
+      super.retractBeaconPresser(0.5,1000);
       //pressBeacon();
       //extendBeaconPresser();
       //delay(2000);
