@@ -113,36 +113,36 @@ public class TeleOpTestServo extends LinearOpMode {
             ten = gamepad1.dpad_left;
 
             if(one) {
-                robot.beaconServo.setPosition(0);
+                robot.beaconServo.setPower(0);
             }
             else if(two){
-                robot.beaconServo.setPosition(0.1);
+                robot.beaconServo.setPower(0.1);
             }
             else if(three){
-                robot.beaconServo.setPosition(0.2);
+                robot.beaconServo.setPower(0.2);
             }
             else if(four){
-                robot.beaconServo.setPosition(0.3);
+                robot.beaconServo.setPower(0.3);
             }
             else if(five){
-                robot.beaconServo.setPosition(0.4);
+                robot.beaconServo.setPower(0.4);
             }
             else if(six){
-                robot.beaconServo.setPosition(0.5);
+                robot.beaconServo.setPower(0.5);
             }
             else if(seven){
-                robot.beaconServo.setPosition(0.6);
+                robot.beaconServo.setPower(0.6);
             }
             else if(eight){
-                robot.beaconServo.setPosition(0.7);
+                robot.beaconServo.setPower(0.7);
             }
             else if(nine){
-                robot.beaconServo.setPosition(0.8);
+                robot.beaconServo.setPower(0.8);
             }
             else if(ten){
-                robot.beaconServo.setPosition(0.9);
+                robot.beaconServo.setPower(0.9);
             }
-            telemetry.addData("servoPos",  robot.beaconServo.getPosition());
+            telemetry.addData("servoPos",  robot.beaconServo.getPower());
             telemetry.update();
 
             idle(); // Always call idle() at the bottom of your while(opModeIsActive()) loop

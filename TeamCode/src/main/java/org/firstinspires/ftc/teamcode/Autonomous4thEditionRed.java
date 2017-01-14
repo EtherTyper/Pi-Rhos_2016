@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Demonstrates empty OpMode
  */
+<<<<<<< HEAD
 @Autonomous(name = "Autonomous 4th Edition Red", group = "Concept")
 public class Autonomous4thEditionRed extends LinearOpMode {
   private HardwareConfiguration4thEdition robot = new HardwareConfiguration4thEdition();
@@ -311,6 +312,10 @@ public class Autonomous4thEditionRed extends LinearOpMode {
       counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
       return counts;
   }
+=======
+@Autonomous(name = "Autonomous 4th edition Red", group = "Concept")
+public class Autonomous4thEditionRed extends Autonomous4thEdition {
+>>>>>>> 565efb087898a789c7e85c7b79ec56e88197307f
 
   @Override
   public void runOpMode() throws InterruptedException {
@@ -318,13 +323,20 @@ public class Autonomous4thEditionRed extends LinearOpMode {
       telemetry.update();
       //Initialize Robot
       //robot.lineColorSensor.enableLed(true);
-      init_hardware();
-      resetEncoders();
-      waitForStart();
-      haltALL();
+      super.init_hardware();
+      super.resetEncoders();
+      super.waitForStart();
+      super.haltALL();
+
+
+      super.extendBeaconPresser(0.5,1000);
+      super.retractBeaconPresser(0.5,1000);
+      //pressBeacon();
+      //extendBeaconPresser();
+      //delay(2000);
       //CURRENT AUTONOMOUS CODE
       //move to shooting position
-      moveForwardTo(calcDrive(5),0.2, 0.2);
+      /*moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
       moveForwardTo(calcDrive(20),0.2, 0.2);
 
@@ -355,7 +367,7 @@ public class Autonomous4thEditionRed extends LinearOpMode {
       //move back to close beacon
       moveBackTo(calcDrive(24), 0.28, 0.3);
       stopOnLineBackward(0.3);
-      //END OF WORKING AUTONOMOUS CODE
+      //END OF WORKING AUTONOMOUS CODE*/
 
       //Beacon sensing
 

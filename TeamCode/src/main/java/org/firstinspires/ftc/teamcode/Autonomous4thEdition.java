@@ -38,11 +38,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Autonomous 4th Edition", group = "Concept")
+@Autonomous(name = "Autonomous 4th edition", group = "Concept")
 public class Autonomous4thEdition extends LinearOpMode {
   private HardwareConfiguration4thEdition robot = new HardwareConfiguration4thEdition();
 
-  //All units here is inches
+  //All units here are inches
   private final int ticksPerRotation = 1120;
   private final int TOLERANCE = 100;
   int step = 0;
@@ -277,8 +277,13 @@ public class Autonomous4thEdition extends LinearOpMode {
         }
 
     }
+<<<<<<< HEAD
     public boolean rightBeaconIsRed(){
         if(robot.colorSensor.red()>220){
+=======
+    public boolean beaconIsRed(){
+        if(robot.colorSensor.red()>=2){
+>>>>>>> 565efb087898a789c7e85c7b79ec56e88197307f
             return true;
         }
         else{
@@ -286,13 +291,36 @@ public class Autonomous4thEdition extends LinearOpMode {
         }
 
     }
+    public void extendBeaconPresser(double power, int time){
+        robot.beaconServo.setPower(power);//left
+        delay(time);
+
+    }
+    public void retractBeaconPresser(double power, int time){
+        robot.beaconServo.setPower(-power);//right
+        delay(time);
+    }
+    public void displayRedValue(){
+        while(opModeIsActive()){
+            telemetry.addData("red", robot.colorSensor.red());
+            telemetry.update();
+        }
+    }
     public void pressBeacon(){
-        if(rightBeaconIsRed()){
-            //move and extend beacon presser
+        telemetry.addData("red", robot.colorSensor.red());
+        telemetry.update();
+        //move to read beacon color #1
+        extendBeaconPresser(1.0, 1000);
+
+        if(beaconIsRed()){
+            extendBeaconPresser(0.5, 1000);
+
+
         }
         else{
             //move and extend beacon presser
         }
+
     }
 
 
@@ -322,9 +350,16 @@ public class Autonomous4thEdition extends LinearOpMode {
       resetEncoders();
       waitForStart();
       haltALL();
-      /*CURRENT AUTONOMOUS CODE
+
+
+      extendBeaconPresser(0.5,1000);
+      retractBeaconPresser(0.5,1000);
+      //pressBeacon();
+      //extendBeaconPresser();
+      //delay(2000);
+      //CURRENT AUTONOMOUS CODE
       //move to shooting position
-      moveForwardTo(calcDrive(5),0.2, 0.2);
+      /*moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
       moveForwardTo(calcDrive(20),0.2, 0.2);
 
@@ -355,7 +390,7 @@ public class Autonomous4thEdition extends LinearOpMode {
       //move back to close beacon
       moveBackTo(calcDrive(24), 0.28, 0.3);
       stopOnLineBackward(0.3);
-      END OF WORKING AUTONOMOUS CODE*/
+      //END OF WORKING AUTONOMOUS CODE*/
 
       //Beacon sensing
 

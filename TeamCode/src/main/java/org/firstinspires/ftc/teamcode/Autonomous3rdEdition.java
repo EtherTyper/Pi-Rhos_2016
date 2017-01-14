@@ -348,14 +348,16 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltALL();
 
 
+      extendBeaconPresser(0.5,1000);
+      retractBeaconPresser(0.5,1000);
       //pressBeacon();
       //extendBeaconPresser();
       //delay(2000);
-      /*CURRENT AUTONOMOUS CODE
+      //CURRENT AUTONOMOUS CODE
       //move to shooting position
-      moveForwardTo(calcDrive(5),0.2, 0.2);
+      /*moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
-      moveForwardTo(calcDrive(20),0.2, 0.2);*/
+      moveForwardTo(calcDrive(20),0.2, 0.2);
 
       //Shoot Ball One
       delay(1000);
@@ -369,7 +371,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //Shoot Ball Two
       shootBall();
       delay(1000);
-      /*
+
       //drive to far beacon
       turnLeftVariableAndStop(0.3, 30);
       moveForwardTo(calcDrive(82), 0.7, 0.7);
@@ -384,7 +386,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //move back to close beacon
       moveBackTo(calcDrive(24), 0.28, 0.3);
       stopOnLineBackward(0.3);
-      END OF WORKING AUTONOMOUS CODE*/
+      //END OF WORKING AUTONOMOUS CODE*/
 
       //Beacon sensing
 
