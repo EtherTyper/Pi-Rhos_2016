@@ -95,11 +95,11 @@ public class HardwareConfiguration3rdEdition
         leftColorSensor.enableLed(false);*/
 
         lineColorSensor = hwMap.colorSensor.get("line sensor");
-        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x20));
+        lineColorSensor.setI2cAddress(I2cAddr.create8bit(0x18));
         lineColorSensor.enableLed(false);
 
         gyro = hwMap.gyroSensor.get("gyro sensor");
-        //gyro.calibrate();
+        gyro.calibrate();
 
         //Set motor direction
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);

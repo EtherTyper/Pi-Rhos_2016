@@ -41,73 +41,73 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @Autonomous(name = "Auto 3rd Edition", group = "Concept")
 public class Autonomous3rdEdition extends LinearOpMode {
-  private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
+    private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
 
-  //All units here are inches
-  private final int ticksPerRotation = 1120;
-  private final int TOLERANCE = 100;
-  int step = 0;
+    //All units here are inches
+    private final int ticksPerRotation = 1120;
+    private final int TOLERANCE = 100;
+    int step = 0;
 
-  //Calculation Variables
-  double MOTOR_CPR = 1120;
-  double GEAR_RATIO = 27.0/40.0;
-  double WHEEL_DIAMETER = 3.5;
-  double distance = 0;
-  final double radius = 7.44;
-  final double driveSpeed = 0.2;
-  double CIRCUMFERENCE = 0;
-  double ROTATIONS = 0;
-  int counts = 0;
-  int threshold = 2;
+    //Calculation Variables
+    double MOTOR_CPR = 1120;
+    double GEAR_RATIO = 27.0 / 40.0;
+    double WHEEL_DIAMETER = 3.5;
+    double distance = 0;
+    final double radius = 7.44;
+    final double driveSpeed = 0.2;
+    double CIRCUMFERENCE = 0;
+    double ROTATIONS = 0;
+    int counts = 0;
+    int threshold = 2;
 
 
-  //Initialization
-  public void init_hardware() {
-    telemetry.addData("Status", "Initialized");
+    //Initialization
+    public void init_hardware() {
+        telemetry.addData("Status", "Initialized");
 
-    robot.init(hardwareMap);
+        robot.init(hardwareMap);
 
-    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    robot.gyro.calibrate();
-    robot.lineColorSensor.enableLed(true);
-    robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-    robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-  }
-
-  //Stop Function
-  public void delay(long mils){
-    try {
-      Thread.sleep(mils);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
+        robot.gyro.calibrate();
+        robot.lineColorSensor.enableLed(true);
+        robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
-  }
 
-  public int absHeading(){
-      return Math.abs(robot.gyro.getHeading());
-  }
+    //Stop Function
+    public void delay(long mils) {
+        try {
+            Thread.sleep(mils);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-  public void haltDrive(){
+    public int absHeading() {
+        return Math.abs(robot.gyro.getHeading());
+    }
+
+    public void haltDrive() {
         robot.backLeftMotor.setPower(0);
         robot.backRightMotor.setPower(0);
     }
 
-  public void haltALL(){
+    public void haltALL() {
         haltDrive();
         robot.intakeMotor.setPower(0);
         robot.shooterMotor.setPower(0);
         robot.elevatorMotor.setPower(0);
     }
 
-  public void resetEncoders() {
+    public void resetEncoders() {
         robot.shooterMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.elevatorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -115,25 +115,25 @@ public class Autonomous3rdEdition extends LinearOpMode {
         delay(300);
     }
 
-  //Robot functionalities
-  public void shootBall(){
+    //Robot functionalities
+    public void shootBall() {
 
-      robot.shooterMotor.setTargetPosition(robot.shooterMotor.getCurrentPosition() + ticksPerRotation);
-      robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.shooterMotor.setPower(1);
+        robot.shooterMotor.setTargetPosition(robot.shooterMotor.getCurrentPosition() + ticksPerRotation);
+        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.shooterMotor.setPower(1);
 
-  }
+    }
 
-  public void moveScrewUp(){
+    public void moveScrewUp() {
 
-      robot.elevatorMotor.setTargetPosition(ticksPerRotation * 2);
-      robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.elevatorMotor.setPower(1);
+        robot.elevatorMotor.setTargetPosition(ticksPerRotation * 2);
+        robot.elevatorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.elevatorMotor.setPower(1);
 
-  }
+    }
 
-  //Robot Movement
-    public void goFoward(double power){
+    //Robot Movement
+    public void goFoward(double power) {
         robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -143,40 +143,40 @@ public class Autonomous3rdEdition extends LinearOpMode {
         telemetry.addData("Motor Variable", power);
     }
 
-  public void moveBackTo(int moveInRotations, double leftPower, double rightPower){
-      robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
-      robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
-      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.backLeftMotor.getCurrentPosition()<= robot.backLeftMotor.getTargetPosition()+TOLERANCE) &&
-              (robot.backRightMotor.getCurrentPosition()<= robot.backRightMotor.getTargetPosition()+TOLERANCE))){
+    public void moveBackTo(int moveInRotations, double leftPower, double rightPower) {
+        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() - moveInRotations);
+        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() - moveInRotations);
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (!((robot.backLeftMotor.getCurrentPosition() <= robot.backLeftMotor.getTargetPosition() + TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition() <= robot.backRightMotor.getTargetPosition() + TOLERANCE))) {
 
-        robot.backLeftMotor.setPower(-leftPower);
+            robot.backLeftMotor.setPower(-leftPower);
 
-        robot.backRightMotor.setPower(-rightPower);
+            robot.backRightMotor.setPower(-rightPower);
 
-    }
-      haltDrive();
-  }
-
-  public void moveForwardTo(int moveInRotations, double leftPower, double rightPower){
-      robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
-      robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
-
-      robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-      while(!((robot.backLeftMotor.getCurrentPosition()>= robot.backLeftMotor.getTargetPosition()-TOLERANCE) &&
-                (robot.backRightMotor.getCurrentPosition()>= robot.backRightMotor.getTargetPosition()-TOLERANCE))){
-
-          robot.backLeftMotor.setPower(leftPower);
-
-          robot.backRightMotor.setPower(rightPower);
-      }
-      haltDrive();
+        }
+        haltDrive();
     }
 
-  //Turning
-  public void correctTurn(double power, double headingGoal){
+    public void moveForwardTo(int moveInRotations, double leftPower, double rightPower) {
+        robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + moveInRotations);
+        robot.backRightMotor.setTargetPosition(robot.backRightMotor.getCurrentPosition() + moveInRotations);
+
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (!((robot.backLeftMotor.getCurrentPosition() >= robot.backLeftMotor.getTargetPosition() - TOLERANCE) &&
+                (robot.backRightMotor.getCurrentPosition() >= robot.backRightMotor.getTargetPosition() - TOLERANCE))) {
+
+            robot.backLeftMotor.setPower(leftPower);
+
+            robot.backRightMotor.setPower(rightPower);
+        }
+        haltDrive();
+    }
+
+    //Turning
+  /*public void correctTurn(double power, double headingGoal){
         if(absHeading() < (headingGoal - threshold)){
             calcTurn(headingGoal-absHeading());
             robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
@@ -207,7 +207,37 @@ public class Autonomous3rdEdition extends LinearOpMode {
             }
         }
         haltDrive();
+    }*/
+    public void correctTurn(int heading) {
+        int currHeading = robot.gyro.getHeading() % 360;
+        //if(currHeading<=heading+1 && currHeading>=heading-1){
+
+        //}
+        robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while (!(currHeading <= heading + 5 && currHeading >= heading - 5)) {
+            currHeading = robot.gyro.getHeading() % 360;
+            telemetry.addData("In while loop. Current Heading: ", currHeading);
+            telemetry.update();
+            if (currHeading < heading - 5) {
+                //correct left
+                robot.backLeftMotor.setPower(-0.2);
+                robot.backRightMotor.setPower(0.2);
+            }
+            else if (currHeading > heading + 5) {
+                //correct right
+                robot.backLeftMotor.setPower(0.2);
+                robot.backRightMotor.setPower(-0.2);
+            }
+
+        }
+        robot.backLeftMotor.setPower(0);
+        robot.backRightMotor.setPower(0);
     }
+
+
+
     public void turnLeftVariableAndStop(double power, int degrees) {
         calcTurn(degrees);
         robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
@@ -306,12 +336,12 @@ public class Autonomous3rdEdition extends LinearOpMode {
         telemetry.addData("red", robot.colorSensor.red());
         telemetry.update();
         //move to read beacon color #1
-        extendBeaconPresser(1, 1000);
+        extendBeaconPresser(1, 1500);
         delay(200);
 
         if(robot.colorSensor.red()>=2){
-            extendBeaconPresser(1, 1500);
-            retractBeaconPresser(1, 2500);
+            extendBeaconPresser(1, 2000);
+            retractBeaconPresser(1, 3500);
 
 
         }
@@ -319,14 +349,24 @@ public class Autonomous3rdEdition extends LinearOpMode {
             //move and extend beacon presser
             moveBackTo(calcDrive(4.8),0.15,0.15);
             if(robot.colorSensor.red()>=2) {
-                delay(200);
-                extendBeaconPresser(1, 1000);
-                retractBeaconPresser(1, 2000);
+                extendBeaconPresser(1, 2000);
+                retractBeaconPresser(1, 3500);
             }
 
         }
 
     }
+
+    public void readGyro(){
+        while(opModeIsActive()) {
+            telemetry.addData("gyro heading: ", robot.gyro.getHeading()%360);
+            telemetry.addData("gyro x: ", robot.gyro.rawX());
+            telemetry.addData("gyro y: ", robot.gyro.rawY());
+            telemetry.addData("gyro z: ", robot.gyro.rawZ());
+            telemetry.update();
+        }
+    }
+
 
 
   //Calc Rotations -> Converts inches into ticks
@@ -361,12 +401,12 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
       //CURRENT AUTONOMOUS CODE
       //move to shooting position
-      moveForwardTo(calcDrive(5),0.2, 0.2);
+      /*moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
       moveForwardTo(calcDrive(20),0.2, 0.2);
 
       //Shoot Ball One
-      //delay(1000);
+      delay(1000);
       //shootBall();
 
       //Load ball two
@@ -376,25 +416,28 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
       //Shoot Ball Two
       //shootBall();
-      //delay(1000);
+      delay(1000);
 
       //drive to far beacon
       turnLeftVariableAndStop(0.3, 30);
-      moveForwardTo(calcDrive(61), 0.5, 0.5);
+      moveForwardTo(calcDrive(65), 0.4, 0.4);
       moveForwardTo(calcDrive(24), 0.3, 0.3);
-      turnRightVariableAndStop(0.2, 67);
-      moveForwardTo(calcDrive(24),0.3, 0.3);
+      turnRightVariableAndStop(0.2, 60);
+      moveForwardTo(calcDrive(25),0.3, 0.3);
       stopOnLineFoward(0.3);
       moveBackTo(calcDrive(2.7),0.2,0.2);
 
       //press beacon
-      pressBeacon();
+      pressBeacon();*/
 
 
       //move back to close beacon
       //moveBackTo(calcDrive(24), 0.28, 0.3);
       //stopOnLineBackward(0.3);
       //END OF WORKING AUTONOMOUS CODE
+      //turnLeftVariableAndStop(0.2,90);
+      correctTurn(90);
+      moveForwardTo(calcDrive(10),0.5,0.5);
 
       //Beacon sensing
 
@@ -405,7 +448,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
 
       //Stop All Movement
-      //resetEncoders();
+      resetEncoders();
 
 
   }
