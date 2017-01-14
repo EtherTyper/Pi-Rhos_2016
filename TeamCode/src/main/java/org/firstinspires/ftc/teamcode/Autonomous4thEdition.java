@@ -90,6 +90,14 @@ public class Autonomous4thEdition extends LinearOpMode {
     }
   }
 
+  public int calcTurn(double deg){
+      double dist = deg*2.0*radius*Math.PI/360.0;
+      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
+      ROTATIONS = dist/CIRCUMFERENCE;
+      counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
+        return counts;
+  }
+
   public int absHeading(){
       return Math.abs(robot.gyro.getHeading());
   }
@@ -252,7 +260,7 @@ public class Autonomous4thEdition extends LinearOpMode {
         return false;
     }
 
-    public void stopOnLineFoward(double power) {
+    public void stopOnLineForward(double power) {
         telemetry.addData("loop", "not init");
         telemetry.update();
 
@@ -277,13 +285,8 @@ public class Autonomous4thEdition extends LinearOpMode {
         }
 
     }
-<<<<<<< HEAD
-    public boolean rightBeaconIsRed(){
-        if(robot.colorSensor.red()>220){
-=======
     public boolean beaconIsRed(){
         if(robot.colorSensor.red()>=2){
->>>>>>> 565efb087898a789c7e85c7b79ec56e88197307f
             return true;
         }
         else{
@@ -291,6 +294,7 @@ public class Autonomous4thEdition extends LinearOpMode {
         }
 
     }
+
     public void extendBeaconPresser(double power, int time){
         robot.beaconServo.setPower(power);//left
         delay(time);
@@ -330,14 +334,6 @@ public class Autonomous4thEdition extends LinearOpMode {
     ROTATIONS = dist/CIRCUMFERENCE;
     counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
     return counts;
-  }
-
-  public int calcTurn(double deg){
-      double dist = deg*2.0*radius*Math.PI/360.0;
-      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
-      ROTATIONS = dist/CIRCUMFERENCE;
-      counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
-      return counts;
   }
 
   @Override
