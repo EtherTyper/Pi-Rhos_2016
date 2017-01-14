@@ -354,7 +354,7 @@ public class Autonomous4thEdition extends LinearOpMode {
       //delay(2000);
       //CURRENT AUTONOMOUS CODE
       //move to shooting position
-      /*moveForwardTo(calcDrive(5),0.2, 0.2);
+      moveForwardTo(calcDrive(5),0.2, 0.2);
       turnLeftVariableAndStop(0.3, 50);
       moveForwardTo(calcDrive(20),0.2, 0.2);
 
@@ -385,7 +385,7 @@ public class Autonomous4thEdition extends LinearOpMode {
       //move back to close beacon
       moveBackTo(calcDrive(24), 0.28, 0.3);
       stopOnLineBackward(0.3);
-      //END OF WORKING AUTONOMOUS CODE*/
+      //END OF WORKING AUTONOMOUS CODE
 
       //Beacon sensing
 
