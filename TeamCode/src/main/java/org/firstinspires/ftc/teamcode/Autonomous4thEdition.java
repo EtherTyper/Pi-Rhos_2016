@@ -90,6 +90,14 @@ public class Autonomous4thEdition extends LinearOpMode {
     }
   }
 
+  public int calcTurn(double deg){
+      double dist = deg*2.0*radius*Math.PI/360.0;
+      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
+      ROTATIONS = dist/CIRCUMFERENCE;
+      counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
+        return counts;
+  }
+
   public int absHeading(){
       return Math.abs(robot.gyro.getHeading());
   }
@@ -252,7 +260,7 @@ public class Autonomous4thEdition extends LinearOpMode {
         return false;
     }
 
-    public void stopOnLineFoward(double power) {
+    public void stopOnLineForward(double power) {
         telemetry.addData("loop", "not init");
         telemetry.update();
 
@@ -286,6 +294,7 @@ public class Autonomous4thEdition extends LinearOpMode {
         }
 
     }
+
     public void extendBeaconPresser(double power, int time){
         robot.beaconServo.setPower(power);//left
         delay(time);
@@ -325,14 +334,6 @@ public class Autonomous4thEdition extends LinearOpMode {
     ROTATIONS = dist/CIRCUMFERENCE;
     counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
     return counts;
-  }
-
-  public int calcTurn(double deg){
-      double dist = deg*2.0*radius*Math.PI/360.0;
-      CIRCUMFERENCE = WHEEL_DIAMETER*Math.PI;
-      ROTATIONS = dist/CIRCUMFERENCE;
-      counts = (int)(ROTATIONS*GEAR_RATIO*MOTOR_CPR);
-      return counts;
   }
 
   @Override
@@ -376,7 +377,7 @@ public class Autonomous4thEdition extends LinearOpMode {
       moveForwardTo(calcDrive(82), 0.7, 0.7);
       turnRightVariableAndStop(0.3, 59);
       moveForwardTo(calcDrive(24),0.3, 0.3);
-      stopOnLineFoward(0.3);
+      //stopOnLineFoward(0.3);
 
       //correct for color
 
@@ -384,7 +385,7 @@ public class Autonomous4thEdition extends LinearOpMode {
 
       //move back to close beacon
       moveBackTo(calcDrive(24), 0.28, 0.3);
-      stopOnLineBackward(0.3);
+      //stopOnLineBackward(0.3);
       //END OF WORKING AUTONOMOUS CODE
 
       //Beacon sensing

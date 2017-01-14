@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Demonstrates empty OpMode
  */
-@Autonomous(name = "Auto Shoot No Move", group = "Concept")
+@Autonomous(name = "Auto 3rd Edition", group = "Concept")
 public class Autonomous3rdEdition extends LinearOpMode {
   private HardwareConfiguration3rdEdition robot = new HardwareConfiguration3rdEdition();
 
@@ -288,12 +288,12 @@ public class Autonomous3rdEdition extends LinearOpMode {
 
     }
     public void extendBeaconPresser(double power, int time){
-        robot.beaconServo.setPower(power);//left
+        robot.beaconServo.setPower(-power);//left
         delay(time);
 
     }
     public void retractBeaconPresser(double power, int time){
-        robot.beaconServo.setPower(-power);//right
+        robot.beaconServo.setPower(power);//right
         delay(time);
     }
     public void displayRedValue(){
@@ -306,15 +306,24 @@ public class Autonomous3rdEdition extends LinearOpMode {
         telemetry.addData("red", robot.colorSensor.red());
         telemetry.update();
         //move to read beacon color #1
-        extendBeaconPresser(1.0, 1000);
+        extendBeaconPresser(1, 1000);
+        delay(200);
 
-        if(beaconIsRed()){
-            extendBeaconPresser(0.5, 1000);
+        if(robot.colorSensor.red()>=2){
+            extendBeaconPresser(1, 1500);
+            retractBeaconPresser(1, 2500);
 
 
         }
         else{
             //move and extend beacon presser
+            moveBackTo(calcDrive(4.8),0.15,0.15);
+            if(robot.colorSensor.red()>=2) {
+                delay(200);
+                extendBeaconPresser(1, 1000);
+                retractBeaconPresser(1, 2000);
+            }
+
         }
 
     }
@@ -348,12 +357,8 @@ public class Autonomous3rdEdition extends LinearOpMode {
       haltALL();
 
 
-      //extendBeaconPresser(0.5,1000);
-      //retractBeaconPresser(0.5,1000);
 
-      //pressBeacon();
-      //extendBeaconPresser();
-      //delay(2000);
+
       //CURRENT AUTONOMOUS CODE
       //move to shooting position
       moveForwardTo(calcDrive(5),0.2, 0.2);
@@ -361,32 +366,34 @@ public class Autonomous3rdEdition extends LinearOpMode {
       moveForwardTo(calcDrive(20),0.2, 0.2);
 
       //Shoot Ball One
-      delay(1000);
-      shootBall();
+      //delay(1000);
+      //shootBall();
 
       //Load ball two
-      delay(1000);
-      moveScrewUp();
-      delay(1000);
+      //delay(1000);
+      //moveScrewUp();
+      //delay(1000);
 
       //Shoot Ball Two
-      shootBall();
-      delay(1000);
+      //shootBall();
+      //delay(1000);
 
       //drive to far beacon
       turnLeftVariableAndStop(0.3, 30);
-      moveForwardTo(calcDrive(82), 0.7, 0.7);
-      turnRightVariableAndStop(0.3, 59);
+      moveForwardTo(calcDrive(61), 0.5, 0.5);
+      moveForwardTo(calcDrive(24), 0.3, 0.3);
+      turnRightVariableAndStop(0.2, 67);
       moveForwardTo(calcDrive(24),0.3, 0.3);
       stopOnLineFoward(0.3);
-
-      //correct for color
+      moveBackTo(calcDrive(2.7),0.2,0.2);
 
       //press beacon
+      pressBeacon();
+
 
       //move back to close beacon
-      moveBackTo(calcDrive(24), 0.28, 0.3);
-      stopOnLineBackward(0.3);
+      //moveBackTo(calcDrive(24), 0.28, 0.3);
+      //stopOnLineBackward(0.3);
       //END OF WORKING AUTONOMOUS CODE
 
       //Beacon sensing
