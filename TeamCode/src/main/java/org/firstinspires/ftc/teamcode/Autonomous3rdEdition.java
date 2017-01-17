@@ -176,7 +176,7 @@ public class Autonomous3rdEdition extends LinearOpMode {
     }
 
     //Turning
-  /*public void correctTurn(double power, double headingGoal){
+  public void correctTurn2(double power, double headingGoal){
         if(absHeading() < (headingGoal - threshold)){
             calcTurn(headingGoal-absHeading());
             robot.backLeftMotor.setTargetPosition(robot.backLeftMotor.getCurrentPosition() + counts);
@@ -207,28 +207,41 @@ public class Autonomous3rdEdition extends LinearOpMode {
             }
         }
         haltDrive();
-    }*/
+    }
     public void correctTurn(int heading) {
         int currHeading = robot.gyro.getHeading() % 360;
+        int correctByDegrees = 0;
         //if(currHeading<=heading+1 && currHeading>=heading-1){
 
         //}
         robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        while (!(currHeading <= heading + 5 && currHeading >= heading - 5)) {
+        //robot.backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //robot.backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (!(currHeading <= (heading + 5)%360 && currHeading >= (heading - 5)%360)) {
             currHeading = robot.gyro.getHeading() % 360;
+
+            /*correctByDegrees = currHeading-heading;
+            if (correctByDegrees<0){
+
+            }
+            else{
+
+            }*/
+
             telemetry.addData("In while loop. Current Heading: ", currHeading);
             telemetry.update();
             if (currHeading < heading - 5) {
                 //correct left
-                robot.backLeftMotor.setPower(-0.2);
-                robot.backRightMotor.setPower(0.2);
+                robot.backLeftMotor.setPower(-0.3);
+                robot.backRightMotor.setPower(0.3);
             }
             else if (currHeading > heading + 5) {
                 //correct right
-                robot.backLeftMotor.setPower(0.2);
-                robot.backRightMotor.setPower(-0.2);
+                robot.backLeftMotor.setPower(-0.3);
+                robot.backRightMotor.setPower(0.3);
             }
 
         }
@@ -435,8 +448,10 @@ public class Autonomous3rdEdition extends LinearOpMode {
       //moveBackTo(calcDrive(24), 0.28, 0.3);
       //stopOnLineBackward(0.3);
       //END OF WORKING AUTONOMOUS CODE
-      //turnLeftVariableAndStop(0.2,90);
+      turnLeftVariableAndStop(0.2,90);
+
       correctTurn(90);
+
       moveForwardTo(calcDrive(10),0.5,0.5);
 
       //Beacon sensing
